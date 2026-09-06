@@ -1,89 +1,688 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0b0d10"><meta name="application-name" content="E.O. Garage v13 Build 001"><meta name="eo-garage-version" content="12.0.2"><title>E.O. Garage v13 Build 001 · Supabase</title><style>
-:root{--bg:#0b0d10;--card:#15191f;--card2:#1c2229;--line:#2c333c;--text:#f5f6f8;--muted:#9ba4af;--gold:#d9b46a;--ok:#45d58a;--warn:#f0c75e;--bad:#f06d73;--blue:#72a8ff}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#15191e 0,#0b0d10 42%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}button,input,select,textarea{font:inherit}button{border:0;border-radius:12px;padding:11px 14px;background:var(--gold);color:#111;font-weight:700;cursor:pointer}.secondary{background:#242a31;color:var(--text);border:1px solid var(--line)}.danger{background:#3a2023;color:#ffb4b8}.wrap{max-width:1150px;margin:auto;padding:18px}.top{display:flex;justify-content:space-between;gap:14px;align-items:center;margin-bottom:16px}.brand{font-weight:900;letter-spacing:.4px;font-size:22px}.sub{color:var(--muted);font-size:12px}.actions{display:flex;gap:8px;flex-wrap:wrap}.layout{display:grid;grid-template-columns:250px 1fr;gap:14px}.side,.card{background:rgba(21,25,31,.94);border:1px solid var(--line);border-radius:18px}.side{padding:12px;height:max-content;position:sticky;top:12px}.vehicle{padding:12px;border-radius:13px;border:1px solid transparent;margin-bottom:7px;cursor:pointer}.vehicle.active{background:#222831;border-color:#4a515b}.vehicle b{display:block}.vehicle small{color:var(--muted)}.content{min-width:0}.hero{padding:20px;display:flex;justify-content:space-between;gap:15px;align-items:flex-start}.hero h1{margin:0 0 5px;font-size:28px}.pill{display:inline-block;padding:5px 9px;border-radius:999px;background:#252b32;color:var(--muted);font-size:12px;margin:2px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:10px 0}.stat{padding:15px;background:var(--card);border:1px solid var(--line);border-radius:16px}.stat .n{font-size:24px;font-weight:900}.stat .l{font-size:12px;color:var(--muted);margin-top:4px}.tabs{display:flex;gap:7px;overflow:auto;margin:14px 0}.tab{white-space:nowrap;background:#191e24;color:#b9c0c8;border:1px solid var(--line)}.tab.active{background:#2a3038;color:#fff;border-color:#56606b}.section{padding:16px;margin-bottom:12px}.section h2{margin:0 0 12px;font-size:18px}.rows{display:grid;gap:8px}.row{display:flex;justify-content:space-between;gap:15px;padding:10px 0;border-bottom:1px solid #252b32}.row:last-child{border-bottom:0}.row span{color:var(--muted)}.badge{font-size:11px;padding:4px 7px;border-radius:999px}.ok{background:#173c2b;color:#70e3a4}.warn{background:#3b3217;color:#f6d76e}.bad{background:#402024;color:#ff9ba0}.info{background:#182d4a;color:#9fc3ff}.table{overflow:auto}.table table{width:100%;border-collapse:collapse;min-width:700px}.table th,.table td{text-align:left;padding:10px;border-bottom:1px solid var(--line);font-size:13px;vertical-align:top}.table th{color:var(--muted);font-weight:600}.empty{padding:25px;text-align:center;color:var(--muted)}.notice{padding:12px;border-radius:12px;background:#18212a;border:1px solid #303b46;color:#c9d2dc;font-size:13px}.formgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}label{display:grid;gap:6px;color:#cbd1d7;font-size:12px}input,select,textarea{width:100%;background:#0f1216;color:#fff;border:1px solid var(--line);border-radius:10px;padding:10px}textarea{min-height:90px;resize:vertical}.full{grid-column:1/-1}.modalbg{position:fixed;inset:0;background:rgba(0,0,0,.72);display:flex;align-items:center;justify-content:center;padding:14px;z-index:20}.modal{width:min(760px,100%);max-height:92vh;overflow:auto;background:#15191f;border:1px solid #39414b;border-radius:20px;padding:18px}.modal h2{margin-top:0}.footer{color:#707984;text-align:center;font-size:11px;padding:20px}.hidden{display:none!important}@media(max-width:800px){.layout{grid-template-columns:1fr}.side{position:static}.grid{grid-template-columns:repeat(2,1fr)}.hero{display:block}.hero .actions{margin-top:12px}.formgrid{grid-template-columns:1fr}}@media(max-width:450px){.wrap{padding:11px}.grid{gap:7px}.stat{padding:12px}.hero h1{font-size:23px}}
-.eyebrow{font-size:10px;letter-spacing:1.4px;color:var(--gold);font-weight:800}.year{color:var(--gold);font-weight:700}.pills{margin-top:8px}.odo{margin-top:15px;display:grid;gap:2px}.odo span{font-size:10px;color:var(--muted);letter-spacing:1px}.odo b{font-size:24px}.section-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.section-head h2{margin:2px 0 0}.dashboard .icon{font-size:16px;margin-bottom:6px}.quick-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0}.quick{background:#171c22;border:1px solid var(--line);color:var(--text);text-align:left;display:grid;gap:4px}.quick span{font-size:11px;color:var(--muted);font-weight:500}.split{display:grid;grid-template-columns:1.25fr .75fr;gap:12px}.mini-list{display:grid;gap:8px}.mini{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px;border:1px solid var(--line);border-radius:12px;background:#11151a}.mini b,.mini span{display:block}.mini span{font-size:11px;color:var(--muted);margin-top:3px}@media(max-width:800px){.quick-grid{grid-template-columns:repeat(2,1fr)}.split{grid-template-columns:1fr}}@media(max-width:450px){.quick-grid{gap:7px}.quick{padding:10px}.odo b{font-size:21px}}
-</style></head><body><div class="wrap"><div class="top"><div><div class="brand">E.O. Garage</div><div class="sub">Bitácora vehicular inteligente · v13 Build 001</div></div><div class="actions"><button onclick="addVehicle()">＋ Vehículo</button><button class="secondary" onclick="backup()">Respaldo</button><button class="secondary" onclick="restore()">Restaurar</button><button class="secondary" onclick="resetApp()">Restablecer</button><button class="secondary" id="accountBtn" onclick="openAuth()">Iniciar sesión</button></div></div><div class="layout"><aside class="side"><div class="sub" style="padding:4px 7px 10px">MIS VEHÍCULOS</div><div id="vehicleList"></div></aside><main class="content" id="app"></main></div><div class="footer">E.O. Garage v13 Build 001 · datos locales + sincronización segura con Supabase.</div></div><div id="modalRoot"></div>
-<div id="authGate" style="display:none;position:fixed;inset:0;background:rgba(11,13,16,.97);z-index:100000;align-items:center;justify-content:center;padding:18px">
-  <div class="card section" style="width:min(440px,100%);box-shadow:0 20px 60px rgba(0,0,0,.5)">
-    <div class="brand">E.O. Garage</div><div class="sub" style="margin:5px 0 18px">Acceso seguro a tus datos en la nube</div>
-    <form id="authForm">
-      <div class="formgrid">
-        <label class="full">Correo electrónico<input id="authEmail" type="email" autocomplete="email" required placeholder="tu correo"></label>
-        <label class="full">Contraseña<input id="authPassword" type="password" autocomplete="current-password" required minlength="6" placeholder="Mínimo 6 caracteres"></label>
+<!doctype html>
+<html lang="es">
+<head><style>
+@font-face {
+  font-family: "Optimistic";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("/fonts/OptimisticAI_VF_Optimized.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Optimistic Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/OptimisticMono_W_TextRegular.woff2") format("woff2");
+}
+:where(html) {
+  font-family: "Optimistic", system-ui, sans-serif;
+}
+:where(code, pre, kbd, samp) {
+  font-family: "Optimistic Mono", ui-monospace, monospace;
+}
+</style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#0b0d10">
+<meta name="color-scheme" content="dark">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="E.O. Garage">
+<meta name="application-name" content="E.O. Garage v14 Build 001">
+<meta name="eo-garage-version" content="14.0.1">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23d9b46a'/%3E%3Ctext x='50' y='62' font-size='46' text-anchor='middle' font-weight='900' fill='%23111'%3EEO%3C/text%3E%3C/svg%3E">
+<link id="manifestLink" rel="manifest" href="">
+<title>E.O. Garage v14 Build 001 · Premium + OCR + Fuel</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.115.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+<style>
+:root{
+  --bg:#080a0d; --bg1:#12151a; --card:#151a21f0; --card2:#1e2630; --cardHover:#1c2530;
+  --line:#2a333e; --line2:#3a4552; --text:#f5f7f9; --muted:#9aa6b5; --muted2:#6b7888;
+  --gold:#d9b46a; --gold2:#e8c47e; --goldSoft:rgba(217,180,106,.14);
+  --ok:#45d58a; --okBg:#132a1f; --warn:#f0c75e; --warnBg:#2e2815; --bad:#ff6b72; --badBg:#3a1e20;
+  --blue:#7aa8ff; --blueBg:#18273f; --r-xl:20px; --r-lg:16px; --r-md:12px; --shadow:0 10px 40px rgba(0,0,0,.45);
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","Inter","Segoe UI",Roboto,Arial,sans-serif; --mono:ui-monospace,Menlo,Monaco,monospace;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(1200px 600px at 15% -10%,#1c232d 0,transparent 60%),radial-gradient(900px 500px at 90% 0%,#1e2a36 0,transparent 60%),linear-gradient(180deg,var(--bg1),var(--bg));color:var(--text);font-family:var(--font);-webkit-font-smoothing:antialiased;min-height:100vh;line-height:1.5;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
+button,input,select,textarea{font:inherit} button{border:0;border-radius:12px;padding:11px 16px;background:var(--gold);color:#111;font-weight:700;cursor:pointer;transition:.18s}
+button:hover{background:var(--gold2);transform:translateY(-1px)} .secondary{background:#1f2730;color:var(--text);border:1px solid var(--line)} .secondary:hover{background:#26313d}
+.ghost{background:transparent;color:var(--muted);border:1px solid transparent} .danger{background:var(--badBg);color:#ffb4b8;border:1px solid #5a2a2d}
+.wrap{max-width:1320px;margin:auto;padding:14px 16px 100px}
+.top{position:sticky;top:0;z-index:30;display:flex;justify-content:space-between;gap:12px;align-items:center;margin:0 -16px 16px;padding:12px 16px;background:rgba(8,10,13,.84);backdrop-filter:blur(16px) saturate(1.2);border-bottom:1px solid rgba(255,255,255,.06);padding-top:calc(12px + env(safe-area-inset-top))}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:18px} .brand-badge{width:36px;height:36px;border-radius:11px;background:linear-gradient(135deg,#d9b46a,#9a7a3a);display:grid;place-items:center;color:#111;box-shadow:0 4px 14px rgba(217,180,106,.3)}
+.sub{color:var(--muted);font-size:12.5px}
+.top-right{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+.search-wrap{position:relative} .search-wrap input{width:220px;background:#11161c;border:1px solid var(--line);border-radius:999px;padding:9px 12px 9px 34px;color:var(--text);outline:none}
+.search-wrap i{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--muted2)}
+.layout{display:grid;grid-template-columns:280px 1fr;gap:14px;align-items:start}
+.side{position:sticky;top:68px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-xl);overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.25)}
+.side-head{padding:14px 14px 8px;display:flex;justify-content:space-between;align-items:center} .vehicle-list{padding:8px;display:grid;gap:7px;max-height:68vh;overflow:auto}
+.vehicle{padding:12px;border-radius:14px;border:1px solid transparent;cursor:pointer;transition:.18s} .vehicle:hover{background:var(--card2);border-color:var(--line)} .vehicle.active{background:linear-gradient(180deg,#222b36,#1b232e);border-color:#3d4a5a;box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
+.vehicle b{display:flex;justify-content:space-between;font-size:14px} .vehicle small{color:var(--muted);font-size:11.5px}
+.content{min-width:0;display:grid;gap:12px}
+.hero{padding:20px;display:flex;justify-content:space-between;gap:16px;align-items:flex-start;background:linear-gradient(180deg,rgba(26,33,42,.97),rgba(18,23,31,.97));border:1px solid var(--line);border-radius:var(--r-xl);box-shadow:var(--shadow)}
+.hero h1{margin:6px 0 8px;font-size:28px;letter-spacing:-.5px} .eyebrow{font-size:10px;letter-spacing:1.5px;color:var(--gold);font-weight:800;text-transform:uppercase}
+.pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px} .pill{padding:5px 10px;border-radius:999px;background:#1e262f;border:1px solid #2b3643;color:var(--muted);font-size:11px}
+.odo{margin-top:14px;display:inline-grid;gap:2px;padding:10px 14px;background:#10151b;border:1px dashed #2a3440;border-radius:12px;min-width:180px}
+.odo span{font-size:9.5px;color:var(--muted);letter-spacing:1px;font-weight:700} .odo b{font-size:22px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px} .stat{padding:14px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);position:relative;overflow:hidden;transition:.18s}
+.stat:hover{transform:translateY(-2px);border-color:var(--line2)} .stat .n{font-size:22px;font-weight:900} .stat .l{font-size:11.5px;color:var(--muted);margin-top:2px} .stat .icon{font-size:16px;margin-bottom:6px}
+.quick-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px} .quick{background:linear-gradient(180deg,#1b232e,#151b24);border:1px solid var(--line);color:var(--text);text-align:left;display:grid;gap:3px;padding:13px;border-radius:14px;cursor:pointer;transition:.18s}
+.quick:hover{border-color:var(--gold);transform:translateY(-1px)} .quick b{font-size:13px} .quick span{font-size:11px;color:var(--muted)}
+.tabs{display:flex;gap:5px;overflow:auto;padding:3px;background:#11161d;border:1px solid var(--line);border-radius:999px;width:max-content;max-width:100%;scrollbar-width:none}
+.tab{white-space:nowrap;background:transparent;color:var(--muted);border:0;border-radius:999px;padding:7px 13px;font-size:12.5px;font-weight:600} .tab.active{background:var(--text);color:#0d1116}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-xl);box-shadow:0 8px 24px rgba(0,0,0,.22)} .section{padding:16px}
+.section-head{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px} .section-head h2{margin:0;font-size:16px}
+.rows{display:grid} .row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #1f2730;align-items:center} .row:last-child{border:0} .row span{color:var(--muted);font-size:12.5px} .row b{font-size:13px;text-align:right}
+.badge{font-size:10.5px;padding:4px 8px;border-radius:999px;font-weight:700;border:1px solid transparent} .ok{background:var(--okBg);color:#6de3a5;border-color:#1e4a32} .warn{background:var(--warnBg);color:#f6d76e;border-color:#4a3f1e} .bad{background:var(--badBg);color:#ff9ba0;border-color:#5a2a2d} .info{background:var(--blueBg);color:#9fc3ff;border-color:#243a5a}
+.table{overflow:auto;border-radius:12px;border:1px solid var(--line)} .table table{width:100%;border-collapse:collapse;min-width:680px;background:#12171e}
+.table th,.table td{padding:11px 9px;border-bottom:1px solid #1f2832;font-size:12.5px;text-align:left;vertical-align:top} .table th{color:var(--muted);font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;background:#0f141a;position:sticky;top:0}
+.empty{padding:30px;text-align:center;color:var(--muted);display:grid;gap:8px;place-items:center} .notice{padding:11px 13px;border-radius:12px;background:#171e27;border:1px solid #2a3543;color:#c9d2dc;font-size:12.5px}
+.formgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px} label{display:grid;gap:5px;color:#cbd1d7;font-size:11.5px;font-weight:600} input,select,textarea{width:100%;background:#0e1318;color:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 11px;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--goldSoft)} textarea{min-height:84px;resize:vertical} .full{grid-column:1/-1}
+.modalbg{position:fixed;inset:0;background:rgba(0,0,0,.64);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;padding:12px;z-index:60;animation:fadeIn .18s}
+.modal{width:min(860px,100%);max-height:92vh;overflow:auto;background:#161d26;border:1px solid #2f3a47;border-radius:20px;padding:20px;box-shadow:0 20px 80px rgba(0,0,0,.6);animation:pop .22s cubic-bezier(.2,.8,.2,1)}
+.modal h2{margin:0 0 12px;font-size:19px}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}} @keyframes pop{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:translateY(0)}}
+.photo-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px} .photo-thumb{width:72px;height:72px;border-radius:10px;object-fit:cover;border:1px solid var(--line);cursor:pointer}
+.chart-wrap{background:#0f141a;border:1px solid var(--line);border-radius:12px;padding:10px} .chart-wrap canvas{width:100%!important;height:200px!important}
+.split{display:grid;grid-template-columns:1.3fr .7fr;gap:12px} .mini-list{display:grid;gap:7px} .mini{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:11px;border:1px solid var(--line);border-radius:12px;background:#11161c}
+#toastRoot{position:fixed;right:12px;bottom:86px;z-index:200;display:grid;gap:8px;pointer-events:none} .toast{pointer-events:auto;min-width:250px;max-width:360px;padding:11px 13px;border-radius:14px;background:#1b242f;border:1px solid #2e3a48;display:flex;gap:9px;align-items:flex-start;box-shadow:0 10px 30px rgba(0,0,0,.4);animation:toastIn .22s}
+.toast.ok{border-color:#1f4a32;background:#14261d} .toast.bad{border-color:#5a2a2d;background:#2a1a1c}
+@keyframes toastIn{from{transform:translateY(6px);opacity:0}to{transform:translateY(0);opacity:1}}
+.bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:35;background:rgba(15,19,26,.92);backdrop-filter:blur(18px) saturate(1.3);border-top:1px solid rgba(255,255,255,.07);display:none;gap:2px;padding:6px 6px calc(6px + env(safe-area-inset-bottom));justify-content:space-around}
+.bottom-nav button{flex:1;background:transparent;color:var(--muted);border-radius:12px;padding:8px 4px;font-size:10px;display:grid;gap:2px;place-items:center} .bottom-nav button.active{background:#1e2833;color:var(--text)} .bottom-nav b{font-size:14px}
+.ocr-progress{height:6px;background:#1f2a36;border-radius:999px;overflow:hidden} .ocr-progress div{height:100%;background:var(--gold);transition:width .2s}
+@media(max-width:900px){
+  .layout{grid-template-columns:1fr} .side{position:fixed;left:10px;right:10px;top:64px;z-index:40;transform:translateY(-10px);opacity:0;pointer-events:none;transition:.22s;max-height:78vh} .side.open{transform:translateY(0);opacity:1;pointer-events:auto}
+  .grid{grid-template-columns:repeat(2,1fr)} .quick-grid{grid-template-columns:repeat(2,1fr)} .split{grid-template-columns:1fr} .formgrid{grid-template-columns:1fr}
+  .tabs{display:none} .bottom-nav{display:flex} .wrap{padding-bottom:110px} .search-wrap input{width:160px}
+}
+.footer{color:#5a6675;text-align:center;font-size:10.5px;padding:18px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div style="display:flex;align-items:center;gap:10px">
+      <button class="secondary" onclick="toggleDrawer()" style="width:38px;height:38px;padding:0;display:grid;place-items:center">☰</button>
+      <div class="brand"><div class="brand-badge">EO</div><div><div>E.O. Garage v14 Build 001</div><div class="sub">Premium · OCR · Fuel · Fotos · iPhone App</div></div></div>
+    </div>
+    <div class="top-right">
+      <div class="search-wrap"><i>⌕</i><input id="globalSearch" placeholder="Buscar..." oninput="onGlobalSearch(this.value)"></div>
+      <button onclick="addVehicle()">＋ Vehículo</button>
+      <button class="secondary" onclick="exportJSON()">💾</button>
+      <button class="secondary" id="accountBtn" onclick="openAuth()">Cuenta</button>
+    </div>
+  </div>
+
+  <div class="layout">
+    <aside class="side" id="sidePanel">
+      <div class="side-head"><span class="sub" style="font-weight:800;letter-spacing:1px">MIS VEHÍCULOS</span><span class="sub" id="vehicleCount"></span></div>
+      <div class="vehicle-list" id="vehicleList"></div>
+      <div style="padding:10px;border-top:1px solid var(--line);display:flex;gap:6px">
+        <button class="secondary" style="flex:1" onclick="addVehicle()">Nuevo</button>
+        <button class="ghost" style="flex:1" onclick="openFuelForm()">⛽ Gas</button>
       </div>
-      <div class="actions" style="margin-top:14px"><button type="submit">Iniciar sesión</button><button type="button" class="secondary" id="signupBtn">Crear cuenta</button></div>
-      <div id="authMsg" class="notice" style="margin-top:12px">Conecta E.O. Garage con tu cuenta de Supabase.</div>
+    </aside>
+    <main class="content" id="app"></main>
+  </div>
+  <div class="footer">E.O. Garage v14 Build 001 · Local primero, nube con Supabase · Modo iPhone App · OCR con Tesseract.js · Charts con Chart.js</div>
+</div>
+
+<div class="bottom-nav" id="bottomNav">
+  <button onclick="switchTab('resumen')" id="bn-resumen"><b>📊</b>Resumen</button>
+  <button onclick="switchTab('historial')" id="bn-historial"><b>🛠️</b>Historial</button>
+  <button onclick="switchTab('combustible')" id="bn-combustible"><b>⛽</b>Gas</button>
+  <button onclick="switchTab('mantenimiento')" id="bn-mantenimiento"><b>⏰</b>Servicios</button>
+  <button onclick="switchTab('gastos')" id="bn-gastos"><b>💰</b>Gastos</button>
+</div>
+
+<div id="modalRoot"></div>
+<div id="toastRoot"></div>
+
+<!-- OCR Modal -->
+<div id="ocrModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(12px);z-index:80;align-items:center;justify-content:center;padding:14px">
+  <div class="card section" style="width:min(560px,100%)">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><h2 style="margin:0">📸 Escáner de Tickets OCR</h2><button class="secondary" onclick="closeOCR()">✕</button></div>
+    <div class="notice">Sube foto del ticket de refacciones, gasolina o servicio. Extrae monto, fecha y concepto automáticamente.</div>
+    <input type="file" id="ocrFile" accept="image/*" capture="environment" style="margin:12px 0" onchange="handleOCRFile(this.files[0])">
+    <div id="ocrPreview" style="display:grid;gap:10px"></div>
+    <div id="ocrProgress" class="ocr-progress" style="display:none;margin-top:10px"><div id="ocrBar" style="width:0%"></div></div>
+    <pre id="ocrText" style="white-space:pre-wrap;background:#0e1318;border:1px solid var(--line);border-radius:10px;padding:10px;margin-top:10px;max-height:140px;overflow:auto;display:none;font-size:11px;color:var(--muted)"></pre>
+    <div id="ocrResult" style="display:grid;gap:8px;margin-top:12px"></div>
+    <div style="display:flex;gap:8px;margin-top:12px"><button onclick="applyOCR()" id="applyOCRBtn" style="display:none">✓ Aplicar a formulario</button><button class="secondary" onclick="closeOCR()">Cerrar</button></div>
+  </div>
+</div>
+
+<div id="authGate" style="display:none;position:fixed;inset:0;background:rgba(8,10,13,.94);backdrop-filter:blur(14px);z-index:100;align-items:center;justify-content:center;padding:16px">
+  <div class="card section" style="width:min(420px,100%)">
+    <div class="brand" style="margin-bottom:8px"><div class="brand-badge">EO</div> E.O. Garage</div>
+    <div class="sub" style="margin:5px 0 14px">Sincronización segura con Supabase</div>
+    <form id="authForm">
+      <div class="formgrid"><label class="full">Correo<input id="authEmail" type="email" required placeholder="tu correo"></label><label class="full">Contraseña<input id="authPassword" type="password" required minlength="6" placeholder="••••••"></label></div>
+      <div style="display:flex;gap:8px;margin-top:12px"><button type="submit" style="flex:1">Entrar</button><button type="button" class="secondary" id="signupBtn" style="flex:1">Crear cuenta</button></div>
+      <div id="authMsg" class="notice" style="margin-top:10px">Conecta para nube.</div>
+      <button type="button" class="ghost" style="width:100%;margin-top:8px" onclick="closeAuth()">Seguir local</button>
     </form>
   </div>
 </div>
-<button id="logoutBtn" class="secondary" onclick="logout()" style="position:fixed;right:10px;bottom:42px;z-index:1000;display:none;padding:7px 10px;font-size:11px">Cerrar sesión</button><div id="cloudStatus" class="sub" style="position:fixed;right:10px;bottom:8px;z-index:1000;background:#15191f;border:1px solid #2c333c;border-radius:999px;padding:6px 9px">☁️ Local</div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.115.0"></script>
+<button id="logoutBtn" class="secondary" onclick="logout()" style="position:fixed;right:10px;bottom:96px;z-index:90;display:none;padding:7px 11px;font-size:11px;border-radius:999px">Cerrar sesión</button>
+<div id="cloudStatus" class="sub" style="position:fixed;right:10px;bottom:12px;z-index:90;background:#151a21;border:1px solid #2a333e;border-radius:999px;padding:6px 10px">☁️ Local</div>
+
 <script>
+/* ===== Config ===== */
 const SUPABASE_URL='https://wwwovjmdlvsqoicdidve.supabase.co';
 const SUPABASE_KEY='sb_publishable_Z2WJKL5aWa2WlZvtDevj0w_nWR5Cidh';
 const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-let cloudUser=null, cloudReady=false, cloudSyncing=false;
-const KEY='eo_garage_v12';
-const seed={vehicles:[{id:'v1',make:'Buick',model:'Enclave',year:2013,vin:'5GAKRCKD1DJ218711',engine:'3.6L V6',drive:'FWD',odo:169000,unit:'mi',fuel:'Gasolina',tire:'P255/60R19',oil:'Castrol EDGE full sintético',oilViscosity:'',oilFilter:'STP',spark:'Bosch Double Iridium',notes:'Vehículo principal.'}],records:[],reminders:[],issues:[],expenses:[],settings:{}};
-const done=[['Motor','Cambio de aceite de motor','Castrol EDGE full sintético'],['Motor','Cambio de filtro de aceite','STP'],['Admisión','Cambio de filtro de aire',''],['Motor','Cambio de bujías','Bosch Double Iridium'],['Motor','Limpieza de sensores',''],['Motor','Limpieza de cuerpo de aceleración',''],['Refrigeración','Reemplazo de bomba de agua',''],['Refrigeración','Cambio de anticongelante/refrigerante',''],['Motor','Cambio de banda serpentina',''],['Motor','Cambio de damper/polea de cigüeñal',''],['A/C','Servicio de válvulas, fugas, aceite y refrigerante A/C',''],['Transmisión','Cambio de fluido de transmisión automática',''],['Suspensión','Reemplazo de bieletas/link kits',''],['Frenos','Rectificado de 4 rotores',''],['Frenos','Cambio de pastillas delanteras',''],['Suspensión','Reemplazo de bujes flotantes',''],['Suspensión','Reemplazo de bujes/hules de barra estabilizadora',''],['Motor','Reemplazo de soporte superior de motor',''],['Suspensión','Reemplazo de amortiguadores traseros','']];
-seed.records=done.map((x,i)=>({id:'r'+i,vehicleId:'v1',date:'2026-09-02',odo:169000,category:x[0],service:x[1],parts:x[2],cost:0,shop:'',notes:'Realizado recientemente a 169,000 mi.'}));
-seed.reminders=[{id:'m1',vehicleId:'v1',name:'Rotación de llantas + servicio requerido',nextMileage:176500,nextDate:null,warnMiles:1000,warnDays:30,type:'Inspección',source:'Fabricante',notes:'Base: cada 7,500 mi. Confirmar según condición y programa.'},{id:'m2',vehicleId:'v1',name:'Cambio de aceite y filtro',nextMileage:null,nextDate:'2027-09-02',warnMiles:1000,warnDays:30,type:'Reemplazo',source:'Fabricante',notes:'Seguir Oil Life System; el manual indica cambio al menos una vez al año.'},{id:'m3',vehicleId:'v1',name:'Inspección de filtro de aire del motor',nextMileage:176500,nextDate:null,warnMiles:1000,warnDays:30,type:'Inspección',source:'Fabricante',notes:'Inspección incluida en los servicios requeridos periódicos.'}];
-function normalize(d){d=d&&typeof d==='object'?d:{};d.vehicles=Array.isArray(d.vehicles)?d.vehicles:[];d.records=Array.isArray(d.records)?d.records:[];d.reminders=Array.isArray(d.reminders)?d.reminders:[];d.issues=Array.isArray(d.issues)?d.issues:[];d.expenses=Array.isArray(d.expenses)?d.expenses:[];d.settings=d.settings&&typeof d.settings==='object'?d.settings:{};return d} let db=normalize(load());let selected=db.vehicles[0]?.id||null;let tab='resumen';
-function load(){try{const raw=localStorage.getItem(KEY)||localStorage.getItem('eo_garage_v11')||localStorage.getItem('eo_garage_v10')||localStorage.getItem('eo_garage_v9')||localStorage.getItem('eo_garage_v7')||localStorage.getItem('eo_garage_v6');if(raw){const d=JSON.parse(raw);if(d&&Array.isArray(d.vehicles))return d}}catch(e){}return JSON.parse(JSON.stringify(seed))}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(db))}catch(e){alert('No se pudo guardar en este navegador. Puedes usar Respaldo para conservar tus datos.')}render()}
+let cloudUser=null, cloudReady=false, cloudSyncing=false, saveQueue=false;
+const KEY='eo_garage_v14_build001';
+const LEGACY_KEYS=['eo_garage_v14','eo_garage_v12','eo_garage_v11','eo_garage_v10','eo_garage_v9','eo_garage_v7'];
+
+/* Seed */
+const seed={
+  vehicles:[{id:'v1',make:'Buick',model:'Enclave',year:2013,vin:'5GAKRCKD1DJ218711',engine:'3.6L V6',drive:'FWD',odo:169000,unit:'mi',fuel:'Gasolina',tire:'P255/60R19',tirePressure:'35',oil:'Castrol EDGE full sintético',oilViscosity:'5W-30',oilFilter:'STP',spark:'Bosch Double Iridium',notes:'Vehículo principal',serviceNotes:''}],
+  records:[], reminders:[], issues:[], expenses:[], fuel:[],
+  settings:{}
+};
+const done=[
+  ['Motor','Cambio de aceite de motor','Castrol EDGE full sintético'],['Motor','Cambio de filtro de aceite','STP'],['Admisión','Cambio de filtro de aire',''],
+  ['Motor','Cambio de bujías','Bosch Double Iridium'],['Motor','Limpieza de sensores',''],['Motor','Limpieza de cuerpo de aceleración',''],
+  ['Refrigeración','Reemplazo de bomba de agua',''],['Refrigeración','Cambio de anticongelante',''],['Motor','Cambio de banda serpentina',''],
+  ['Motor','Cambio de damper/polea de cigüeñal',''],['A/C','Servicio A/C',''],['Transmisión','Cambio de fluido transmisión',''],
+  ['Suspensión','Reemplazo de bieletas',''],['Frenos','Rectificado de 4 rotores',''],['Frenos','Cambio de pastillas delanteras',''],
+  ['Suspensión','Reemplazo de bujes flotantes',''],['Suspensión','Reemplazo de bujes barra estabilizadora',''],['Motor','Reemplazo de soporte motor',''],['Suspensión','Reemplazo de amortiguadores traseros','']
+];
+seed.records=done.map((x,i)=>({id:'r'+i,vehicleId:'v1',date:'2026-09-02',odo:169000,category:x[0],service:x[1],parts:x[2],partNumber:'',cost:0,shop:'',notes:'Realizado 169k mi',photos:[]}));
+seed.reminders=[
+  {id:'m1',vehicleId:'v1',name:'Rotación de llantas + servicio',nextMileage:176500,nextDate:null,warnMiles:1000,warnDays:30,type:'Inspección',source:'Fabricante',intervalMiles:7500,intervalMonths:null,status:'pending',notes:''},
+  {id:'m2',vehicleId:'v1',name:'Cambio de aceite y filtro',nextMileage:null,nextDate:'2027-09-02',warnMiles:800,warnDays:30,type:'Reemplazo',source:'Fabricante',intervalMiles:7500,intervalMonths:6,status:'pending',notes:'Oil Life'},
+  {id:'m3',vehicleId:'v1',name:'Inspección filtro aire motor',nextMileage:176500,nextDate:null,warnMiles:1000,warnDays:30,type:'Inspección',source:'Fabricante',intervalMiles:15000,intervalMonths:12,status:'pending',notes:''}
+];
+
+/* Utils */
 function esc(s){return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
-function v(){return db.vehicles.find(x=>x.id===selected)||db.vehicles[0]}
-function money(n){return new Intl.NumberFormat('es-MX',{style:'currency',currency:'MXN'}).format(Number(n)||0)}
-function daysBetween(a,b){return Math.ceil((new Date(a)-new Date(b))/86400000)}
-function reminderStatus(r){let x=v(),m=r.nextMileage?Number(r.nextMileage)-Number(x.odo):Infinity,d=r.nextDate?daysBetween(r.nextDate,today()):Infinity;if(m<0||d<0)return ['Vencido','bad'];if(m<=Number(r.warnMiles||1000)||d<=Number(r.warnDays||30))return ['Próximo','warn'];return ['Al día','ok']}
 function today(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
-function render(){renderVehicles();const x=v();if(!x){document.getElementById('app').innerHTML='<div class="card section empty">Agrega tu primer vehículo para comenzar.</div>';return}let rec=db.records.filter(r=>r.vehicleId===x.id), rem=db.reminders.filter(r=>r.vehicleId===x.id), iss=db.issues.filter(r=>r.vehicleId===x.id), exp=db.expenses.filter(r=>r.vehicleId===x.id);let maintTotal=rec.reduce((a,r)=>a+Number(r.cost||0),0),expTotal=exp.reduce((a,r)=>a+Number(r.amount||0),0),total=maintTotal+expTotal,alerts=rem.filter(r=>reminderStatus(r)[1]!=='ok').length,open=iss.filter(r=>!['resuelto','resolved'].includes(String(r.status||'').toLowerCase())).length;document.getElementById('app').innerHTML=`<div class="hero card"><div><div class="eyebrow">VEHÍCULO ACTIVO</div><h1>${esc(x.make)} ${esc(x.model)} <span class="year">${x.year}</span></h1><div class="pills"><span class="pill">${esc(x.vin||'Sin VIN')}</span><span class="pill">${esc(x.engine||'Motor no indicado')}</span><span class="pill">${esc(x.drive||'Tracción no indicada')}</span></div><div class="odo"><span>ODÓMETRO</span><b>${Number(x.odo||0).toLocaleString()} ${esc(x.unit||'mi')}</b></div></div><div class="actions hero-actions"><button onclick="editVehicle()">Editar vehículo</button><button class="secondary" onclick="recordForm()">＋ Mantenimiento</button><button class="secondary" onclick="reminderForm()">＋ Recordatorio</button></div></div><div class="grid dashboard"><div class="stat"><div class="icon">🛠️</div><div class="n">${rec.length}</div><div class="l">Trabajos</div></div><div class="stat"><div class="icon">⏰</div><div class="n">${alerts}</div><div class="l">Alertas</div></div><div class="stat"><div class="icon">⚠️</div><div class="n">${open}</div><div class="l">Problemas abiertos</div></div><div class="stat"><div class="icon">$</div><div class="n">${money(total)}</div><div class="l">Gasto total</div></div></div><div class="quick-grid"><button class="quick" onclick="recordForm()"><b>Registrar servicio</b><span>Guarda trabajo, costo y kilometraje</span></button><button class="quick" onclick="issueForm()"><b>Registrar problema</b><span>Deja síntomas y seguimiento</span></button><button class="quick" onclick="expenseForm()"><b>Agregar gasto</b><span>Gasolina, piezas, seguro y más</span></button><button class="quick" onclick="reminderForm()"><b>Programar mantenimiento</b><span>Por kilometraje o fecha</span></button></div><div class="tabs">${['resumen','historial','mantenimiento','problemas','gastos','vin','ficha'].map(t=>`<button class="tab ${tab===t?'active':''}" onclick="tab='${t}';render()">${labelTab(t)}</button>`).join('')}</div><div id="tabContent">${tabHtml(tab,x,rec,rem,iss,exp)}</div>`}
-function labelTab(t){return {resumen:'Resumen',historial:'Historial',mantenimiento:'Mantenimiento',problemas:'Problemas',gastos:'Gastos',vin:'VIN',ficha:'Ficha técnica'}[t]}
-function tabHtml(t,x,rec,rem,iss,exp){if(t==='resumen'){let next=[...rem].sort((a,b)=>{let sa=reminderStatus(a)[1],sb=reminderStatus(b)[1];return (sa==='bad'?0:sa==='warn'?1:2)-(sb==='bad'?0:sb==='warn'?1:2)}).slice(0,4);return `<div class="split"><div class="card section"><div class="section-head"><div><div class="eyebrow">RESUMEN</div><h2>Estado del vehículo</h2></div><button class="secondary" onclick="editVehicle()">Editar ficha</button></div><div class="rows"><div class="row"><span>VIN</span><b>${esc(x.vin||'No registrado')}</b></div><div class="row"><span>Último trabajo</span><b>${rec.length?esc([...rec].sort((a,b)=>b.date.localeCompare(a.date))[0].service):'Sin registros'}</b></div><div class="row"><span>Próximo servicio</span><b>${next[0]?esc(next[0].name):'No programado'}</b></div><div class="row"><span>Problemas abiertos</span><b>${iss.filter(i=>!['resuelto','resolved'].includes(String(i.status||'').toLowerCase())).length}</b></div></div></div><div class="card section"><div class="eyebrow">PRÓXIMO</div><h2>Servicios</h2>${next.length?reminderCards(next):'<div class="empty">No hay servicios programados.</div>'}</div></div><div class="card section"><div class="section-head"><div><div class="eyebrow">ASISTENTE E.O.</div><h2>Recomendaciones</h2></div></div>${assistant(x,rec,rem,iss)}</div>`}
-if(t==='historial')return `<div class="card section"><div class="section-head"><div><div class="eyebrow">BITÁCORA</div><h2>Historial de mantenimiento</h2></div><button onclick="recordForm()">＋ Agregar trabajo</button></div>${recordTable(rec)}</div>`;
-if(t==='mantenimiento')return `<div class="card section"><div class="section-head"><div><div class="eyebrow">PREVENTIVO</div><h2>Próximos servicios</h2></div><button onclick="reminderForm()">＋ Programar</button></div>${reminderTable(rem)}</div>`;
-if(t==='problemas')return `<div class="card section"><div class="section-head"><div><div class="eyebrow">DIAGNÓSTICO</div><h2>Problemas y síntomas</h2></div><button onclick="issueForm()">＋ Registrar problema</button></div>${issueTable(iss)}</div>`;
-if(t==='gastos'){let total=exp.reduce((a,r)=>a+Number(r.amount||0),0), maint=rec.reduce((a,r)=>a+Number(r.cost||0),0);return `<div class="grid"><div class="stat"><div class="n">${money(total+maint)}</div><div class="l">Gasto total</div></div><div class="stat"><div class="n">${money(maint)}</div><div class="l">Mantenimiento</div></div><div class="stat"><div class="n">${money(total)}</div><div class="l">Otros gastos</div></div><div class="stat"><div class="n">${exp.length}</div><div class="l">Gastos registrados</div></div></div><div class="card section"><div class="section-head"><div><div class="eyebrow">CONTROL FINANCIERO</div><h2>Gastos</h2></div><button onclick="expenseForm()">＋ Agregar gasto</button></div>${expenseTable(exp)}<div class="notice" style="margin-top:12px">Los costos de mantenimiento se toman del historial y los demás gastos se registran por separado.</div></div>`}
-if(t==='vin')return `<div class="card section"><div class="eyebrow">IDENTIFICACIÓN</div><h2>VIN y recalls</h2><div class="row"><span>VIN</span><b>${esc(x.vin||'')}</b></div><div class="actions" style="margin-top:12px"><button onclick="decodeVIN()">Consultar VIN</button><button class="secondary" onclick="openRecall()">Consultar recalls NHTSA</button></div><div id="vinResult" style="margin-top:12px"></div></div>`;
-return `<div class="card section"><div class="eyebrow">FICHA</div><h2>Ficha técnica</h2><div class="rows"><div class="row"><span>Marca / modelo</span><b>${esc(x.make)} ${esc(x.model)}</b></div><div class="row"><span>Año</span><b>${x.year}</b></div><div class="row"><span>Motor</span><b>${esc(x.engine||'')}</b></div><div class="row"><span>Tracción</span><b>${esc(x.drive||'')}</b></div><div class="row"><span>Combustible</span><b>${esc(x.fuel||'')}</b></div><div class="row"><span>Llantas</span><b>${esc(x.tire||'')}</b></div><div class="row"><span>Presión</span><b>${esc(x.tirePressure?x.tirePressure+' PSI':'No registrada')}</b></div><div class="row"><span>Aceite</span><b>${esc(x.oil||'')} ${esc(x.oilViscosity||'')}</b></div><div class="row"><span>Filtro aceite</span><b>${esc(x.oilFilter||'')}</b></div><div class="row"><span>Bujías</span><b>${esc(x.spark||'')}</b></div><div class="row"><span>Notas</span><b>${esc(x.notes||'')}</b></div></div></div>`}
-function reminderCards(a){return `<div class="mini-list">${a.map(r=>{let s=reminderStatus(r);return `<div class="mini"><div><b>${esc(r.name)}</b><span>${r.nextMileage?Number(r.nextMileage).toLocaleString()+' '+esc(v().unit):''}${r.nextDate?' · '+esc(r.nextDate):''}</span></div><span class="badge ${s[1]}">${s[0]}</span></div>`}).join('')}</div>`}
-function assistant(x,rec,rem,iss){let out=[];let due=rem.filter(r=>reminderStatus(r)[1]!=='ok');if(due.length)out.push(`<b>Prioridad:</b> revisa ${due.length} recordatorio(s) marcado(s) como próximos o vencidos.`);let open=iss.filter(i=>i.status!=='resuelto');if(open.length)out.push(`<b>Problemas abiertos:</b> tienes ${open.length} síntoma(s) sin cerrar.`);if(!rec.some(r=>/fren|pastilla|rotor/i.test(r.category+' '+r.service)))out.push('<b>Preventivo:</b> conviene mantener inspección periódica del sistema de frenos.');if(!out.length)out.push('<b>Estado:</b> no hay alertas registradas. Mantén actualizado el odómetro y registra cada trabajo.');return `<div class="rows">${out.map(s=>`<div class="notice">${s}</div>`).join('')}</div><div class="sub" style="margin-top:10px">Las recomendaciones son preventivas; no sustituyen un diagnóstico mecánico.</div>`}
-function recordTable(a){if(!a.length)return '<div class="empty">No hay registros.</div>';a=[...a].sort((x,y)=>y.date.localeCompare(x.date)||y.odo-x.odo);return `<div class="table"><table><thead><tr><th>Fecha</th><th>Mi/Km</th><th>Trabajo</th><th>Categoría</th><th>Partes</th><th>Costo</th><th></th></tr></thead><tbody>${a.map(r=>`<tr><td>${esc(r.date)}</td><td>${Number(r.odo).toLocaleString()}</td><td><b>${esc(r.service)}</b><br><span class="sub">${esc(r.shop||'')}${r.notes?' · '+esc(r.notes):''}</span></td><td>${esc(r.category||'')}</td><td>${esc(r.parts||'')}</td><td>${money(r.cost)}</td><td><button class="secondary" onclick="editRecord('${r.id}')">Editar</button> <button class="danger" onclick="delRecord('${r.id}')">×</button></td></tr>`).join('')}</tbody></table></div>`}
-function reminderTable(a){if(!a.length)return '<div class="empty">No hay recordatorios programados.</div>';return `<div class="table"><table><thead><tr><th>Servicio</th><th>Próximo</th><th>Tipo</th><th>Fuente</th><th>Estado</th><th></th></tr></thead><tbody>${a.map(r=>{let s=reminderStatus(r);return `<tr><td><b>${esc(r.name)}</b></td><td>${r.nextMileage?Number(r.nextMileage).toLocaleString()+' '+esc(v().unit):''}${r.nextDate?'<br>'+esc(r.nextDate):''}</td><td>${esc(r.type||'')}</td><td>${esc(r.source||'')}</td><td><span class="badge ${s[1]}">${s[0]}</span></td><td><button class="secondary" onclick="completeReminder('${r.id}')">✓ Hecho</button> <button class="secondary" onclick="editReminder('${r.id}')">Editar</button> <button class="danger" onclick="delReminder('${r.id}')">×</button></td></tr>`}).join('')}</tbody></table></div>`}
-function issueTable(a){if(!a.length)return '<div class="empty">No hay problemas registrados.</div>';return `<div class="table"><table><thead><tr><th>Fecha</th><th>Problema</th><th>Severidad</th><th>Estado</th><th></th></tr></thead><tbody>${a.map(r=>`<tr><td>${esc(r.date)}</td><td><b>${esc(r.title)}</b><br><span class="sub">${esc(r.description)}</span></td><td>${esc(r.severity)}</td><td>${esc(r.status)}</td><td><button class="secondary" onclick="editIssue('${r.id}')">Editar</button> <button class="danger" onclick="delIssue('${r.id}')">×</button></td></tr>`).join('')}</tbody></table></div>`}
-function modal(html){document.getElementById('modalRoot').innerHTML=`<div class="modalbg" onclick="if(event.target===this)closeModal()"><div class="modal">${html}</div></div>`}function closeModal(){document.getElementById('modalRoot').innerHTML=''}
-function vehicleForm(data={}){let edit=!!data.id;modal(`<h2>${edit?'Editar':'Agregar'} vehículo</h2><form onsubmit="saveVehicle(event,${edit})"><div class="formgrid"><label>Marca<input name="make" required value="${esc(data.make||'')}" placeholder="Buick"></label><label>Modelo<input name="model" required value="${esc(data.model||'')}" placeholder="Enclave"></label><label>Año<input name="year" type="number" value="${esc(data.year||'')}" required></label><label>VIN<input name="vin" maxlength="17" value="${esc(data.vin||'')}" placeholder="17 caracteres"></label><label>Motor<input name="engine" value="${esc(data.engine||'')}"></label><label>Tracción<input name="drive" value="${esc(data.drive||'')}"></label><label>Odómetro actual<input name="odo" type="number" value="${esc(data.odo||0)}"></label><label>Unidad<select name="unit"><option ${data.unit==='km'?'selected':''}>km</option><option ${data.unit!=='km'?'selected':''}>mi</option></select></label><label>Combustible<input name="fuel" value="${esc(data.fuel||'')}"></label><label>Llantas<input name="tire" value="${esc(data.tire||'')}" placeholder="P255/60R19"></label><label>Presión PSI<input name="tirePressure" type="number" step="0.1" value="${esc(data.tirePressure??'')}" placeholder="35"></label><label>Aceite<input name="oil" value="${esc(data.oil||'')}"></label><label>Viscosidad<input name="oilViscosity" value="${esc(data.oilViscosity||'')}" placeholder="No indicar si no se conoce"></label><label>Filtro de aceite<input name="oilFilter" value="${esc(data.oilFilter||'')}"></label><label>Bujías<input name="spark" value="${esc(data.spark||'')}"></label><label class="full">Notas<textarea name="notes">${esc(data.notes||'')}</textarea></label><label class="full">Notas de servicio<textarea name="serviceNotes">${esc(data.serviceNotes||'')}</textarea></label></div><div class="actions" style="margin-top:14px"><button>Guardar</button><button type="button" class="secondary" onclick="closeModal()">Cancelar</button>${edit?`<button type="button" class="danger" onclick="deleteVehicle('${data.id}')">Eliminar vehículo</button>`:''}</div></form>`)}
+function money(n){return new Intl.NumberFormat('es-MX',{style:'currency',currency:'MXN',maximumFractionDigits:0}).format(Number(n)||0)}
+function money2(n){return new Intl.NumberFormat('es-MX',{style:'currency',currency:'MXN'}).format(Number(n)||0)}
+function daysBetween(a,b){return Math.ceil((new Date(a)-new Date(b))/86400000)}
+function normalize(d){d=d&&typeof d==='object'?d:{};d.vehicles=Array.isArray(d.vehicles)?d.vehicles:[];d.records=Array.isArray(d.records)?d.records:[];d.reminders=Array.isArray(d.reminders)?d.reminders:[];d.issues=Array.isArray(d.issues)?d.issues:[];d.expenses=Array.isArray(d.expenses)?d.expenses:[];d.fuel=Array.isArray(d.fuel)?d.fuel:[];d.settings=d.settings&&typeof d.settings==='object'?d.settings:{};return d}
+function load(){try{let raw=localStorage.getItem(KEY);if(!raw){for(const k of LEGACY_KEYS){const v=localStorage.getItem(k);if(v){raw=v;break;}}}if(raw){const d=JSON.parse(raw);if(d&&Array.isArray(d.vehicles))return d;}}catch(e){}return JSON.parse(JSON.stringify(seed))}
+let db=normalize(load());
+let selected=db.vehicles[0]?.id||null;let tab='resumen';let filterText=(db.settings?.search||'').toLowerCase();
+function v(){return db.vehicles.find(x=>x.id===selected)||db.vehicles[0]||null}
+function reminderStatus(r){let x=v();if(!x)return['—','info'];let m=r.nextMileage?Number(r.nextMileage)-Number(x.odo):Infinity;let d=r.nextDate?daysBetween(r.nextDate,today()):Infinity;if(m<0||d<0)return['Vencido','bad'];if(m<=Number(r.warnMiles||1000)||d<=Number(r.warnDays||30))return['Próximo','warn'];return['Al día','ok']}
+function toast(msg,type='info',ms=3400){const root=document.getElementById('toastRoot');const el=document.createElement('div');el.className=`toast ${type}`;el.innerHTML=`<div>${type==='ok'?'✓':type==='bad'?'✕':type==='warn'?'⚠':'☁️'}</div><div style="flex:1;font-size:12.5px">${esc(msg)}</div><button class="ghost" style="width:24px;height:24px;padding:0" onclick="this.parentElement.remove()">✕</button>`;root.appendChild(el);setTimeout(()=>{el.style.opacity='0';setTimeout(()=>el.remove(),200)},ms)}
+
+/* Photos compress */
+async function compressImage(file,max=1024,quality=0.7){
+  return new Promise((res,rej)=>{
+    const img=new Image();const url=URL.createObjectURL(file);
+    img.onload=()=>{
+      const canvas=document.createElement('canvas');let w=img.width,h=img.height;
+      if(w>max||h>max){if(w>h){h=h*max/w;w=max}else{w=w*max/h;h=max}}
+      canvas.width=w;canvas.height=h;const ctx=canvas.getContext('2d');ctx.drawImage(img,0,0,w,h);
+      URL.revokeObjectURL(url);res(canvas.toDataURL('image/jpeg',quality));
+    };img.onerror=rej;img.src=url;
+  });
+}
+async function handlePhotoInput(input,previewId){
+  const files=Array.from(input.files||[]);const out=[];
+  for(const f of files){if(f.size>12*1024*1024){toast('Foto muy grande >12MB','warn');continue}try{const b64=await compressImage(f);out.push(b64)}catch(e){}}
+  const preview=document.getElementById(previewId);if(preview){out.forEach(src=>{const img=document.createElement('img');img.src=src;img.className='photo-thumb';img.onclick=()=>openPhotoViewer(src);preview.appendChild(img)});}
+  return out;
+}
+let photoViewerSrc=null;
+function openPhotoViewer(src){photoViewerSrc=src;modal(`<div style="display:grid;gap:10px"><h2>Foto</h2><img src="${src}" style="width:100%;border-radius:12px;max-height:70vh;object-fit:contain"><div style="display:flex;gap:8px"><button onclick="closeModal()">Cerrar</button><button class="secondary" onclick="navigator.clipboard.writeText('${src.slice(0,200)}')">Copiar</button></div></div>`)}
+function getPhotosFromPreview(previewId){const cont=document.getElementById(previewId);if(!cont)return[];return Array.from(cont.querySelectorAll('img')).map(i=>i.src)}
+
+/* OCR */
+let ocrTarget=null;let ocrData={amount:null,date:null,text:'',concept:''};
+function openOCR(target='expense'){ocrTarget=target;document.getElementById('ocrModal').style.display='flex';document.getElementById('ocrPreview').innerHTML='';document.getElementById('ocrText').style.display='none';document.getElementById('ocrResult').innerHTML='';document.getElementById('ocrBar').style.width='0%';document.getElementById('ocrProgress').style.display='none';document.getElementById('applyOCRBtn').style.display='none';}
+function closeOCR(){document.getElementById('ocrModal').style.display='none';ocrTarget=null;ocrData={amount:null,date:null,text:'',concept:''};}
+async function handleOCRFile(file){
+  if(!file)return;
+  const preview=document.getElementById('ocrPreview');preview.innerHTML=`<img src="${URL.createObjectURL(file)}" style="width:100%;max-height:220px;object-fit:contain;border-radius:12px;border:1px solid var(--line)">`;
+  document.getElementById('ocrProgress').style.display='block';document.getElementById('ocrText').style.display='block';document.getElementById('ocrText').textContent='Iniciando OCR...';
+  try{
+    const worker=await Tesseract.createWorker('spa+eng');
+    let progress=0;
+    const {data}=await worker.recognize(file,{},{
+      logger:m=>{
+        if(m.status==='recognizing text'){progress=Math.round(m.progress*100);document.getElementById('ocrBar').style.width=progress+'%';document.getElementById('ocrText').textContent=`Reconociendo ${progress}%...`}
+      }
+    });
+    await worker.terminate();
+    const text=data.text||'';document.getElementById('ocrText').textContent=text;ocrData.text=text;
+    // Parse amount
+    const amountMatches=text.match(/(?:\$|MXN|TOTAL|IMPORTE)\s*([0-9]{1,3}(?:,[0-9]{3})*(?:\.[0-9]{2})?|[0-9]+\.[0-9]{2})/gi);
+    let amount=null;if(amountMatches){const nums=amountMatches.map(s=>{const m=s.match(/([0-9,.]+)/);if(!m)return 0;return parseFloat(m[1].replace(/,/g,''))}).filter(n=>n>0&&n<100000);if(nums.length)amount=Math.max(...nums);}
+    if(!amount){const allNums=(text.match(/\b\d+\.\d{2}\b/g)||[]).map(n=>parseFloat(n)).filter(n=>n>5&&n<50000);if(allNums.length)amount=Math.max(...allNums);}
+    // date
+    let date=today();
+    const dateMatch=text.match(/(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4})|(\d{4}[\/\-]\d{1,2}[\/\-]\d{1,2})/);
+    if(dateMatch){try{let d=dateMatch[0];let parts=d.split(/[\/\-]/);let parsed=null;if(parts[0].length===4){parsed=`${parts[0]}-${parts[1].padStart(2,'0')}-${parts[2].padStart(2,'0')}`}else{let yy=parts[2].length===2?'20'+parts[2]:parts[2];parsed=`${yy}-${parts[1].padStart(2,'0')}-${parts[0].padStart(2,'0')}`}if(parsed)date=parsed}catch(e){}}
+    // concept - first meaningful line
+    const lines=text.split('\n').map(l=>l.trim()).filter(l=>l.length>4&&l.length<80).slice(0,6);
+    const concept=lines[0]||'Ticket escaneado';
+    ocrData.amount=amount;ocrData.date=date;ocrData.concept=concept;
+    document.getElementById('ocrResult').innerHTML=`<div class="formgrid">
+      <label>Concepto detectado<input id="ocrConcept" value="${esc(concept)}"></label>
+      <label>Monto MXN<input id="ocrAmount" type="number" step="0.01" value="${esc(amount||'')}"></label>
+      <label>Fecha<input id="ocrDate" type="date" value="${esc(date)}"></label>
+      <label>Texto completo<textarea id="ocrNotes" style="min-height:60px">${esc(text.slice(0,500))}</textarea></label>
+    </div>`;
+    document.getElementById('applyOCRBtn').style.display='block';
+    toast('OCR completado','ok');
+  }catch(e){document.getElementById('ocrText').textContent='Error OCR: '+e.message;toast('Error OCR','bad')}
+}
+function applyOCR(){
+  const concept=document.getElementById('ocrConcept')?.value||'';const amount=document.getElementById('ocrAmount')?.value||'';const date=document.getElementById('ocrDate')?.value||today();const notes=document.getElementById('ocrNotes')?.value||'';
+  // apply to last opened form - we store pending data in window
+  window._ocrPending={concept,amount,date,notes};
+  closeOCR();
+  // Try to fill active modal inputs if exists
+  const modal=document.getElementById('modalRoot');
+  if(modal.innerHTML){
+    const desc=modal.querySelector('input[name="description"], input[name="service"]');if(desc&&concept)desc.value=concept;
+    const amt=modal.querySelector('input[name="amount"], input[name="cost"]');if(amt&&amount)amt.value=amount;
+    const dt=modal.querySelector('input[name="date"]');if(dt&&date)dt.value=date;
+    const nt=modal.querySelector('textarea[name="notes"]');if(nt)nt.value=(nt.value?nt.value+'\n':'')+notes;
+    toast('Datos aplicados del ticket','ok');
+  }else{
+    toast('Escaneo guardado, abre un gasto o servicio para aplicar','info');
+  }
+}
+
+/* Render */
+function renderVehicles(){
+  const list=document.getElementById('vehicleList');const count=document.getElementById('vehicleCount');if(!list)return;
+  count.textContent=db.vehicles.length?`${db.vehicles.length}`:'';
+  if(!db.vehicles.length){list.innerHTML=`<div class="empty">Sin vehículos<br><button class="secondary" onclick="addVehicle()">Agregar</button></div>`;return;}
+  list.innerHTML=db.vehicles.map(x=>{
+    const alerts=db.reminders.filter(r=>r.vehicleId===x.id&&reminderStatus(r)[1]!=='ok').length;
+    const open=db.issues.filter(r=>r.vehicleId===x.id&&!['resuelto'].includes(String(r.status||'').toLowerCase())).length;
+    const fuel=db.fuel.filter(f=>f.vehicleId===x.id).length;
+    return `<div class="vehicle ${x.id===selected?'active':''}" onclick="selectVehicle('${x.id}')"><b><span>${esc(x.make)} ${esc(x.model)}</span><span style="font-size:10px;padding:2px 6px;border-radius:999px;background:${alerts||open?'var(--warnBg)':'var(--okBg)'};color:${alerts||open?'var(--warn)':'var(--ok)'}">${alerts||open? (alerts?'⚠ '+alerts:'')+(open?' · '+open+' prob':'') : '✓'}</span></b><small>${x.year} · ${Number(x.odo).toLocaleString()} ${esc(x.unit||'mi')} · ⛽${fuel}</small></div>`
+  }).join('');
+}
+function selectVehicle(id){selected=id;tab='resumen';document.getElementById('sidePanel')?.classList.remove('open');render();}
+function toggleDrawer(){document.getElementById('sidePanel')?.classList.toggle('open')}
+function labelTab(t){return {resumen:'Resumen',historial:'Historial',combustible:'Combustible',mantenimiento:'Servicios',problemas:'Diagnóstico',gastos:'Gastos',vin:'VIN',ficha:'Ficha'}[t]||t}
+function switchTab(t){tab=t;render();document.querySelectorAll('.bottom-nav button').forEach(b=>b.classList.remove('active'));document.getElementById('bn-'+t)?.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
+
+function render(){
+  renderVehicles();
+  const x=v();const app=document.getElementById('app');if(!x){app.innerHTML=`<div class="card section empty"><h3>Bienvenido a E.O. Garage v14</h3><div class="sub">Agrega tu primer vehículo</div><button onclick="addVehicle()">＋ Vehículo</button></div>`;return;}
+  let rec=db.records.filter(r=>r.vehicleId===x.id);let rem=db.reminders.filter(r=>r.vehicleId===x.id);let iss=db.issues.filter(r=>r.vehicleId===x.id);let exp=db.expenses.filter(r=>r.vehicleId===x.id);let fuel=db.fuel.filter(r=>r.vehicleId===x.id);
+  if(filterText){const f=filterText;const contains=s=>String(s||'').toLowerCase().includes(f);rec=rec.filter(r=>contains(r.service+r.category+r.parts+r.notes+r.shop));rem=rem.filter(r=>contains(r.name+r.notes));iss=iss.filter(r=>contains(r.title+r.description));exp=exp.filter(r=>contains(r.description+r.category));fuel=fuel.filter(r=>contains(r.station+r.notes));}
+  const maintTotal=rec.reduce((a,r)=>a+Number(r.cost||0),0);const expTotal=exp.reduce((a,r)=>a+Number(r.amount||0),0);const fuelTotal=fuel.reduce((a,r)=>a+Number(r.amount||0),0);const total=maintTotal+expTotal+fuelTotal;
+  const alerts=rem.filter(r=>reminderStatus(r)[1]!=='ok').length;const open=iss.filter(r=>!['resuelto','resolved'].includes(String(r.status||'').toLowerCase())).length;
+  // fuel efficiency avg
+  const effs=fuel.filter(f=>f.kml||f.mpg).map(f=>Number(f.kml||f.mpg*0.425144));const avgEff=effs.length? effs.reduce((a,b)=>a+b,0)/effs.length :0;
+  const costPerKm=x.odo? total/Number(x.odo):0;
+
+  app.innerHTML=`
+    <div class="hero card">
+      <div style="min-width:0">
+        <div class="eyebrow">Vehículo activo · ${esc(x.unit||'mi').toUpperCase()} · BUILD 001</div>
+        <h1>${esc(x.make)} ${esc(x.model)} <span style="color:var(--gold)">${x.year}</span></h1>
+        <div class="pills"><span class="pill"><b>VIN</b> ${esc(x.vin||'Sin VIN')}</span><span class="pill">${esc(x.engine||'Motor')}</span><span class="pill">${esc(x.drive||'')}</span><span class="pill">${esc(x.tire||'Llantas')}</span></div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+          <div class="odo"><span>ODÓMETRO</span><b>${Number(x.odo||0).toLocaleString()} ${esc(x.unit||'mi')}</b><small>${fuel.length} cargas · ${rec.length} servicios</small></div>
+          <div class="odo"><span>RENDIMIENTO PROM</span><b>${avgEff? avgEff.toFixed(2)+' km/L' : '—'}</b><small>${effs.length? effs.length+' registros' : 'Sin datos fuel'}</small></div>
+          <div class="odo"><span>COSTO / ${esc(x.unit||'mi')}</span><b>${money2(costPerKm)}</b><small>${money(total)} total</small></div>
+        </div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:7px;align-self:flex-start">
+        <button onclick="editVehicle()">✎ Editar</button>
+        <button class="secondary" onclick="recordForm()">＋ Servicio</button>
+        <button class="secondary" onclick="openFuelForm()">⛽ Gasolina</button>
+        <button class="secondary" onclick="openOCR('expense')">📸 Scan Ticket</button>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="stat"><div class="icon">🛠️</div><div class="n">${rec.length}</div><div class="l">Servicios</div></div>
+      <div class="stat"><div class="icon">⛽</div><div class="n">${fuel.length}</div><div class="l">Cargas gas</div><div style="position:absolute;top:8px;right:8px;font-size:10px;padding:3px 7px;border-radius:999px;background:var(--blueBg);color:var(--blue)">${avgEff?avgEff.toFixed(1)+' km/L':'—'}</div></div>
+      <div class="stat"><div class="icon">⏰</div><div class="n">${alerts}</div><div class="l">Alertas</div></div>
+      <div class="stat"><div class="icon">⚠️</div><div class="n">${open}</div><div class="l">Diagnósticos</div></div>
+      <div class="stat"><div class="icon">💰</div><div class="n">${money(total)}</div><div class="l">Gasto total</div></div>
+      <div class="stat"><div class="icon">📷</div><div class="n">${rec.reduce((a,r)=>a+(r.photos?.length||0),0)+exp.reduce((a,r)=>a+(r.photos?.length||0),0)+fuel.reduce((a,r)=>a+(r.photos?.length||0),0)}</div><div class="l">Fotos</div></div>
+      <div class="stat"><div class="icon">📄</div><div class="n">${exp.length}</div><div class="l">Tickets</div></div>
+      <div class="stat"><div class="icon">🧠</div><div class="n">${rem.length}</div><div class="l">Recordatorios IA</div></div>
+    </div>
+
+    <div class="quick-grid">
+      <button class="quick" onclick="recordForm()"><b>Registrar servicio + foto</b><span>Guarda refacciones, taller y evidencia</span></button>
+      <button class="quick" onclick="openFuelForm()"><b>Carga de combustible</b><span>Calcula km/L, MPG y costo</span></button>
+      <button class="quick" onclick="openOCR('expense')"><b>Escanear ticket OCR</b><span>Refacciones, gas, servicio automático</span></button>
+      <button class="quick" onclick="issueForm()"><b>Diagnóstico + costos</b><span>Síntomas, seguimiento y $ acumulado</span></button>
+    </div>
+
+    <div class="tabs">${['resumen','historial','combustible','mantenimiento','problemas','gastos','vin','ficha'].map(t=>`<button class="tab ${tab===t?'active':''}" onclick="switchTab('${t}')">${labelTab(t)}</button>`).join('')}</div>
+    <div id="tabContent">${tabHtml(tab,x,rec,rem,iss,exp,fuel)}</div>
+  `;
+  if(tab==='resumen'||tab==='gastos'||tab==='combustible') setTimeout(()=>drawCharts(exp,rec,fuel),80);
+}
+
+function tabHtml(t,x,rec,rem,iss,exp,fuel){
+  if(t==='resumen'){
+    let next=[...rem].sort((a,b)=>{const o={bad:0,warn:1,ok:2};return o[reminderStatus(a)[1]]-o[reminderStatus(b)[1]]}).slice(0,5);
+    return `<div class="split">
+      <div class="card section"><div class="section-head"><div><div class="eyebrow">Premium</div><h2>Estado y gráficas</h2></div><button class="secondary" onclick="generateSmartReminders()">🧠 Generar IA</button></div>
+        <div class="chart-wrap"><canvas id="chartMain"></canvas></div>
+        <div class="chart-wrap" style="margin-top:10px"><canvas id="chartFuel"></canvas></div>
+        <div class="rows" style="margin-top:12px">
+          <div class="row"><span>Último servicio</span><b>${rec[0]?esc(rec.sort((a,b)=>b.date.localeCompare(a.date))[0].service):'—'}</b></div>
+          <div class="row"><span>Última carga</span><b>${fuel[0]? Number(fuel.sort((a,b)=>b.date.localeCompare(a.date))[0].liters||0)+' L · '+esc(fuel[0].station||'') : '—'}</b></div>
+          <div class="row"><span>Problemas abiertos</span><b>${iss.filter(i=>!['resuelto'].includes(String(i.status||'').toLowerCase())).length}</b></div>
+        </div>
+      </div>
+      <div class="card section"><div class="eyebrow">Próximo</div><h2>Servicios IA</h2>${next.length?reminderCards(next):'<div class="empty">Sin servicios</div>'}<div style="margin-top:12px" class="notice">Recordatorios inteligentes se crean solos al registrar aceite, frenos, etc. Intervalos según fabricante + tu uso real.</div></div>
+    </div>
+    <div class="card section"><div class="section-head"><div><div class="eyebrow">Asistente</div><h2>Recomendaciones</h2></div></div>${assistant(x,rec,rem,iss,fuel)}</div>`;
+  }
+  if(t==='historial') return `<div class="card section"><div class="section-head"><div><div class="eyebrow">Bitácora</div><h2>Historial con fotos</h2></div><div style="display:flex;gap:6px"><button onclick="recordForm()">＋ Servicio</button><button class="secondary" onclick="openOCR('record')">📸 Scan</button></div></div>${recordTable(rec)}</div>`;
+  if(t==='combustible') return `<div class="card section"><div class="section-head"><div><div class="eyebrow">Combustible</div><h2>Control de rendimiento</h2></div><div style="display:flex;gap:6px"><button onclick="openFuelForm()">⛽ Nueva carga</button><button class="secondary" onclick="openOCR('fuel')">📸 Scan ticket gas</button></div></div><div class="chart-wrap" style="margin-bottom:12px"><canvas id="chartFuelFull"></canvas></div>${fuelTable(fuel)}</div>`;
+  if(t==='mantenimiento') return `<div class="card section"><div class="section-head"><div><div class="eyebrow">Preventivo IA</div><h2>Servicios programados</h2></div><div style="display:flex;gap:6px"><button onclick="reminderForm()">＋ Programar</button><button class="secondary" onclick="generateSmartReminders()">🧠 Auto</button></div></div>${reminderTable(rem)}</div>`;
+  if(t==='problemas') return `<div class="card section"><div class="section-head"><div><div class="eyebrow">Diagnóstico</div><h2>Problemas, costos y seguimiento</h2></div><button onclick="issueForm()">＋ Diagnóstico</button></div>${issueTable(iss)}</div>`;
+  if(t==='gastos'){let total=exp.reduce((a,r)=>a+Number(r.amount||0),0),maint=rec.reduce((a,r)=>a+Number(r.cost||0),0),fuelT=fuel.reduce((a,r)=>a+Number(r.amount||0),0);return `<div class="grid"><div class="stat"><div class="n">${money(total+maint+fuelT)}</div><div class="l">Total todo</div></div><div class="stat"><div class="n">${money(maint)}</div><div class="l">Mantenimiento</div></div><div class="stat"><div class="n">${money(total)}</div><div class="l">Otros</div></div><div class="stat"><div class="n">${money(fuelT)}</div><div class="l">Combustible</div></div></div><div class="card section"><div class="section-head"><div><div class="eyebrow">Finanzas</div><h2>Gastos y tickets</h2></div><div style="display:flex;gap:6px"><button onclick="expenseForm()">＋ Gasto</button><button class="secondary" onclick="openOCR('expense')">📸 Scan</button><button class="secondary" onclick="exportCSV()">CSV</button></div></div><div class="chart-wrap" style="margin-bottom:12px"><canvas id="chartExpenses"></canvas></div>${expenseTable(exp)}</div>`}
+  if(t==='vin') return `<div class="card section"><div class="eyebrow">VIN</div><h2>VIN y recalls</h2><div class="rows"><div class="row"><span>VIN</span><b style="font-family:var(--mono)">${esc(x.vin||'')}</b></div></div><div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button onclick="decodeVIN()">🔎 Decodificar</button><button class="secondary" onclick="openRecall()">NHTSA recalls</button><button class="secondary" onclick="copyVIN()">Copiar</button></div><div id="vinResult" style="margin-top:12px"></div></div>`;
+  return `<div class="card section"><div class="eyebrow">Ficha</div><h2>Ficha técnica</h2><div class="rows">
+    <div class="row"><span>Marca / Modelo</span><b>${esc(x.make)} ${esc(x.model)}</b></div><div class="row"><span>Año</span><b>${x.year}</b></div><div class="row"><span>VIN</span><b style="font-family:var(--mono)">${esc(x.vin||'—')}</b></div>
+    <div class="row"><span>Motor</span><b>${esc(x.engine||'—')}</b></div><div class="row"><span>Tracción</span><b>${esc(x.drive||'—')}</b></div><div class="row"><span>Llantas</span><b>${esc(x.tire||'')}</b></div><div class="row"><span>Aceite</span><b>${esc(x.oil||'')} ${esc(x.oilViscosity||'')}</b></div>
+    <div class="row"><span>Filtro</span><b>${esc(x.oilFilter||'')}</b></div><div class="row"><span>Bujías</span><b>${esc(x.spark||'')}</b></div>
+  </div><div style="margin-top:12px;display:flex;gap:8px"><button onclick="editVehicle()">✎ Editar</button><button class="secondary" onclick="exportJSON()">💾 Respaldo completo</button></div></div>`;
+}
+
+function reminderCards(a){return `<div class="mini-list">${a.map(r=>{let s=reminderStatus(r);let due=[];if(r.nextMileage)due.push(Number(r.nextMileage).toLocaleString()+' '+(v().unit||''));if(r.nextDate)due.push(r.nextDate);return `<div class="mini" onclick="editReminder('${r.id}')" style="cursor:pointer"><div><b>${esc(r.name)}</b><span>${due.join(' · ')} · ${esc(r.type||'')}</span></div><span class="badge ${s[1]}">${s[0]}</span></div>`}).join('')}</div>`}
+function assistant(x,rec,rem,iss,fuel){
+  let out=[];let due=rem.filter(r=>reminderStatus(r)[1]!=='ok');if(due.length)out.push(`<b>Prioridad:</b> ${due.length} servicios vencidos/próximos.`);
+  let open=iss.filter(i=>i.status!=='resuelto');if(open.length)out.push(`<b>Diagnóstico:</b> ${open.length} problemas abiertos con ${money(open.reduce((a,b)=>a+Number(b.cost||0),0))} estimado.`);
+  if(fuel.length>=2){const avg=fuel.filter(f=>f.kml).map(f=>Number(f.kml)).reduce((a,b)=>a+b,0)/Math.max(fuel.filter(f=>f.kml).length,1);if(avg&&avg<5)out.push(`<b>Rendimiento bajo:</b> ${avg.toFixed(1)} km/L. Revisa filtro aire, bujías y presión llantas.`)}
+  if(!out.length)out.push('<b>Todo al día:</b> sin alertas. Mantén fotos y tickets escaneados.');
+  return `<div class="rows">${out.map(s=>`<div class="notice">${s}</div>`).join('')}</div>`;
+}
+
+/* Tables with photos */
+function recordTable(a){
+  if(!a.length)return `<div class="empty">Sin registros</div>`;
+  a=[...a].sort((x,y)=>y.date.localeCompare(x.date));
+  return `<div class="table"><table><thead><tr><th>Fecha</th><th>Trabajo</th><th>Cat</th><th>Costo</th><th>Fotos</th><th></th></tr></thead><tbody>${a.map(r=>`<tr>
+    <td>${esc(r.date)}<br><small>${Number(r.odo).toLocaleString()}</small></td>
+    <td><b>${esc(r.service)}</b><br><span class="sub">${esc(r.shop||'')}${r.notes?' · '+esc(r.notes.slice(0,60)):''}</span></td>
+    <td>${esc(r.category||'')}</td><td>${money(r.cost)}</td>
+    <td>${(r.photos||[]).length? `<div style="display:flex;gap:4px">${r.photos.slice(0,3).map(p=>`<img src="${p}" class="photo-thumb" style="width:32px;height:32px" onclick="openPhotoViewer('${p.replace(/'/g,'')}')">`).join('')}${r.photos.length>3?`<span style="font-size:10px">+${r.photos.length-3}</span>`:''}</div>` : '—'}</td>
+    <td><div style="display:flex;gap:4px"><button class="secondary" onclick="editRecord('${r.id}')">✎</button><button class="danger" onclick="delRecord('${r.id}')">×</button></div></td>
+  </tr>`).join('')}</tbody></table></div>`;
+}
+function fuelTable(a){
+  if(!a.length)return `<div class="empty"><div>⛽ Sin cargas</div><button onclick="openFuelForm()">Registrar primera carga</button></div>`;
+  a=[...a].sort((x,y)=>y.date.localeCompare(x.date));
+  return `<div class="table"><table><thead><tr><th>Fecha</th><th>Odo</th><th>Litros</th><th>Monto</th><th>Rendimiento</th><th>Estación</th><th></th></tr></thead><tbody>${a.map(r=>`<tr>
+    <td>${esc(r.date)}</td><td>${Number(r.odo).toLocaleString()}</td><td>${r.liters||''} L ${r.fullTank?'· lleno':''}</td><td>${money(r.amount)}<br><small>${r.pricePerLiter?'$'+r.pricePerLiter+'/L':''}</small></td>
+    <td>${r.kml?`<span class="badge ${Number(r.kml)>8?'ok':Number(r.kml)>5?'warn':'bad'}">${Number(r.kml).toFixed(2)} km/L</span>`: (r.mpg?`${Number(r.mpg).toFixed(1)} MPG`:'—')}</td>
+    <td>${esc(r.station||'')}<br><span class="sub">${esc(r.notes||'').slice(0,40)}</span></td>
+    <td><div style="display:flex;gap:4px"><button class="secondary" onclick="editFuel('${r.id}')">✎</button><button class="danger" onclick="delFuel('${r.id}')">×</button></div></td>
+  </tr>`).join('')}</tbody></table></div>`;
+}
+function reminderTable(a){if(!a.length)return `<div class="empty">Sin recordatorios</div>`;return `<div class="table"><table><thead><tr><th>Servicio</th><th>Próximo</th><th>Intervalo</th><th>Estado</th><th></th></tr></thead><tbody>${a.map(r=>{let s=reminderStatus(r);return `<tr><td><b>${esc(r.name)}</b></td><td>${r.nextMileage?Number(r.nextMileage).toLocaleString():''} ${r.nextDate||''}</td><td>${(r.intervalMiles||'')+' '+(r.intervalMonths||'')} </td><td><span class="badge ${s[1]}">${s[0]}</span></td><td><div style="display:flex;gap:4px;flex-wrap:wrap"><button class="secondary" onclick="completeReminder('${r.id}')">✓</button><button class="secondary" onclick="editReminder('${r.id}')">✎</button><button class="danger" onclick="delReminder('${r.id}')">×</button></div></td></tr>`}).join('')}</tbody></table></div>`}
+function issueTable(a){if(!a.length)return `<div class="empty">Sin diagnósticos</div>`;return `<div class="table"><table><thead><tr><th>Fecha</th><th>Problema</th><th>Costo</th><th>Estado</th><th></th></tr></thead><tbody>${a.map(r=>`<tr><td>${esc(r.date)}</td><td><b>${esc(r.title)}</b><br><span class="sub">${esc(r.description||'').slice(0,80)}</span><br>${(r.photos||[]).length? r.photos.slice(0,2).map(p=>`<img src="${p}" style="width:28px;height:28px;border-radius:6px;object-fit:cover">`).join('') : ''}</td><td>${money(r.cost||0)}${r.costHistory?.length?`<br><small>+${r.costHistory.length} gastos</small>`:''}</td><td><span class="badge ${r.status==='resuelto'?'ok':r.status==='en observación'?'warn':'bad'}">${esc(r.status)}</span></td><td><div style="display:flex;gap:4px"><button class="secondary" onclick="editIssue('${r.id}')">✎</button><button class="danger" onclick="delIssue('${r.id}')">×</button></div></td></tr>`).join('')}</tbody></table></div>`}
+function expenseTable(a){if(!a.length)return `<div class="empty">Sin gastos</div>`;a=[...a].sort((x,y)=>y.date.localeCompare(x.date));return `<div class="table"><table><thead><tr><th>Fecha</th><th>Concepto</th><th>Monto</th><th>Fotos</th><th></th></tr></thead><tbody>${a.map(r=>`<tr><td>${esc(r.date)}</td><td><b>${esc(r.description)}</b><br><span class="sub">${esc(r.category||'')}</span></td><td>${money(r.amount)}</td><td>${(r.photos||[]).length? r.photos.length+' 📷' : '—'}</td><td><div style="display:flex;gap:4px"><button class="secondary" onclick="expenseForm(db.expenses.find(x=>x.id==='${r.id}'))">✎</button><button class="danger" onclick="delExpense('${r.id}')">×</button></div></td></tr>`).join('')}</tbody></table></div>`}
+
+/* Charts */
+let chartInstances={};
+function drawCharts(exp,rec,fuel){
+  try{
+    const byMonth={};[...exp.map(e=>({d:e.date,a:Number(e.amount)||0})),...rec.map(r=>({d:r.date,a:Number(r.cost)||0})),...fuel.map(f=>({d:f.date,a:Number(f.amount)||0}))].forEach(e=>{if(!e.d)return;const k=e.d.slice(0,7);byMonth[k]=(byMonth[k]||0)+e.a});
+    const keys=Object.keys(byMonth).sort().slice(-7);const vals=keys.map(k=>byMonth[k]);
+    const ctxMain=document.getElementById('chartMain');if(ctxMain){
+      if(chartInstances.main)chartInstances.main.destroy();
+      chartInstances.main=new Chart(ctxMain,{type:'bar',data:{labels:keys,datasets:[{label:'Gastos MXN',data:vals,backgroundColor:'#d9b46a',borderRadius:8}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{color:'#9aa6b5',font:{size:10}}},y:{grid:{color:'#1f2a36'},ticks:{color:'#9aa6b5'}}}}});
+    }
+    const ctxFuel=document.getElementById('chartFuel');const ctxFuelFull=document.getElementById('chartFuelFull');const fuelSorted=[...fuel].sort((a,b)=>a.date.localeCompare(b.date));const fuelLabels=fuelSorted.map(f=>f.date.slice(5));const kmlData=fuelSorted.map(f=>Number(f.kml||0));const costData=fuelSorted.map(f=>Number(f.amount||0));
+    const fuelChartConfig={type:'line',data:{labels:fuelLabels,datasets:[{label:'km/L',data:kmlData,borderColor:'#45d58a',tension:.3,yAxisID:'y'},{label:'Costo',data:costData,borderColor:'#d9b46a',tension:.3,yAxisID:'y1',hidden:true}]},options:{responsive:true,plugins:{legend:{labels:{color:'#9aa6b5',font:{size:10}}}},scales:{x:{ticks:{color:'#6b7888'}},y:{grid:{color:'#1f2a36'},ticks:{color:'#9aa6b5'}},y1:{display:false}}}};
+    if(ctxFuel){if(chartInstances.fuel)chartInstances.fuel.destroy();chartInstances.fuel=new Chart(ctxFuel,fuelChartConfig);}
+    if(ctxFuelFull){if(chartInstances.fuelFull)chartInstances.fuelFull.destroy();chartInstances.fuelFull=new Chart(ctxFuelFull,fuelChartConfig);}
+    const ctxExp=document.getElementById('chartExpenses');if(ctxExp){if(chartInstances.exp)chartInstances.exp.destroy();chartInstances.exp=new Chart(ctxExp,{type:'bar',data:{labels:keys,datasets:[{label:'Gastos',data:vals,backgroundColor:'#7aa8ff',borderRadius:8}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#9aa6b5'}},y:{ticks:{color:'#9aa6b5'}}}}});}
+  }catch(e){console.warn('chart err',e)}
+}
+
+/* Modals */
+function modal(html){document.getElementById('modalRoot').innerHTML=`<div class="modalbg" onclick="if(event.target===this)closeModal()"><div class="modal">${html}</div></div>`;setTimeout(()=>{document.querySelector('.modal input')?.focus()},40)}
+function closeModal(){document.getElementById('modalRoot').innerHTML=''}
+
+/* Forms */
+function vehicleForm(data={}){
+  const edit=!!data.id;
+  modal(`<h2>${edit?'Editar':'Agregar'} vehículo</h2><form onsubmit="saveVehicle(event,${edit})"><div class="formgrid">
+    <label>Marca<input name="make" required value="${esc(data.make||'')}"></label><label>Modelo<input name="model" required value="${esc(data.model||'')}"></label>
+    <label>Año<input name="year" type="number" value="${esc(data.year||'')}" required></label><label>VIN<input name="vin" maxlength="17" value="${esc(data.vin||'')}" style="font-family:var(--mono)"></label>
+    <label>Motor<input name="engine" value="${esc(data.engine||'')}"></label><label>Tracción<input name="drive" value="${esc(data.drive||'')}"></label>
+    <label>Odómetro<input name="odo" type="number" value="${esc(data.odo||0)}" required></label><label>Unidad<select name="unit"><option ${data.unit==='km'?'selected':''}>km</option><option ${data.unit!=='km'?'selected':''}>mi</option></select></label>
+    <label>Llantas<input name="tire" value="${esc(data.tire||'')}"></label><label>Presión PSI<input name="tirePressure" value="${esc(data.tirePressure||'')}"></label>
+    <label>Aceite<input name="oil" value="${esc(data.oil||'')}"></label><label>Viscosidad<input name="oilViscosity" value="${esc(data.oilViscosity||'')}"></label>
+    <label>Filtro<input name="oilFilter" value="${esc(data.oilFilter||'')}"></label><label>Bujías<input name="spark" value="${esc(data.spark||'')}"></label>
+    <label class="full">Notas<textarea name="notes">${esc(data.notes||'')}</textarea></label>
+  </div><div style="margin-top:14px;display:flex;gap:8px"><button>Guardar</button><button type="button" class="secondary" onclick="closeModal()">Cancelar</button>${edit?`<button type="button" class="danger" onclick="deleteVehicle('${data.id}')">Eliminar</button>`:''}</div></form>`);
+}
 function addVehicle(){vehicleForm()}function editVehicle(){vehicleForm(v())}
-function saveVehicle(e,edit){e.preventDefault();let o=Object.fromEntries(new FormData(e.target));o.year=+o.year;o.odo=+o.odo||0;o.vin=(o.vin||'').trim().toUpperCase();if(edit){let old=v();Object.assign(old,o)}else{o.id='v-'+Date.now();db.vehicles.push(o);selected=o.id}closeModal();save()}
-function deleteVehicle(id){if(db.vehicles.length<2)return alert('Debe existir al menos un vehículo.');if(confirm('¿Eliminar este vehículo y todos sus registros?')){db.vehicles=db.vehicles.filter(x=>x.id!==id);db.records=db.records.filter(x=>x.vehicleId!==id);db.reminders=db.reminders.filter(x=>x.vehicleId!==id);db.issues=db.issues.filter(x=>x.vehicleId!==id);db.expenses=db.expenses.filter(x=>x.vehicleId!==id);selected=db.vehicles[0].id;closeModal();save()}}
-function recordForm(data={}){let edit=!!data.id;modal(`<h2>${edit?'Editar':'Registrar'} mantenimiento o reparación</h2><form onsubmit="saveRecord(event,${edit})"><div class="formgrid"><label>Fecha<input name="date" type="date" required value="${esc(data.date||today())}"></label><label>Odómetro<input name="odo" type="number" required value="${esc(data.odo??v().odo)}"></label><label>Trabajo realizado<input name="service" required value="${esc(data.service||'')}"></label><label>Categoría<input name="category" value="${esc(data.category||'')}" placeholder="Motor, frenos, A/C..."></label><label>Costo MXN<input name="cost" type="number" step="0.01" value="${esc(data.cost??0)}"></label><label>Taller / proveedor<input name="shop" value="${esc(data.shop||'')}"></label><label>Partes / marcas<input name="parts" value="${esc(data.parts||'')}"></label><label>Número de parte<input name="partNumber" value="${esc(data.partNumber||'')}" placeholder="Opcional"></label><label class="full">Notas<textarea name="notes">${esc(data.notes||'')}</textarea></label></div><div class="actions" style="margin-top:14px"><button>Guardar</button><button type="button" class="secondary" onclick="closeModal()">Cancelar</button></div></form>`)}
-function saveRecord(e,edit){e.preventDefault();let o=Object.fromEntries(new FormData(e.target));o.odo=+o.odo||0;o.cost=+o.cost||0;o.vehicleId=selected;if(edit){Object.assign(db.records.find(x=>x.id===edit),o)}else{o.id='r-'+Date.now();db.records.push(o)}if(o.odo>v().odo)v().odo=o.odo;closeModal();save()}function editRecord(id){recordForm(db.records.find(x=>x.id===id))}function delRecord(id){if(confirm('¿Eliminar registro?')){db.records=db.records.filter(x=>x.id!==id);save()}}
-function reminderForm(data={}){let edit=!!data.id;modal(`<h2>${edit?'Editar':'Programar'} servicio</h2><form onsubmit="saveReminder(event,${edit})"><div class="formgrid"><label>Servicio<input name="name" required value="${esc(data.name||'')}" placeholder="Ej. inspección de frenos"></label><label>Próximo kilometraje<input name="nextMileage" type="number" value="${esc(data.nextMileage??'')}"></label><label>Próxima fecha<input name="nextDate" type="date" value="${esc(data.nextDate||'')}"></label><label>Intervalo (millas/km)<input name="intervalMiles" type="number" value="${esc(data.intervalMiles??'')}" placeholder="Ej. 7500"></label><label>Intervalo (meses)<input name="intervalMonths" type="number" value="${esc(data.intervalMonths??'')}" placeholder="Ej. 12"></label><label>Avise con millas/km<input name="warnMiles" type="number" value="${esc(data.warnMiles??1000)}"></label><label>Avise con días<input name="warnDays" type="number" value="${esc(data.warnDays??30)}"></label><label>Tipo<select name="type"><option>Reemplazo</option><option ${data.type==='Inspección'?'selected':''}>Inspección</option><option ${data.type==='Monitoreo'?'selected':''}>Monitoreo</option><option ${data.type==='Reparación'?'selected':''}>Reparación</option></select></label><label>Fuente<select name="source"><option>Usuario</option><option ${data.source==='Fabricante'?'selected':''}>Fabricante</option><option ${data.source==='E.O. preventivo'?'selected':''}>E.O. preventivo</option></select></label><label class="full">Notas<textarea name="notes">${esc(data.notes||'')}</textarea></label></div><div class="actions" style="margin-top:14px"><button>Guardar</button><button type="button" class="secondary" onclick="closeModal()">Cancelar</button></div></form>`)}
-function saveReminder(e,edit){e.preventDefault();let o=Object.fromEntries(new FormData(e.target));o.vehicleId=selected;o.nextMileage=o.nextMileage?+o.nextMileage:null;o.intervalMiles=o.intervalMiles?+o.intervalMiles:null;o.intervalMonths=o.intervalMonths?+o.intervalMonths:null;o.warnMiles=+o.warnMiles||1000;o.warnDays=+o.warnDays||30;if(edit)Object.assign(db.reminders.find(x=>x.id===edit),o);else{o.id='m-'+Date.now();db.reminders.push(o)}closeModal();save()}function editReminder(id){reminderForm(db.reminders.find(x=>x.id===id))}function delReminder(id){if(confirm('¿Eliminar recordatorio?')){db.reminders=db.reminders.filter(x=>x.id!==id);save()}}
-function expenseForm(data={}){let edit=!!data.id;modal(`<h2>${edit?'Editar':'Agregar'} gasto</h2><form onsubmit="saveExpense(event,${edit})"><div class="formgrid"><label>Fecha<input name="date" type="date" required value="${esc(data.date||today())}"></label><label>Odómetro<input name="odo" type="number" value="${esc(data.odo??v().odo)}"></label><label>Categoría<select name="category"><option ${data.category==='Gasolina'?'selected':''}>Gasolina</option><option ${data.category==='Seguro'?'selected':''}>Seguro</option><option ${data.category==='Piezas'?'selected':''}>Piezas</option><option ${data.category==='Accesorios'?'selected':''}>Accesorios</option><option ${data.category==='Lavado'?'selected':''}>Lavado</option><option ${data.category==='Otro'?'selected':''}>Otro</option></select></label><label>Monto MXN<input name="amount" type="number" step="0.01" required value="${esc(data.amount??0)}"></label><label class="full">Descripción<input name="description" required value="${esc(data.description||'')}"></label><label class="full">Notas<textarea name="notes">${esc(data.notes||'')}</textarea></label></div><div class="actions" style="margin-top:14px"><button>Guardar</button><button type="button" class="secondary" onclick="closeModal()">Cancelar</button></div></form>`)}
-function saveExpense(e,edit){e.preventDefault();let o=Object.fromEntries(new FormData(e.target));o.odo=+o.odo||0;o.amount=+o.amount||0;o.vehicleId=selected;if(edit)Object.assign(db.expenses.find(x=>x.id===edit),o);else{o.id=crypto.randomUUID();db.expenses.push(o)}closeModal();save()}
-function expenseTable(a){if(!a.length)return '<div class="empty">No hay gastos adicionales registrados.</div>';a=[...a].sort((x,y)=>y.date.localeCompare(x.date));return `<div class="table"><table><thead><tr><th>Fecha</th><th>Concepto</th><th>Categoría</th><th>Odómetro</th><th>Monto</th><th></th></tr></thead><tbody>${a.map(r=>`<tr><td>${esc(r.date)}</td><td><b>${esc(r.description)}</b><br><span class="sub">${esc(r.notes||'')}</span></td><td>${esc(r.category||'')}</td><td>${Number(r.odo||0).toLocaleString()}</td><td>${money(r.amount)}</td><td><button class="secondary" onclick="expenseForm(db.expenses.find(x=>x.id==='${r.id}'))">Editar</button> <button class="danger" onclick="delExpense('${r.id}')">×</button></td></tr>`).join('')}</tbody></table></div>`}
-function delExpense(id){if(confirm('¿Eliminar gasto?')){db.expenses=db.expenses.filter(x=>x.id!==id);save()}}
-function issueForm(data={}){let edit=!!data.id;modal(`<h2>${edit?'Editar':'Registrar'} problema / síntoma</h2><form onsubmit="saveIssue(event,${edit})"><div class="formgrid"><label>Fecha<input name="date" type="date" value="${esc(data.date||today())}"></label><label>Odómetro<input name="odo" type="number" value="${esc(data.odo??v().odo)}"></label><label>Título<input name="title" required value="${esc(data.title||'')}" placeholder="Ej. vibración al acelerar"></label><label>Severidad<select name="severity"><option>baja</option><option ${data.severity==='media'?'selected':''}>media</option><option ${data.severity==='alta'?'selected':''}>alta</option></select></label><label>Estado<select name="status"><option>abierto</option><option ${data.status==='en observación'?'selected':''}>en observación</option><option ${data.status==='resuelto'?'selected':''}>resuelto</option></select></label><label class="full">Descripción<textarea name="description" required>${esc(data.description||'')}</textarea></label><label>Costo MXN<input name="cost" type="number" step="0.01" value="${esc(data.cost??0)}"></label><label class="full">Notas<textarea name="notes">${esc(data.notes||'')}</textarea></label></div><div class="actions" style="margin-top:14px"><button>Guardar</button><button type="button" class="secondary" onclick="closeModal()">Cancelar</button></div></form>`)}
-function saveIssue(e,edit){e.preventDefault();let o=Object.fromEntries(new FormData(e.target));o.odo=+o.odo||0;o.cost=+o.cost||0;o.vehicleId=selected;o.resolvedAt=o.resolvedAt||null;if(edit)Object.assign(db.issues.find(x=>x.id===edit),o);else{o.id='i-'+Date.now();db.issues.push(o)}closeModal();save()}function editIssue(id){issueForm(db.issues.find(x=>x.id===id))}function delIssue(id){if(confirm('¿Eliminar problema?')){db.issues=db.issues.filter(x=>x.id!==id);save()}}
-async function completeReminder(id){try{var r=db.reminders.find(function(x){return x.id===id});if(!r)return;var odo=Number(v().odo||0);r.lastDoneOdo=odo;r.completedAt=today();if(r.intervalMiles)r.nextMileage=odo+Number(r.intervalMiles);if(r.intervalMonths){var d=new Date();d.setMonth(d.getMonth()+Number(r.intervalMonths));r.nextDate=d.toISOString().slice(0,10);}else if(r.intervalDays){var d2=new Date();d2.setDate(d2.getDate()+Number(r.intervalDays));r.nextDate=d2.toISOString().slice(0,10);}r.status='pending';save()}catch(e){alert('No se pudo completar el recordatorio: '+e.message)}}
-async function decodeVIN(){let el=document.getElementById('vinResult');if(!v().vin||v().vin.length!==17){el.innerHTML='<div class="notice">Escribe un VIN de 17 caracteres primero.</div>';return}el.innerHTML='<div class="notice">Consultando NHTSA…</div>';try{let r=await fetch('https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValues/'+encodeURIComponent(v().vin)+'?format=json');let j=await r.json(),x=j.Results?.[0];if(!x)throw Error();let f=[['Marca',x.Make],['Modelo',x.Model],['Año',x.ModelYear],['Motor',x.EngineModel||x.DisplacementCC?((x.EngineModel||'')+' '+(x.DisplacementCC||'')+' cc'):x.EngineConfiguration],['Tracción',x.DriveType],['Transmisión',x.TransmissionStyle],['Carrocería',x.BodyClass],['País de fabricación',x.PlantCountry]];el.innerHTML='<div class="card section">'+f.map(a=>`<div class="row"><span>${esc(a[0])}</span><b>${esc(a[1]||'No disponible')}</b></div>`).join('')+'</div>'}catch(e){el.innerHTML='<div class="notice">No se pudo consultar el VIN desde este navegador. El VIN y el expediente siguen guardados localmente.</div>'}}
-function openRecall(){window.open('https://www.nhtsa.gov/recalls','_blank','noopener')}
-function backup(){const blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='EO_Garage_respaldo_'+today()+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
-function resetApp(){if(confirm('Esto borrará los datos locales y cargará nuevamente la Enclave de ejemplo. ¿Continuar?')){try{[KEY,'eo_garage_v11','eo_garage_v10','eo_garage_v9','eo_garage_v7','eo_garage_v6'].forEach(k=>localStorage.removeItem(k))}catch(e){}db=JSON.parse(JSON.stringify(seed));selected=db.vehicles[0]?.id||null;tab='resumen';render()}}
-function restore(){let i=document.createElement('input');i.type='file';i.accept='.json,application/json';i.onchange=()=>{let f=i.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let d=JSON.parse(r.result);if(!d.vehicles||!Array.isArray(d.records)||!Array.isArray(d.reminders)||!Array.isArray(d.issues))throw 0;if(!Array.isArray(d.expenses))d.expenses=[];db=d;selected=db.vehicles[0]?.id||null;save()}catch(e){alert('Archivo de respaldo no válido.')}};r.readAsText(f)};i.click()}
-function renderVehicles(){document.getElementById('vehicleList').innerHTML=db.vehicles.map(x=>`<div class="vehicle ${x.id===selected?'active':''}" onclick="selected='${x.id}';tab='resumen';render()"><b>${esc(x.make)} ${esc(x.model)}</b><small>${x.year} · ${Number(x.odo).toLocaleString()} ${esc(x.unit||'mi')}</small></div>`).join('')||'<div class="empty">Sin vehículos</div>'}
-async function setCloudStatus(text){const el=document.getElementById('cloudStatus');if(el)el.textContent=text}function openAuth(){const g=document.getElementById('authGate');if(g)g.style.display='flex'}async function logout(){const {error}=await sb.auth.signOut({scope:'local'});if(error)authMsg('No se pudo cerrar sesión: '+error.message)}function setAccountUI(session){const btn=document.getElementById('accountBtn'),out=document.getElementById('logoutBtn');if(btn)btn.textContent=session?'Cuenta: '+(session.user?.email||'conectada'):'Iniciar sesión';if(out)out.style.display=session?'block':'none';if(!session)setCloudStatus('☁️ Local')}
+function saveVehicle(e,edit){e.preventDefault();const o=Object.fromEntries(new FormData(e.target));o.year=+o.year||2020;o.odo=+o.odo||0;o.vin=(o.vin||'').toUpperCase();if(edit){Object.assign(v(),o)}else{o.id='v-'+Date.now();db.vehicles.push(o);selected=o.id}closeModal();save();toast(edit?'Vehículo actualizado':'Vehículo agregado','ok')}
+function deleteVehicle(id){if(db.vehicles.length<2){toast('Mínimo 1 vehículo','warn');return}if(confirm('¿Eliminar vehículo y todo su historial?')){db.vehicles=db.vehicles.filter(x=>x.id!==id);db.records=db.records.filter(x=>x.vehicleId!==id);db.reminders=db.reminders.filter(x=>x.vehicleId!==id);db.issues=db.issues.filter(x=>x.vehicleId!==id);db.expenses=db.expenses.filter(x=>x.vehicleId!==id);db.fuel=db.fuel.filter(x=>x.vehicleId!==id);selected=db.vehicles[0]?.id||null;closeModal();save();toast('Eliminado','bad')}}
+
+function recordForm(data={}){
+  const edit=!!data.id;
+  const ocr=window._ocrPending||{};
+  modal(`<h2>${edit?'Editar':'Registrar'} servicio + fotos</h2><form onsubmit="saveRecord(event,'${data.id||''}')">
+    <div style="display:flex;gap:6px;margin-bottom:10px"><button type="button" class="secondary" onclick="openOCR('record')">📸 Escanear ticket OCR</button><span class="sub">o sube fotos de refacciones</span></div>
+    <div class="formgrid">
+      <label>Fecha<input name="date" type="date" required value="${esc(data.date||ocr.date||today())}"></label><label>Odómetro<input name="odo" type="number" required value="${esc(data.odo??v().odo)}"></label>
+      <label class="full">Trabajo<input name="service" required value="${esc(data.service||ocr.concept||'')}" placeholder="Ej. Cambio aceite + filtro"></label>
+      <label>Categoría<input name="category" value="${esc(data.category||'')}"></label><label>Costo MXN<input name="cost" type="number" step="0.01" value="${esc(data.cost??ocr.amount??0)}"></label>
+      <label>Taller<input name="shop" value="${esc(data.shop||'')}"></label><label>Partes / Marca<input name="parts" value="${esc(data.parts||'')}"></label>
+      <label>Num parte<input name="partNumber" value="${esc(data.partNumber||'')}"></label><label class="full">Fotos de refacciones / factura<input type="file" id="recPhotos" accept="image/*" multiple onchange="handlePhotoInput(this,'recPhotoPreview').then(arr=>{window._tmpPhotos=arr})"><div id="recPhotoPreview" class="photo-grid">${(data.photos||[]).map(p=>`<img src="${p}" class="photo-thumb" onclick="openPhotoViewer('${p.replace(/'/g,'')}')">`).join('')}</div></label>
+      <label class="full">Notas<textarea name="notes">${esc(data.notes||ocr.notes||'')}</textarea></label>
+    </div><div style="margin-top:12px;display:flex;gap:8px"><button>Guardar servicio</button><button type="button" class="secondary" onclick="closeModal()">Cancelar</button></div></form>`);
+  window._tmpPhotos=data.photos||[];window._ocrPending=null;
+}
+async function saveRecord(e,editId){
+  e.preventDefault();const fd=new FormData(e.target);const o=Object.fromEntries(fd);o.odo=+o.odo||0;o.cost=+o.cost||0;o.vehicleId=selected;
+  const previewPhotos=getPhotosFromPreview('recPhotoPreview');const newPhotos=window._tmpPhotos||[];o.photos=[...new Set([...(previewPhotos||[]),...newPhotos])].slice(0,10);
+  if(editId){Object.assign(db.records.find(x=>x.id===editId),o)}else{o.id='r-'+Date.now();db.records.push(o);if(o.odo>v().odo)v().odo=o.odo;autoCreateReminderFromService(o);}
+  closeModal();save();toast('Servicio guardado con fotos','ok');window._tmpPhotos=[];
+}
+function editRecord(id){recordForm(db.records.find(x=>x.id===id))}function delRecord(id){if(confirm('¿Eliminar registro?')){db.records=db.records.filter(x=>x.id!==id);save();toast('Eliminado','bad')}}
+
+function openFuelForm(data={}){
+  const edit=!!data.id;const ocr=window._ocrPending||{};
+  modal(`<h2>${edit?'Editar':'Nueva'} carga de combustible</h2><form onsubmit="saveFuel(event,'${data.id||''}')">
+    <div style="display:flex;gap:6px;margin-bottom:10px"><button type="button" class="secondary" onclick="openOCR('fuel')">📸 Scan ticket gasolinera</button></div>
+    <div class="formgrid">
+      <label>Fecha<input name="date" type="date" required value="${esc(data.date||ocr.date||today())}"></label><label>Odómetro<input name="odo" type="number" required value="${esc(data.odo??v().odo)}"></label>
+      <label>Litros / Galones<input name="liters" type="number" step="0.01" required value="${esc(data.liters||'')}"></label><label>Unidad<select name="unitFuel"><option value="L" ${data.unitFuel!=='gal'?'selected':''}>Litros</option><option value="gal" ${data.unitFuel==='gal'?'selected':''}>Galones</option></select></label>
+      <label>Monto total MXN<input name="amount" type="number" step="0.01" required value="${esc(data.amount??ocr.amount??0)}"></label><label>Precio por litro<input name="pricePerLiter" type="number" step="0.01" value="${esc(data.pricePerLiter||'')}"></label>
+      <label>Estación / gasolinera<input name="station" value="${esc(data.station||'')}"></label><label><span style="display:flex;gap:8px;align-items:center"><input type="checkbox" name="fullTank" ${data.fullTank!==false?'checked':''} style="width:18px"> Tanque lleno (para cálculo km/L)</span></label>
+      <label class="full">Fotos ticket<input type="file" id="fuelPhotos" accept="image/*" multiple onchange="handlePhotoInput(this,'fuelPhotoPreview').then(arr=>{window._tmpFuelPhotos=arr})"><div id="fuelPhotoPreview" class="photo-grid">${(data.photos||[]).map(p=>`<img src="${p}" class="photo-thumb">`).join('')}</div></label>
+      <label class="full">Notas<textarea name="notes">${esc(data.notes||ocr.notes||'')}</textarea></label>
+    </div><div style="margin-top:12px;display:flex;gap:8px"><button>Guardar carga</button><button type="button" class="secondary" onclick="closeModal()">Cancelar</button></div></form>`);
+  window._tmpFuelPhotos=data.photos||[];window._ocrPending=null;
+}
+function saveFuel(e,editId){
+  e.preventDefault();const o=Object.fromEntries(new FormData(e.target));o.odo=+o.odo||0;o.amount=+o.amount||0;o.liters=o.liters?+o.liters:0;o.pricePerLiter=o.pricePerLiter?+o.pricePerLiter:(o.liters? o.amount/o.liters :0);o.fullTank=e.target.fullTank.checked;o.vehicleId=selected;o.unitFuel=o.unitFuel||'L';
+  const litersForCalc=o.unitFuel==='gal'? o.liters*3.78541 : o.liters;
+  // calc efficiency vs previous full tank
+  const prevFuels=[...db.fuel.filter(f=>f.vehicleId===selected)].sort((a,b)=>b.date.localeCompare(a.date)||b.odo-a.odo);
+  const lastFull=prevFuels.find(f=>f.fullTank&&f.id!==editId);
+  if(lastFull&&o.fullTank&&o.odo>lastFull.odo&&litersForCalc>0){
+    const dist=o.odo-lastFull.odo;const totalLiters=prevFuels.filter(f=>{return f.date>=lastFull.date&&f.date<=o.date}).reduce((a,f)=>a+(f.unitFuel==='gal'?f.liters*3.78541:f.liters),0)+litersForCalc - (lastFull.unitFuel==='gal'?lastFull.liters*3.78541:lastFull.liters);
+    // simpler: distance / liters current if full to full
+    const litersUsed=litersForCalc; // if user filled full, this is approx used since last full if previous was full
+    // Actually need sum between fulls
+    const between=prevFuels.filter(f=>f.odo>lastFull.odo&&f.odo<o.odo);let sumLit=litersForCalc;between.forEach(f=>sumLit+= f.unitFuel==='gal'?f.liters*3.78541:f.liters);
+    if(sumLit>0){o.kml=dist/sumLit;o.mpg=o.kml*2.35215}
+  }
+  const previewPhotos=getPhotosFromPreview('fuelPhotoPreview');o.photos=[...new Set([...(previewPhotos||[]),...(window._tmpFuelPhotos||[])])].slice(0,5);
+  if(editId){Object.assign(db.fuel.find(x=>x.id===editId),o)}else{o.id='f-'+Date.now();db.fuel.push(o);if(o.odo>v().odo)v().odo=o.odo}
+  closeModal();save();toast(o.kml?`Carga guardada · ${o.kml.toFixed(2)} km/L`:'Carga guardada','ok');window._tmpFuelPhotos=[];
+}
+function editFuel(id){openFuelForm(db.fuel.find(x=>x.id===id))}function delFuel(id){if(confirm('¿Eliminar carga?')){db.fuel=db.fuel.filter(x=>x.id!==id);save();toast('Eliminada','bad')}}
+
+function reminderForm(data={}){
+  const edit=!!data.id;
+  modal(`<h2>${edit?'Editar':'Programar'} servicio</h2><form onsubmit="saveReminder(event,'${data.id||''}')">
+    <div class="formgrid"><label class="full">Servicio<input name="name" required value="${esc(data.name||'')}"></label>
+    <label>Próx km<input name="nextMileage" type="number" value="${esc(data.nextMileage||'')}"></label><label>Próx fecha<input name="nextDate" type="date" value="${esc(data.nextDate||'')}"></label>
+    <label>Intervalo km<input name="intervalMiles" type="number" value="${esc(data.intervalMiles||'')}"></label><label>Intervalo meses<input name="intervalMonths" type="number" value="${esc(data.intervalMonths||'')}"></label>
+    <label>Avise km<input name="warnMiles" type="number" value="${esc(data.warnMiles||1000)}"></label><label>Avise días<input name="warnDays" type="number" value="${esc(data.warnDays||30)}"></label>
+    <label>Tipo<select name="type"><option>Reemplazo</option><option ${data.type==='Inspección'?'selected':''}>Inspección</option></select></label><label>Fuente<select name="source"><option>Usuario</option><option ${data.source==='Fabricante'?'selected':''}>Fabricante</option><option ${data.source==='E.O. IA'?'selected':''}>E.O. IA</option></select></label>
+    <label class="full">Notas<textarea name="notes">${esc(data.notes||'')}</textarea></label></div>
+    <div style="margin-top:12px;display:flex;gap:8px"><button>Guardar</button><button type="button" class="secondary" onclick="closeModal()">Cancelar</button></div></form>`);
+}
+function saveReminder(e,editId){e.preventDefault();const o=Object.fromEntries(new FormData(e.target));o.vehicleId=selected;o.nextMileage=o.nextMileage?+o.nextMileage:null;o.intervalMiles=o.intervalMiles?+o.intervalMiles:null;o.intervalMonths=o.intervalMonths?+o.intervalMonths:null;o.warnMiles=+o.warnMiles||1000;o.warnDays=+o.warnDays||30;if(editId)Object.assign(db.reminders.find(x=>x.id===editId),o);else{o.id='m-'+Date.now();o.status='pending';db.reminders.push(o)}closeModal();save();toast('Recordatorio guardado','ok')}
+function editReminder(id){reminderForm(db.reminders.find(x=>x.id===id))}function delReminder(id){if(confirm('¿Eliminar?')){db.reminders=db.reminders.filter(x=>x.id!==id);save();toast('Eliminado','bad')}}
+async function completeReminder(id){const r=db.reminders.find(x=>x.id===id);if(!r)return;const odo=Number(v().odo||0);r.lastDoneOdo=odo;r.completedAt=today();if(r.intervalMiles)r.nextMileage=odo+Number(r.intervalMiles);if(r.intervalMonths){const d=new Date();d.setMonth(d.getMonth()+Number(r.intervalMonths));r.nextDate=d.toISOString().slice(0,10);}r.status='pending';save();toast(`Hecho · próximo ${r.nextMileage||r.nextDate||''}`,'ok')}
+
+function issueForm(data={}){
+  const edit=!!data.id;
+  modal(`<h2>${edit?'Editar':'Nuevo'} diagnóstico + costos</h2><form onsubmit="saveIssue(event,'${data.id||''}')">
+    <div class="formgrid"><label>Fecha<input name="date" type="date" value="${esc(data.date||today())}"></label><label>Odómetro<input name="odo" type="number" value="${esc(data.odo??v().odo)}"></label>
+    <label class="full">Título / síntoma<input name="title" required value="${esc(data.title||'')}" placeholder="Vibración 60-80"></label>
+    <label>Severidad<select name="severity"><option>baja</option><option ${data.severity==='media'?'selected':''}>media</option><option ${data.severity==='alta'?'selected':''}>alta</option></select></label><label>Estado<select name="status"><option>abierto</option><option ${data.status==='en observación'?'selected':''}>en observación</option><option ${data.status==='resuelto'?'selected':''}>resuelto</option></select></label>
+    <label class="full">Descripción<textarea name="description" required>${esc(data.description||'')}</textarea></label><label>Costo estimado<input name="cost" type="number" step="0.01" value="${esc(data.cost||0)}"></label>
+    <label class="full">Fotos evidencia<input type="file" id="issuePhotos" accept="image/*" multiple onchange="handlePhotoInput(this,'issuePhotoPreview').then(a=>window._tmpIssuePhotos=a)"><div id="issuePhotoPreview" class="photo-grid">${(data.photos||[]).map(p=>`<img src="${p}" class="photo-thumb">`).join('')}</div></label>
+    <label class="full">Notas seguimiento<textarea name="notes">${esc(data.notes||'')}</textarea></label></div>
+    <div style="margin-top:12px;display:flex;gap:8px"><button>Guardar diagnóstico</button><button type="button" class="secondary" onclick="closeModal()">Cancelar</button></div></form>`);
+  window._tmpIssuePhotos=data.photos||[];
+}
+function saveIssue(e,editId){e.preventDefault();const o=Object.fromEntries(new FormData(e.target));o.odo=+o.odo||0;o.cost=+o.cost||0;o.vehicleId=selected;o.photos=[...new Set([...(getPhotosFromPreview('issuePhotoPreview')||[]),...(window._tmpIssuePhotos||[])])].slice(0,8);if(!o.costHistory)o.costHistory=[];if(editId){const old=db.issues.find(x=>x.id===editId);if(old.cost!==o.cost){old.costHistory=old.costHistory||[];old.costHistory.push({date:today(),amount:o.cost,notes:'Actualización costo'});}Object.assign(old,o)}else{o.id='i-'+Date.now();o.costHistory=[{date:today(),amount:o.cost,notes:'Costo inicial'}];db.issues.push(o)}closeModal();save();toast('Diagnóstico guardado','ok');window._tmpIssuePhotos=[]}
+function editIssue(id){issueForm(db.issues.find(x=>x.id===id))}function delIssue(id){if(confirm('¿Eliminar diagnóstico?')){db.issues=db.issues.filter(x=>x.id!==id);save();toast('Eliminado','bad')}}
+
+function expenseForm(data={}){
+  const edit=!!data.id;const ocr=window._ocrPending||{};
+  modal(`<h2>${edit?'Editar':'Nuevo'} gasto + ticket</h2><form onsubmit="saveExpense(event,'${data.id||''}')">
+    <div style="display:flex;gap:6px;margin-bottom:10px"><button type="button" class="secondary" onclick="openOCR('expense')">📸 Scan ticket OCR</button></div>
+    <div class="formgrid"><label>Fecha<input name="date" type="date" required value="${esc(data.date||ocr.date||today())}"></label><label>Odo<input name="odo" type="number" value="${esc(data.odo??v().odo)}"></label>
+    <label>Categoría<select name="category"><option ${data.category==='Gasolina'?'selected':''}>Gasolina</option><option ${data.category==='Piezas'?'selected':''}>Piezas</option><option ${data.category==='Seguro'?'selected':''}>Seguro</option><option ${data.category==='Lavado'?'selected':''}>Lavado</option><option ${data.category==='Otro'?'selected':''}>Otro</option></select></label><label>Monto MXN<input name="amount" type="number" step="0.01" required value="${esc(data.amount??ocr.amount??0)}"></label>
+    <label class="full">Descripción<input name="description" required value="${esc(data.description||ocr.concept||'')}"></label>
+    <label class="full">Foto ticket<input type="file" id="expPhotos" accept="image/*" multiple onchange="handlePhotoInput(this,'expPhotoPreview').then(a=>window._tmpExpPhotos=a)"><div id="expPhotoPreview" class="photo-grid">${(data.photos||[]).map(p=>`<img src="${p}" class="photo-thumb">`).join('')}</div></label>
+    <label class="full">Notas<textarea name="notes">${esc(data.notes||ocr.notes||'')}</textarea></label></div>
+    <div style="margin-top:12px;display:flex;gap:8px"><button>Guardar</button><button type="button" class="secondary" onclick="closeModal()">Cancelar</button></div></form>`);
+  window._tmpExpPhotos=data.photos||[];window._ocrPending=null;
+}
+function saveExpense(e,editId){e.preventDefault();const o=Object.fromEntries(new FormData(e.target));o.odo=+o.odo||0;o.amount=+o.amount||0;o.vehicleId=selected;o.photos=[...new Set([...(getPhotosFromPreview('expPhotoPreview')||[]),...(window._tmpExpPhotos||[])])].slice(0,8);if(editId)Object.assign(db.expenses.find(x=>x.id===editId),o);else{o.id=crypto.randomUUID();db.expenses.push(o)}closeModal();save();toast('Gasto guardado','ok');window._tmpExpPhotos=[]}
+function delExpense(id){if(confirm('¿Eliminar gasto?')){db.expenses=db.expenses.filter(x=>x.id!==id);save();toast('Eliminado','bad')}}
+
+/* Smart reminders */
+const SERVICE_MAP=[
+  {kw:['aceite','oil'],name:'Cambio de aceite y filtro',miles:7500,months:6},
+  {kw:['filtro de aire','air filter'],name:'Cambio filtro de aire motor',miles:15000,months:12},
+  {kw:['bujía','spark','bujia'],name:'Cambio de bujías',miles:30000,months:24},
+  {kw:['frenos','pastilla','balata','rotor'],name:'Inspección de frenos',miles:15000,months:12},
+  {kw:['transmisión','transmision','cvt'],name:'Cambio fluido transmisión',miles:40000,months:36},
+  {kw:['anticongelante','refrigerante','coolant'],name:'Cambio anticongelante',miles:30000,months:24},
+  {kw:['banda','serpentina','belt'],name:'Inspección banda serpentina',miles:40000,months:36},
+  {kw:['llantas','rotación','rotacion'],name:'Rotación de llantas',miles:7500,months:6},
+];
+function autoCreateReminderFromService(record){
+  const txt=(record.service+' '+record.category).toLowerCase();
+  for(const m of SERVICE_MAP){if(m.kw.some(k=>txt.includes(k))){const exists=db.reminders.some(r=>r.vehicleId===record.vehicleId&&r.name.toLowerCase().includes(m.name.toLowerCase().split(' ')[0])&&reminderStatus(r)[1]!=='bad');if(!exists){const nextMiles=Number(v().odo||record.odo)+m.miles;const d=new Date();d.setMonth(d.getMonth()+m.months);db.reminders.push({id:'m-'+Date.now()+Math.random().toString(16).slice(2),vehicleId:record.vehicleId,name:m.name,nextMileage:nextMiles,nextDate:d.toISOString().slice(0,10),warnMiles:800,warnDays:30,type:'Reemplazo',source:'E.O. IA',intervalMiles:m.miles,intervalMonths:m.months,status:'pending',notes:`Auto-generado tras: ${record.service} el ${record.date}`});toast(`🧠 Recordatorio IA creado: ${m.name} → ${nextMiles.toLocaleString()} mi`,'ok',5000);}break;}}
+}
+function generateSmartReminders(){
+  let created=0;db.records.forEach(r=>{const before=db.reminders.length;autoCreateReminderFromService(r);if(db.reminders.length>before)created++;});if(created){save();toast(`🧠 IA generó ${created} recordatorios inteligentes`,'ok');}else toast('IA: todo al día, sin nuevos recordatorios','info');
+}
+
+/* Search */
+function onGlobalSearch(val){filterText=val.toLowerCase().trim();db.settings.search=filterText;localStorage.setItem(KEY,JSON.stringify(db));render();}
+
+/* VIN */
+async function decodeVIN(){const el=document.getElementById('vinResult');const cur=v();if(!cur?.vin||cur.vin.length!==17){el.innerHTML='<div class="notice">VIN 17 caracteres requerido</div>';return}el.innerHTML='<div class="notice">Consultando NHTSA…</div>';try{const r=await fetch('https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValues/'+encodeURIComponent(cur.vin)+'?format=json');const j=await r.json();const x=j.Results?.[0];if(!x)throw Error();const f=[['Marca',x.Make],['Modelo',x.Model],['Año',x.ModelYear],['Motor',x.EngineModel||x.DisplacementCC+' cc'],['Tracción',x.DriveType],['Transmisión',x.TransmissionStyle],['Carrocería',x.BodyClass],['Combustible',x.FuelTypePrimary],['País',x.PlantCountry]];el.innerHTML='<div class="card section" style="padding:10px">'+f.filter(a=>a[1]).map(a=>`<div class="row"><span>${esc(a[0])}</span><b>${esc(a[1])}</b></div>`).join('')+'</div>'}catch(e){el.innerHTML='<div class="notice bad">Error VIN: '+esc(e.message||e)+'</div>'}}
+function openRecall(){window.open('https://www.nhtsa.gov/recalls?vin='+encodeURIComponent(v()?.vin||''),'_blank')}function copyVIN(){const cur=v()?.vin||'';if(!cur){toast('Sin VIN','warn');return}navigator.clipboard.writeText(cur).then(()=>toast('VIN copiado','ok'))}
+
+/* Backup */
+function exportJSON(){const blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='EO_Garage_v14_Build001_'+today()+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),600);toast('Respaldo JSON con fotos descargado','ok')}
+function exportCSV(){let rows=[];db.records.forEach(r=>rows.push({tipo:'servicio',fecha:r.date,odo:r.odo,cat:r.category,desc:r.service,costo:r.cost,fotos:r.photos?.length||0}));db.fuel.forEach(r=>rows.push({tipo:'combustible',fecha:r.date,odo:r.odo,cat:'Gasolina',desc:r.station||'Carga',costo:r.amount,fotos:r.photos?.length||0,litros:r.liters,kml:r.kml||''}));db.expenses.forEach(r=>rows.push({tipo:'gasto',fecha:r.date,odo:r.odo,cat:r.category,desc:r.description,costo:r.amount,fotos:r.photos?.length||0}));if(!rows.length){toast('Sin datos','warn');return}const headers=Object.keys(rows[0]);const csv=[headers.join(',')].concat(rows.map(r=>headers.map(h=>`"${String(r[h]??'').replace(/"/g,'""')}"`).join(','))).join('\n');const blob=new Blob([csv],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='EO_Garage_Build001_'+today()+'.csv';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),600);toast('CSV exportado','ok')}
+function restore(){const i=document.createElement('input');i.type='file';i.accept='.json';i.onchange=()=>{const f=i.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d.vehicles||!Array.isArray(d.records))throw 0;d.fuel=d.fuel||[];d.expenses=d.expenses||[];db=normalize(d);selected=db.vehicles[0]?.id||null;save();toast('Respaldo restaurado','ok',5000)}catch(e){toast('Archivo no válido','bad')}};r.readAsText(f)};i.click()}
+
+/* Cloud */
+function setCloudStatus(t){const el=document.getElementById('cloudStatus');if(el)el.textContent=t}
+function openAuth(){document.getElementById('authGate').style.display='flex'}function closeAuth(){document.getElementById('authGate').style.display='none'}
+async function logout(){const {error}=await sb.auth.signOut({scope:'local'});if(error)toast(error.message,'bad');else toast('Sesión cerrada','info')}
+function setAccountUI(s){const btn=document.getElementById('accountBtn'),out=document.getElementById('logoutBtn');if(btn)btn.textContent=s?'Cuenta: '+(s.user?.email||'ok'):'Cuenta';if(out)out.style.display=s?'block':'none';if(!s)setCloudStatus('☁️ Local')}
 function authMsg(t){const el=document.getElementById('authMsg');if(el)el.textContent=t}
 function uuid(id){return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(String(id||''))?id:crypto.randomUUID()}
-async function syncTable(table, rows, mapFn){const existing=await sb.from(table).select('id').eq('owner_id',cloudUser.id);if(existing.error)throw existing.error;const keep=new Set();const payload=rows.map(r=>{const id=uuid(r.id);r.id=id;keep.add(id);return mapFn(r,id)});if(payload.length){const {error}=await sb.from(table).upsert(payload,{onConflict:'id'});if(error)throw error}for(const row of existing.data||[]){if(!keep.has(row.id)){const {error}=await sb.from(table).delete().eq('owner_id',cloudUser.id).eq('id',row.id);if(error)throw error}}}
-async function cloudSave(force=false){if(!cloudUser||(!cloudReady&&!force))return;if(cloudSyncing){await new Promise(resolve=>setTimeout(resolve,350));if(cloudSyncing)return;}cloudSyncing=true;try{setCloudStatus('☁️ Guardando…');const idMap=new Map();for(const r of db.vehicles){const old=r.id;const id=uuid(old);r.id=id;idMap.set(old,id)}db.records.forEach(r=>{if(idMap.has(r.vehicleId))r.vehicleId=idMap.get(r.vehicleId)});db.reminders.forEach(r=>{if(idMap.has(r.vehicleId))r.vehicleId=idMap.get(r.vehicleId)});db.issues.forEach(r=>{if(idMap.has(r.vehicleId))r.vehicleId=idMap.get(r.vehicleId)});db.expenses.forEach(r=>{if(idMap.has(r.vehicleId))r.vehicleId=idMap.get(r.vehicleId)});await syncTable('eo_garage_vehicles',db.vehicles,(r,id)=>({id,owner_id:cloudUser.id,make:r.make,model:r.model,model_year:Number(r.year)||null,vin:r.vin||null,engine:r.engine||null,drivetrain:r.drive||null,current_mileage:Number(r.odo)||0,tire_size:r.tire||null,tire_pressure_psi:r.tirePressure?Number(r.tirePressure):null,oil_brand:r.oil||null,oil_viscosity:r.oilViscosity||null,oil_filter_brand:r.oilFilter||null,spark_plug_brand:r.spark||null,notes:r.notes||null,service_notes:r.serviceNotes||null}));await syncTable('eo_garage_maintenance',db.records,(r,id)=>({id,owner_id:cloudUser.id,vehicle_id:r.vehicleId,service_date:r.date||today(),mileage:Number(r.odo)||null,category:r.category||'Mantenimiento',description:r.service||'Trabajo realizado',brand:r.parts||null,part_number:r.partNumber||null,cost:Number(r.cost)||0,shop:r.shop||null,notes:r.notes||null}));await syncTable('eo_garage_reminders',db.reminders,(r,id)=>({id,owner_id:cloudUser.id,vehicle_id:r.vehicleId,title:r.name||'Servicio',category:r.type||null,interval_miles:r.intervalMiles?Number(r.intervalMiles):null,interval_months:r.intervalMonths?Number(r.intervalMonths):null,due_mileage:r.nextMileage?Number(r.nextMileage):null,due_date:r.nextDate||null,status:r.status||'pending',notes:r.notes||null}));await syncTable('eo_garage_issues',db.issues,(r,id)=>({id,owner_id:cloudUser.id,vehicle_id:r.vehicleId,title:r.title||'Problema',description:r.description||null,priority:r.severity||'normal',status:r.status==='resuelto'?'resuelto':(r.status==='en observación'?'en observación':'abierto'),diagnosed_at:r.date||null,notes:r.notes||null,cost:Number(r.cost)||0}));await syncTable('eo_garage_expenses',db.expenses,(r,id)=>({id,owner_id:cloudUser.id,vehicle_id:r.vehicleId,expense_date:r.date||today(),mileage:Number(r.odo)||null,category:r.category||'Otro',description:r.description||'Gasto',amount:Number(r.amount)||0,notes:r.notes||null}));localStorage.setItem(KEY,JSON.stringify(db));setCloudStatus('☁️ Nube conectada')}catch(e){console.error('cloudSave',e);setCloudStatus('⚠️ Guardado local; nube pendiente');authMsg('No se pudo guardar en la nube: '+(e.message||e))}finally{cloudSyncing=false}}
-async function loadCloudToLocal(){const qv=await sb.from('eo_garage_vehicles').select('*').order('created_at',{ascending:true});if(qv.error)throw qv.error;if(!qv.data.length){await cloudSave(true);cloudReady=true;return}const vehicles=qv.data.map(x=>({id:x.id,make:x.make,model:x.model,year:x.model_year,vin:x.vin||'',engine:x.engine||'',drive:x.drivetrain||'',odo:x.current_mileage||0,unit:'mi',fuel:'Gasolina',tire:x.tire_size||'',tirePressure:x.tire_pressure_psi||'',oil:x.oil_brand||'',oilViscosity:x.oil_viscosity||'',oilFilter:x.oil_filter_brand||'',spark:x.spark_plug_brand||'',notes:x.notes||'',serviceNotes:x.service_notes||''}));const ids=vehicles.map(x=>x.id);const [qm,qr,qi,qe]=await Promise.all([sb.from('eo_garage_maintenance').select('*').in('vehicle_id',ids).order('service_date',{ascending:false}),sb.from('eo_garage_reminders').select('*').in('vehicle_id',ids),sb.from('eo_garage_issues').select('*').in('vehicle_id',ids),sb.from('eo_garage_expenses').select('*').in('vehicle_id',ids).order('expense_date',{ascending:false})]);if(qm.error)throw qm.error;if(qr.error)throw qr.error;if(qi.error)throw qi.error;if(qe.error)throw qe;db.vehicles=vehicles;db.records=(qm.data||[]).map(x=>({id:x.id,vehicleId:x.vehicle_id,date:x.service_date,odo:x.mileage||0,category:x.category||'',service:x.description||'',parts:x.brand||'',partNumber:x.part_number||'',cost:Number(x.cost)||0,shop:x.shop||'',notes:x.notes||''}));db.reminders=(qr.data||[]).map(x=>({id:x.id,vehicleId:x.vehicle_id,name:x.title,nextMileage:x.due_mileage,nextDate:x.due_date,warnMiles:1000,warnDays:30,type:x.category||'Reemplazo',source:'Supabase',intervalMiles:x.interval_miles||null,intervalMonths:x.interval_months||null,status:x.status||'pending',notes:x.notes||''}));db.issues=(qi.data||[]).map(x=>({id:x.id,vehicleId:x.vehicle_id,date:x.diagnosed_at||today(),odo:0,title:x.title,severity:x.priority||'normal',status:(x.status==='resolved'||x.status==='resuelto')?'resuelto':(x.status==='in_progress'||x.status==='en observación'?'en observación':'abierto'),description:x.description||'',notes:x.notes||'',cost:Number(x.cost)||0}));db.expenses=(qe.data||[]).map(x=>({id:x.id,vehicleId:x.vehicle_id,date:x.expense_date,odo:x.mileage||0,category:x.category||'Otro',description:x.description||'',amount:Number(x.amount)||0,notes:x.notes||''}));selected=db.vehicles[0]?.id||null;localStorage.setItem(KEY,JSON.stringify(db));render()}
-async function syncCloud(){if(!cloudUser||cloudSyncing)return;cloudSyncing=true;try{setCloudStatus('☁️ Sincronizando…');await loadCloudToLocal();cloudReady=true;setCloudStatus('☁️ Nube conectada')}catch(e){console.error(e);setCloudStatus('⚠️ Error de nube');authMsg('No se pudo sincronizar: '+(e.message||e));}finally{cloudSyncing=false}}
-document.getElementById('authForm').addEventListener('submit',async e=>{e.preventDefault();authMsg('Iniciando sesión…');const email=document.getElementById('authEmail').value.trim(),password=document.getElementById('authPassword').value;const {error}=await sb.auth.signInWithPassword({email,password});if(error)authMsg('No se pudo iniciar sesión: '+error.message);else{authMsg('Sesión iniciada. Sincronizando…');document.getElementById('authGate').style.display='none'}});
-const authSubscription=sb.auth.onAuthStateChange((event,session)=>{cloudUser=session?.user||null;setAccountUI(session);const g=document.getElementById('authGate');if(session){if(g)g.style.display='none';if(event==='INITIAL_SESSION'||event==='SIGNED_IN'||event==='USER_UPDATED'){setCloudStatus('☁️ Conectando…');setTimeout(()=>syncCloud(),0)}}else{cloudReady=false;setCloudStatus('☁️ Local')}});sb.auth.getSession().then(({data})=>{const session=data?.session||null;cloudUser=session?.user||null;setAccountUI(session);if(session){setCloudStatus('☁️ Conectando…');setTimeout(()=>syncCloud(),0)}});document.getElementById('signupBtn').addEventListener('click',async()=>{const email=document.getElementById('authEmail').value.trim(),password=document.getElementById('authPassword').value;if(!email||password.length<6)return authMsg('Escribe un correo y una contraseña de mínimo 6 caracteres.');authMsg('Creando cuenta…');const {data,error}=await sb.auth.signUp({email,password});if(error)return authMsg('No se pudo crear la cuenta: '+error.message);authMsg(data.session?'Cuenta creada. Sincronizando…':'Cuenta creada. Revisa tu correo para confirmar la cuenta.')});
-save=async function(){try{localStorage.setItem(KEY,JSON.stringify(db));}catch(e){alert('No se pudo guardar en este navegador. Puedes usar Respaldo para conservar tus datos.')}render();if(cloudUser)await cloudSave(true)};
-try{render()}catch(err){document.getElementById('app').innerHTML='<div class="card section"><h2>No se pudo cargar E.O. Garage</h2><div class="notice">El almacenamiento anterior tenía datos incompatibles. Usa Restaurar con un respaldo válido o limpia los datos del sitio y vuelve a abrirlo.</div><div class="sub" style="margin-top:10px">Detalle técnico: '+esc(err.message||err)+'</div></div>'}
-</script><div id="fatal" style="display:none;position:fixed;inset:0;background:#0b0d10;color:#fff;z-index:99999;padding:28px;font-family:system-ui"><h2>E.O. Garage</h2><p>Ocurrió un error al cargar la aplicación.</p><pre id="fatalMsg" style="white-space:pre-wrap;color:#ffb4ab"></pre><button onclick="localStorage.removeItem('eo_garage_v12');localStorage.removeItem('eo_garage_v10');localStorage.removeItem('eo_garage_v9');localStorage.removeItem('eo_garage_v7');location.reload()" style="padding:12px 16px;border-radius:12px;border:0">Reiniciar datos locales</button></div>
-<script>window.addEventListener('error',function(e){var f=document.getElementById('fatal');if(f){f.style.display='block';document.getElementById('fatalMsg').textContent=e.message||'Error desconocido';}});</script>
-</body></html>
+async function syncTable(table,rows,mapFn){
+  const existing=await sb.from(table).select('id').eq('owner_id',cloudUser.id);if(existing.error)throw existing.error;const keep=new Set();const payload=rows.map(r=>{const id=uuid(r.id);r.id=id;keep.add(id);return mapFn(r,id)});if(payload.length){const {error}=await sb.from(table).upsert(payload,{onConflict:'id'});if(error)throw error}for(const row of existing.data||[]){if(!keep.has(row.id)){const {error}=await sb.from(table).delete().eq('owner_id',cloudUser.id).eq('id',row.id);if(error)throw error}}
+}
+async function cloudSave(force=false){
+  if(!cloudUser||(!cloudReady&&!force))return;if(cloudSyncing){saveQueue=true;return}cloudSyncing=true;
+  try{
+    setCloudStatus('☁️ Guardando…');
+    const idMap=new Map();for(const r of db.vehicles){const old=r.id;const id=uuid(old);if(old!==id)idMap.set(old,id);r.id=id}
+    if(idMap.size){const remap=arr=>arr.forEach(r=>{if(idMap.has(r.vehicleId))r.vehicleId=idMap.get(r.vehicleId)});remap(db.records);remap(db.reminders);remap(db.issues);remap(db.expenses);remap(db.fuel)}
+    await syncTable('eo_garage_vehicles',db.vehicles,(r,id)=>({id,owner_id:cloudUser.id,make:r.make,model:r.model,model_year:Number(r.year)||null,vin:r.vin||null,engine:r.engine||null,drivetrain:r.drive||null,current_mileage:Number(r.odo)||0,tire_size:r.tire||null,tire_pressure_psi:r.tirePressure?Number(r.tirePressure):null,oil_brand:r.oil||null,oil_viscosity:r.oilViscosity||null,oil_filter_brand:r.oilFilter||null,spark_plug_brand:r.spark||null,notes:r.notes||null,service_notes:r.serviceNotes||null}));
+    await syncTable('eo_garage_maintenance',db.records,(r,id)=>({id,owner_id:cloudUser.id,vehicle_id:r.vehicleId,service_date:r.date||today(),mileage:Number(r.odo)||null,category:r.category||'Mantenimiento',description:r.service||'Trabajo',brand:r.parts||null,part_number:r.partNumber||null,cost:Number(r.cost)||0,shop:r.shop||null,notes:(r.notes||'')+ (r.photos?.length? `\n[FOTOS:${r.photos.length}]`:'') }));
+    await syncTable('eo_garage_reminders',db.reminders,(r,id)=>({id,owner_id:cloudUser.id,vehicle_id:r.vehicleId,title:r.name||'Servicio',category:r.type||null,interval_miles:r.intervalMiles?Number(r.intervalMiles):null,interval_months:r.intervalMonths?Number(r.intervalMonths):null,due_mileage:r.nextMileage?Number(r.nextMileage):null,due_date:r.nextDate||null,status:r.status||'pending',notes:r.notes||null}));
+    await syncTable('eo_garage_issues',db.issues,(r,id)=>({id,owner_id:cloudUser.id,vehicle_id:r.vehicleId,title:r.title||'Problema',description:r.description||null,priority:r.severity||'normal',status:r.status==='resuelto'?'resuelto':(r.status==='en observación'?'en observación':'abierto'),diagnosed_at:r.date||null,notes:(r.notes||'')+`\nCOST_HIST:${JSON.stringify(r.costHistory||[])}`,cost:Number(r.cost)||0}));
+    await syncTable('eo_garage_expenses',db.expenses,(r,id)=>({id,owner_id:cloudUser.id,vehicle_id:r.vehicleId,expense_date:r.date||today(),mileage:Number(r.odo)||null,category:r.category||'Otro',description:r.description||'Gasto',amount:Number(r.amount)||0,notes:r.notes||null}));
+    try{await syncTable('eo_garage_fuel',db.fuel,(r,id)=>({id,owner_id:cloudUser.id,vehicle_id:r.vehicleId,fuel_date:r.date||today(),mileage:Number(r.odo)||0,liters:Number(r.liters)||0,amount:Number(r.amount)||0,price_per_liter:Number(r.pricePerLiter)||0,station:r.station||null,is_full_tank:!!r.fullTank,kml:r.kml?Number(r.kml):null,notes:r.notes||null}));}catch(e){console.warn('fuel table missing',e.message)}
+    localStorage.setItem(KEY,JSON.stringify(db));setCloudStatus('☁️ Nube conectada');
+  }catch(e){console.error(e);setCloudStatus('⚠️ Local; nube pendiente');toast('Error nube: '+(e.message||e),'bad')}finally{cloudSyncing=false;if(saveQueue){saveQueue=false;setTimeout(()=>cloudSave(true),500)}}
+}
+async function loadCloudToLocal(){
+  const qv=await sb.from('eo_garage_vehicles').select('*').order('created_at',{ascending:true});if(qv.error)throw qv.error;if(!qv.data.length){await cloudSave(true);cloudReady=true;return}
+  const vehicles=qv.data.map(x=>({id:x.id,make:x.make,model:x.model,year:x.model_year,vin:x.vin||'',engine:x.engine||'',drive:x.drivetrain||'',odo:x.current_mileage||0,unit:'mi',fuel:'Gasolina',tire:x.tire_size||'',tirePressure:x.tire_pressure_psi||'',oil:x.oil_brand||'',oilViscosity:x.oil_viscosity||'',oilFilter:x.oil_filter_brand||'',spark:x.spark_plug_brand||'',notes:x.notes||'',serviceNotes:x.service_notes||''}));
+  const ids=vehicles.map(x=>x.id);
+  const [qm,qr,qi,qe,qf]=await Promise.all([
+    sb.from('eo_garage_maintenance').select('*').in('vehicle_id',ids).order('service_date',{ascending:false}),
+    sb.from('eo_garage_reminders').select('*').in('vehicle_id',ids),
+    sb.from('eo_garage_issues').select('*').in('vehicle_id',ids),
+    sb.from('eo_garage_expenses').select('*').in('vehicle_id',ids).order('expense_date',{ascending:false}),
+    sb.from('eo_garage_fuel').select('*').in('vehicle_id',ids).order('fuel_date',{ascending:false}).then(r=>{return r}).catch(()=>({data:[],error:null}))
+  ]);
+  if(qm.error)throw qm.error;if(qr.error)throw qr.error;if(qi.error)throw qi.error;if(qe.error)throw qe.error;
+  db.vehicles=vehicles;
+  db.records=(qm.data||[]).map(x=>({id:x.id,vehicleId:x.vehicle_id,date:x.service_date,odo:x.mileage||0,category:x.category||'',service:x.description||'',parts:x.brand||'',partNumber:x.part_number||'',cost:Number(x.cost)||0,shop:x.shop||'',notes:x.notes||'',photos:[]}));
+  db.reminders=(qr.data||[]).map(x=>({id:x.id,vehicleId:x.vehicle_id,name:x.title,nextMileage:x.due_mileage,nextDate:x.due_date,warnMiles:1000,warnDays:30,type:x.category||'Reemplazo',source:'Supabase',intervalMiles:x.interval_miles||null,intervalMonths:x.interval_months||null,status:x.status||'pending',notes:x.notes||''}));
+  db.issues=(qi.data||[]).map(x=>({id:x.id,vehicleId:x.vehicle_id,date:x.diagnosed_at||today(),odo:0,title:x.title,severity:x.priority||'normal',status:(x.status==='resolved'||x.status==='resuelto')?'resuelto':(x.status==='in_progress'||x.status==='en observación'?'en observación':'abierto'),description:x.description||'',notes:x.notes||'',cost:Number(x.cost)||0,costHistory:[],photos:[]}));
+  db.expenses=(qe.data||[]).map(x=>({id:x.id,vehicleId:x.vehicle_id,date:x.expense_date,odo:x.mileage||0,category:x.category||'Otro',description:x.description||'',amount:Number(x.amount)||0,notes:x.notes||'',photos:[]}));
+  db.fuel=(qf.data||[]).map(x=>({id:x.id,vehicleId:x.vehicle_id,date:x.fuel_date||x.expense_date||today(),odo:x.mileage||0,liters:Number(x.liters)||0,amount:Number(x.amount)||0,pricePerLiter:Number(x.price_per_liter)||0,station:x.station||'',fullTank:!!x.is_full_tank,kml:x.kml?Number(x.kml):null,notes:x.notes||'',photos:[],unitFuel:'L'}));
+  selected=db.vehicles[0]?.id||null;localStorage.setItem(KEY,JSON.stringify(db));render();
+}
+async function syncCloud(){if(!cloudUser||cloudSyncing)return;cloudSyncing=true;try{setCloudStatus('☁️ Sincronizando…');await loadCloudToLocal();cloudReady=true;setCloudStatus('☁️ Nube conectada');toast('Nube sincronizada','ok')}catch(e){setCloudStatus('⚠️ Error nube');toast('Error: '+(e.message||e),'bad')}finally{cloudSyncing=false}}
+
+/* Auth */
+document.getElementById('authForm').addEventListener('submit',async e=>{e.preventDefault();authMsg('Entrando…');const email=document.getElementById('authEmail').value.trim(),password=document.getElementById('authPassword').value;const {error}=await sb.auth.signInWithPassword({email,password});if(error)authMsg('Error: '+error.message);else{authMsg('Sesión iniciada');closeAuth()}});
+sb.auth.onAuthStateChange((ev,session)=>{cloudUser=session?.user||null;setAccountUI(session);if(session){if(ev==='INITIAL_SESSION'||ev==='SIGNED_IN'){setCloudStatus('☁️ Conectando…');setTimeout(()=>syncCloud(),100)}}else{cloudReady=false;setCloudStatus('☁️ Local')}});
+sb.auth.getSession().then(({data})=>{const s=data?.session||null;cloudUser=s?.user||null;setAccountUI(s);if(s){setCloudStatus('☁️ Conectando…');setTimeout(()=>syncCloud(),100)}});
+document.getElementById('signupBtn').addEventListener('click',async()=>{const email=document.getElementById('authEmail').value.trim(),password=document.getElementById('authPassword').value;if(!email||password.length<6)return authMsg('Correo y 6 caracteres mínimo');authMsg('Creando…');const {data,error}=await sb.auth.signUp({email,password});if(error)return authMsg(error.message);authMsg(data.session?'Cuenta creada':'Revisa tu correo para confirmar')});
+
+/* Save */
+let saveDebounce=null;
+async function save(){try{localStorage.setItem(KEY,JSON.stringify(db))}catch(e){toast('LocalStorage lleno, exporta respaldo','bad')}render();clearTimeout(saveDebounce);saveDebounce=setTimeout(()=>{if(cloudUser)cloudSave(true)},700)}
+
+/* PWA Manifest + SW */
+(function(){
+  const manifest={name:"E.O. Garage v14 Build 001",short_name:"EOGarage",description:"Bitácora vehicular premium con OCR, combustible y fotos",start_url:".",display:"standalone",background_color:"#080a0d",theme_color:"#0b0d10",icons:[{src:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23d9b46a'/%3E%3Ctext x='50' y='62' font-size='46' text-anchor='middle' font-weight='900' fill='%23111'%3EEO%3C/text%3E%3C/svg%3E",sizes:"192x192",type:"image/svg+xml"}]};
+  const blob=new Blob([JSON.stringify(manifest)],{type:'application/json'});const url=URL.createObjectURL(blob);document.getElementById('manifestLink').href=url;
+  if('serviceWorker' in navigator){
+    const swCode=`self.addEventListener('install',e=>{self.skipWaiting()});self.addEventListener('fetch',e=>{e.respondWith(fetch(e.request).catch(()=>caches.match(e.request)))})`;
+    const swBlob=new Blob([swCode],{type:'text/javascript'});const swUrl=URL.createObjectURL(swBlob);
+    navigator.serviceWorker.register(swUrl).catch(()=>{});
+  }
+})();
+
+/* Init */
+try{
+  render();
+  document.getElementById('bn-resumen')?.classList.add('active');
+  setTimeout(()=>{const inp=document.getElementById('globalSearch');if(inp)inp.value=filterText||''},100);
+}catch(err){document.getElementById('app').innerHTML=`<div class="card section"><h2>Error carga</h2><div class="notice">${esc(err.message||err)}</div></div>`}
+</script>
+<script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductId(a);if(productId){e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*");return}e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:a.href},"*");return}var dataHref=findDataHref(target);if(dataHref&&/^https?:\/\//.test(dataHref.href)&&dataHref.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(dataHref.node,dataHref.href))return;e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:dataHref.href},"*")}},true)})();</script><script>(function(){var FOCUS_TYPE="ecto:artifact-focus-request";var CLOSE_TYPE="ecto:artifact-close-request";function focusArtifactDocument(){var body=document.body;if(!body)return;try{window.focus();}catch(e){}if(!body.hasAttribute("tabindex"))body.setAttribute("tabindex","-1");try{body.focus({preventScroll:true});}catch(e){try{body.focus();}catch(e2){}}}window.addEventListener("message",function(event){if(event.source!==window.parent)return;var data=event.data;if(!data||typeof data!=="object"||data.type!==FOCUS_TYPE)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",focusArtifactDocument,{once:true});return;}focusArtifactDocument();});window.addEventListener("keydown",function(event){if(event.key!=="Escape")return;window.setTimeout(function(){if(event.defaultPrevented)return;window.parent.postMessage({type:CLOSE_TYPE},"*");},0);});})();</script></body>
+</html>
