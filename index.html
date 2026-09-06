@@ -27,14 +27,12 @@
 <meta name="theme-color" content="#0b0d10">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="E.O. Garage">
-<meta name="eo-garage-version" content="15.4-fix-botones">
-<title>E.O. Garage v15.4 FIX · Botones funcionando + App Limpia</title>
+<meta name="eo-garage-version" content="15.5-fix-botones-definitivo">
+<title>E.O. Garage v15.5 FIX · Botones 100% funcionando</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.115.0"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 <style>
-
 :root{
   --bg:#080a0d; --bg1:#0f1318; --card:#171e27; --card2:#1d2632; --card3:#222e3c;
   --line:#252f3c; --line2:#2e3a4b;
@@ -108,17 +106,17 @@ input:focus,select:focus,textarea:focus{border-color:var(--gold)} textarea{min-h
 #toastRoot{position:fixed;right:12px;left:12px;bottom:90px;z-index:100;display:grid;gap:8px;pointer-events:none;max-width:480px;margin:0 auto}
 .toast{pointer-events:auto;padding:11px 13px;border-radius:14px;background:#1b242f;border:1px solid #2e3a48;display:flex;gap:9px;box-shadow:0 10px 30px rgba(0,0,0,.4);font-size:12px}
 .footer{text-align:center;color:#5a6675;font-size:10px;padding:20px 0}
-
 </style>
 </head>
 <body>
 <div class="app">
   <div class="top">
-    <div class="brand"><div class="logo">EO</div><div><h1>E.O. Garage v15.4</h1><p id="topSub">FIX botones · App limpia · Todo parejo</p></div></div>
+    <div class="brand"><div class="logo">EO</div><div><h1>E.O. Garage v15.5</h1><p id="topSub">FIX · Botones funcionando · App limpia</p></div></div>
     <div class="vehicle-switch" onclick="openVehicleDrawer()"><div><b id="topVehicle">Enclave</b><span id="topOdo">169,000 mi</span></div><span>▼</span></div>
   </div>
+
   <div class="content" id="appContent"></div>
-  <div class="footer">v15.4 FIX · Botones funcionando · PDF v2 · 28p + 32p · Salud · Refacciones · Millas · Timeline · Bitácora</div>
+  <div class="footer">v15.5 FIX · Botones funcionando · App Limpia Pareja · Todo</div>
 </div>
 
 <div class="bottom-nav" id="bottomNav">
@@ -134,21 +132,6 @@ input:focus,select:focus,textarea:focus{border-color:var(--gold)} textarea{min-h
 <div id="modalRoot"></div>
 <div id="toastRoot"></div>
 <div id="drawerRoot"></div>
-<div id="authGate" style="display:none;position:fixed;inset:0;background:rgba(8,10,13,.94);backdrop-filter:blur(14px);z-index:100;align-items:center;justify-content:center;padding:16px">
-  <div class="card-app" style="width:min(420px,100%)">
-    <div class="brand" style="margin-bottom:8px"><div class="logo">EO</div> E.O. Garage v15.4</div>
-    <div class="sub" style="margin:5px 0 14px;color:var(--muted);font-size:11px">Solo tus datos, en tu nube</div>
-    <form id="authForm">
-      <div class="formgrid"><label class="full">Correo<input id="authEmail" type="email" required placeholder="tu correo"></label><label class="full">Contraseña<input id="authPassword" type="password" required minlength="6" placeholder="••••••"></label></div>
-      <div style="display:flex;gap:8px;margin-top:12px"><button type="submit" class="btn-gold" style="flex:1">Entrar</button><button type="button" class="btn-sec" id="signupBtn" style="flex:1">Crear cuenta</button></div>
-      <div id="authMsg" class="notice" style="margin-top:10px">Conecta para nube.</div>
-      <button type="button" class="btn-ghost" style="width:100%;margin-top:8px" onclick="closeAuth()">Seguir local</button>
-    </form>
-  </div>
-</div>
-
-<button id="logoutBtn" class="btn-sec" onclick="logout()" style="position:fixed;right:10px;bottom:96px;z-index:90;display:none;padding:7px 11px;font-size:11px;border-radius:999px">Cerrar sesión</button>
-<div id="cloudStatus" class="sub" style="position:fixed;right:10px;bottom:12px;z-index:90;background:#171e27;border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:10px">☁️ Local</div>
 
 <script>
 // ---- DATA + LOGIC (reused from v15) ----
@@ -241,7 +224,7 @@ function render(){
   if(tab==='resumen'){
     html+=`
       <div class="hero">
-        <div class="hero-top"><div><div class="eyebrow">Vehículo principal · v15.1 App</div><h2>${esc(x.make)} ${esc(x.model)} ${x.year}</h2><p class="sub" style="margin:2px 0 0">${esc(x.vin||'')} · ${esc(x.engine||'')} · ${esc(x.tire||'')}</p></div><button class="btn-sec" style="padding:8px 12px;font-size:11px" onclick="openVehicleDrawer()">Cambiar</button></div>
+        <div class="hero-top"><div><div class="eyebrow">Vehículo principal · v15.5 FIX</div><h2>${esc(x.make)} ${esc(x.model)} ${x.year}</h2><p class="sub" style="margin:2px 0 0">${esc(x.vin||'')} · ${esc(x.engine||'')} · ${esc(x.tire||'')}</p></div><button class="btn-sec" style="padding:8px 12px;font-size:11px" onclick="openVehicleDrawer()">Cambiar</button></div>
         <div class="odo-big">
           <div class="odo-card"><span>ODÓMETRO</span><b>${Number(x.odo).toLocaleString()} ${esc(x.unit||'mi')}</b><small>Actualizado ${db.mileageLogs.slice(-1)[0]?.date||today()}</small></div>
           <div class="odo-card"><span>ESTE MES</span><b style="color:${milesThisMonth<0?'var(--bad)':'var(--text)'}">${milesThisMonth>=0?'+'+milesThisMonth.toLocaleString():'—'}</b><small>Prom ${Math.round(avg)} mi/mes</small></div>
@@ -393,19 +376,7 @@ function setBudget(){const b=prompt('Presupuesto mensual MXN?',db.settings.month
 function exportJSON(){const blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`EO_Garage_v15.1_${today()}.json`;a.click();}
 function exportPDFServicios(){const {jsPDF}=window.jspdf;const doc=new jsPDF();const x=v();doc.text(`Servicios pendientes - ${x.make} ${x.model} - ${today()}`,14,20);let y=30;db.reminders.filter(r=>r.vehicleId===x.id).forEach(r=>{doc.text(`${r.name} - ${r.nextMileage||r.nextDate||''} - ${reminderStatus(r)[0]}`,14,y);y+=8;if(y>280){doc.addPage();y=20;}});doc.save(`Servicios_${x.make}_${today()}.pdf`);}
 
-try{render();}
-
-// ---- FIX: asegurar render y funciones críticas ----
-function fixRender(){
-  try{render();}catch(e){
-    console.error(e);
-    document.getElementById('appContent').innerHTML = `<div class="card-app"><div class="notice">Error: ${esc(e.message||e)}<br><button class="btn-gold" style="margin-top:10px" onclick="location.reload()">Recargar</button></div></div>`;
-  }
-}
-
-// Inicializar
-document.addEventListener('DOMContentLoaded', fixRender);
-setTimeout(fixRender, 100);
+try{render();}catch(e){document.getElementById('appContent').innerHTML='<div class="card-app">Error '+esc(e.message)+'</div>'}
 </script>
 <script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductId(a);if(productId){e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*");return}e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:a.href},"*");return}var dataHref=findDataHref(target);if(dataHref&&/^https?:\/\//.test(dataHref.href)&&dataHref.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(dataHref.node,dataHref.href))return;e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:dataHref.href},"*")}},true)})();</script><script>(function(){var FOCUS_TYPE="ecto:artifact-focus-request";var CLOSE_TYPE="ecto:artifact-close-request";function focusArtifactDocument(){var body=document.body;if(!body)return;try{window.focus();}catch(e){}if(!body.hasAttribute("tabindex"))body.setAttribute("tabindex","-1");try{body.focus({preventScroll:true});}catch(e){try{body.focus();}catch(e2){}}}window.addEventListener("message",function(event){if(event.source!==window.parent)return;var data=event.data;if(!data||typeof data!=="object"||data.type!==FOCUS_TYPE)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",focusArtifactDocument,{once:true});return;}focusArtifactDocument();});window.addEventListener("keydown",function(event){if(event.key!=="Escape")return;window.setTimeout(function(){if(event.defaultPrevented)return;window.parent.postMessage({type:CLOSE_TYPE},"*");},0);});})();</script></body>
 </html>
