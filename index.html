@@ -28,7 +28,7 @@
 <meta name="apple-mobile-web-app-title" content="E.O. Garage">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="description" content="E.O. Garage - Buick Enclave 2013 vertical telefono">
-<meta name="eo-garage-version" content="33.0-millaje-real-169972-inicio-real">
+<meta name="eo-garage-version" content="35.0-vin-real-5GAKRCKD1DJ218711-169972">
 <title>E.O. Garage</title>
 <link rel="icon" type="image/png" sizes="32x32" href="eo_icon_32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="eo_icon_180.png">
@@ -364,9 +364,9 @@ img, canvas, svg { max-width:100%; height:auto; }
 
 </style></head><body>
 <div class="wrap">
-<div class="top"><div style="display:flex;align-items:center;gap:10px;min-width:0;flex:1"><button class="secondary" onclick="toggleDrawer()" style="width:38px;height:38px;padding:0;display:grid;place-items:center;flex-shrink:0" aria-label="Menu">M</button><div class="brand" style="min-width:0;flex:1"><div class="brand-badge" style="background:linear-gradient(135deg,#d9b46a,#9a7a3a);width:36px;height:36px;border-radius:11px;display:grid;place-items:center;color:#111;font-weight:900;flex-shrink:0">EO</div><div style="min-width:0;flex:1"><div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">E.O. Garage</div><div class="sub" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">v33 169,972 mi REAL Inicio</div></div></div></div><div class="top-right"><div id="cloudStatus" class="sub" style="display:inline-flex;align-items:center;gap:4px;background:#151a21;border:1px solid #2a333e;border-radius:999px;padding:5px 9px;font-size:10px"><span class="cloud-dot" style="width:8px;height:8px;border-radius:50%;background:var(--ok);display:inline-block"></span>Local</div><button class="secondary" id="accountBtn" onclick="openAuth()" style="flex-shrink:0">Cuenta</button><button id="logoutBtn" class="secondary" onclick="logout()" style="display:none;padding:6px 10px;font-size:10px">Salir</button></div></div>
+<div class="top"><div style="display:flex;align-items:center;gap:10px;min-width:0;flex:1"><button class="secondary" onclick="toggleDrawer()" style="width:38px;height:38px;padding:0;display:grid;place-items:center;flex-shrink:0" aria-label="Menu">M</button><div class="brand" style="min-width:0;flex:1"><div class="brand-badge" style="background:linear-gradient(135deg,#d9b46a,#9a7a3a);width:36px;height:36px;border-radius:11px;display:grid;place-items:center;color:#111;font-weight:900;flex-shrink:0">EO</div><div style="min-width:0;flex:1"><div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">E.O. Garage</div><div class="sub" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">v35 VIN 5GAKRCKD1DJ218711 + 169,972 mi REAL</div></div></div></div><div class="top-right"><div id="cloudStatus" class="sub" style="display:inline-flex;align-items:center;gap:4px;background:#151a21;border:1px solid #2a333e;border-radius:999px;padding:5px 9px;font-size:10px"><span class="cloud-dot" style="width:8px;height:8px;border-radius:50%;background:var(--ok);display:inline-block"></span>Local</div><button class="secondary" id="accountBtn" onclick="openAuth()" style="flex-shrink:0">Cuenta</button><button id="logoutBtn" class="secondary" onclick="logout()" style="display:none;padding:6px 10px;font-size:10px">Salir</button></div></div>
 <div class="layout"><aside class="side" id="sidePanel"><div class="side-head" style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap"><span class="sub" style="font-weight:800">MIS VEHICULOS</span><div style="display:flex;gap:6px;align-items:center"><button onclick="addVehicle()" style="background:var(--gold);color:#111;border:0;border-radius:8px;padding:6px 12px;font-size:11px;font-weight:800">＋ Nuevo</button><span class="sub" id="vehicleCount"></span></div></div><div class="vehicle-list" id="vehicleList"></div><div style="padding:10px;border-top:1px solid var(--line)"><button onclick="addVehicle()" style="width:100%;background:linear-gradient(135deg,#d9b46a,#9a7a3a);color:#111;border:0;border-radius:12px;padding:12px;font-weight:800;font-size:13px">＋ Agregar otro vehículo</button><div style="font-size:9px;color:var(--muted);text-align:center;margin-top:6px">Con mismas funciones: servicios, millas, checklist, IA</div></div></aside><main class="content" id="app"><div class="app-loading">Cargando E.O. Garage v29 vertical...</div></main></div>
-<div class="footer" style="color:#5a6675;text-align:center;font-size:10px;padding:18px;padding-bottom:calc(18px + env(safe-area-inset-bottom));word-break:break-word">v33 Fix: Millaje real 169972 pre-cargado como inicio<br>100% vertical telefono - Guarda en inicio con icono EO dorado</div></div>
+<div class="footer" style="color:#5a6675;text-align:center;font-size:10px;padding:18px;padding-bottom:calc(18px + env(safe-area-inset-bottom));word-break:break-word">v35 Fix: VIN REAL 5GAKRCKD1DJ218711 confirmado + NHTSA decode<br>100% vertical telefono - Guarda en inicio con icono EO dorado</div></div>
 <div class="bottom-nav-v22" id="bottomNav"><button onclick="switchTab('resumen')" id="bn-resumen" aria-label="Inicio"><div class="ico">🏠</div><b>RES</b><span>Inicio</span></button><button onclick="switchTab('millas')" id="bn-millas" aria-label="Millas"><div class="ico">🛣️</div><b>MIL</b><span>Millas</span></button><button onclick="switchTab('mantenimiento')" id="bn-mantenimiento" aria-label="Servicios"><div class="ico">⏰</div><b>SER</b><span>Servicios</span></button><button onclick="switchTab('checklist')" id="bn-checklist" aria-label="Checklist"><div class="ico">✅</div><b>CHK</b><span>Check</span></button><button onclick="openMasMenu()" id="bn-mas" aria-label="Mas"><div class="ico">⋯</div><b>MAS</b><span>Mas</span></button></div>
 <button class="ia-float" onclick="openIAModalV22()" title="IA Mecanico" style="position:fixed;left:14px;bottom:92px;z-index:44;width:52px;height:52px;border-radius:18px;background:linear-gradient(135deg,#d9b46a,#9a7a3a);color:#111;border:0;box-shadow:0 8px 24px rgba(217,180,106,.3);display:grid;place-items:center;font-size:22px;font-weight:800" aria-label="IA Mecanico">🧠</button>
 <div id="modalRoot"></div><div id="toastRoot"></div>
@@ -667,9 +667,9 @@ function closeModal(){document.getElementById('modalRoot').innerHTML=''}
 
 function vehicleForm(data={}){
   const edit=!!data.id;
-  modal(`<h2>${edit?'Editar':'Agregar'} vehículo</h2><form onsubmit="saveVehicle(event,${edit})"><div class="formgrid">
+  modal(`<h2>${edit?'Editar':'Agregar'} vehículo</h2><div class="notice" style="margin-bottom:10px;font-size:11px">💡 Si pones el VIN (17 caracteres) y tocas <b>🔎 Decodificar</b>, se llena automático marca, modelo, año, motor y tracción desde NHTSA</div><form onsubmit="saveVehicle(event,${edit})"><div class="formgrid">
     <label>Marca<input name="make" required value="${esc(data.make||'')}"></label><label>Modelo<input name="model" required value="${esc(data.model||'')}"></label>
-    <label>Año<input name="year" type="number" value="${esc(data.year||'')}" required></label><label>VIN<input name="vin" maxlength="17" value="${esc(data.vin||'')}" style="font-family:var(--mono)"></label>
+    <label>Año<input name="year" type="number" value="${esc(data.year||'')}" required></label><label>VIN<div style="display:flex;gap:6px"><input name="vin" id="vinInputForm" maxlength="17" value="${esc(data.vin||'')}" style="font-family:var(--mono);flex:1" placeholder="17 caracteres"><button type="button" class="secondary" onclick="decodeVINForm()" style="padding:8px 10px;font-size:11px;white-space:nowrap">🔎 Decodificar</button></div></label>
     <label>Motor<input name="engine" value="${esc(data.engine||'')}"></label><label>Tracción<input name="drive" value="${esc(data.drive||'')}"></label>
     <label>Odómetro actual<input name="odo" type="number" value="${esc(data.odo||0)}" required></label><label>Unidad<select name="unit"><option ${data.unit==='km'?'selected':''}>km</option><option ${data.unit!=='km'?'selected':''}>mi</option></select></label>
     <label>Llantas<input name="tire" value="${esc(data.tire||'')}"></label><label>Presión PSI<input name="tirePressure" value="${esc(data.tirePressure||'')}"></label>
@@ -1162,6 +1162,33 @@ function exportPDFServiciosV2(){
 function exportJSON(){const blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`EO_Garage_Personal_${today()}.json`;a.click();toast('Respaldo descargado','ok')}
 function restore(){const i=document.createElement('input');i.type='file';i.accept='.json';i.onchange=()=>{const f=i.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d.vehicles)throw 0;d.mileageLogs=d.mileageLogs||[];db=normalize(d);selected=db.vehicles[0]?.id||null;save();toast('Respaldo restaurado','ok')}catch(e){toast('Archivo no válido','bad')}};r.readAsText(f)};i.click()}
 function decodeVIN(){const el=document.getElementById('vinResult');const cur=v();if(!cur?.vin||cur.vin.length!==17){el.innerHTML='<div class="notice">VIN 17 caracteres</div>';return}el.innerHTML='<div class="notice">Consultando…</div>';fetch('https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValues/'+encodeURIComponent(cur.vin)+'?format=json').then(r=>r.json()).then(j=>{const x=j.Results?.[0];const f=[['Marca',x.Make],['Modelo',x.Model],['Año',x.ModelYear],['Motor',x.EngineModel||x.DisplacementCC+' cc'],['Tracción',x.DriveType]];el.innerHTML='<div class="card section" style="padding:10px">'+f.map(a=>`<div class="row"><span>${esc(a[0])}</span><b>${esc(a[1]||'—')}</b></div>`).join('')+'</div>'}).catch(e=>{el.innerHTML='<div class="notice bad">Error: '+esc(e.message)+'</div>'})}
+
+function decodeVINForm(){
+  const vinEl = document.getElementById('vinInputForm');
+  const vin = (vinEl?.value||'').trim().toUpperCase();
+  if(!vin || vin.length!==17){ toast('VIN debe tener 17 caracteres','warn'); return; }
+  toast('Consultando VIN en NHTSA...','info');
+  fetch('https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValues/'+encodeURIComponent(vin)+'?format=json')
+    .then(r=>r.json())
+    .then(j=>{
+      const x=j.Results?.[0];
+      if(!x){ toast('No se encontró VIN','bad'); return; }
+      // Auto-fill form fields
+      const form = vinEl?.closest('form');
+      if(form){
+        if(x.Make) form.make.value = x.Make;
+        if(x.Model) form.model.value = x.Model;
+        if(x.ModelYear) form.year.value = x.ModelYear;
+        if(x.EngineModel || x.DisplacementCC){
+          form.engine.value = x.EngineModel || (x.DisplacementCC ? x.DisplacementCC+' cc' : '') || (x.EngineCylinders ? x.EngineCylinders+' cil' : '');
+        }
+        if(x.DriveType) form.drive.value = x.DriveType;
+        toast(`VIN decodificado: ${x.Make} ${x.Model} ${x.ModelYear}`,'ok',4000);
+      }
+    })
+    .catch(e=>{ toast('Error: '+e.message,'bad'); });
+}
+
 function openRecall(){window.open('https://www.nhtsa.gov/recalls?vin='+encodeURIComponent(v()?.vin||''),'_blank')}
 
 /* Cloud */
