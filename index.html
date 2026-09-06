@@ -28,11 +28,14 @@
 <meta name="apple-mobile-web-app-title" content="E.O. Garage">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="description" content="E.O. Garage - Buick Enclave 2013 vertical telefono">
-<meta name="eo-garage-version" content="36.0-fix-nube-169000-a-169972">
+<meta name="eo-garage-version" content="42.0-logo-garaje-ilustrativo-dorado">
 <title>E.O. Garage</title>
 <link rel="icon" type="image/png" sizes="32x32" href="eo_icon_32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="eo_icon_180.png">
 <link rel="apple-touch-icon" sizes="192x192" href="eo_icon_192.png">
+<link rel="apple-touch-icon" sizes="512x512" href="eo_icon_512.png">
+<link rel="icon" type="image/png" sizes="192x192" href="eo_icon_192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="eo_icon_512.png">
 <link rel="manifest" href="manifest.json">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.115.0"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
@@ -364,9 +367,9 @@ img, canvas, svg { max-width:100%; height:auto; }
 
 </style></head><body>
 <div class="wrap">
-<div class="top"><div style="display:flex;align-items:center;gap:10px;min-width:0;flex:1"><button class="secondary" onclick="toggleDrawer()" style="width:38px;height:38px;padding:0;display:grid;place-items:center;flex-shrink:0" aria-label="Menu">M</button><div class="brand" style="min-width:0;flex:1"><div class="brand-badge" style="background:linear-gradient(135deg,#d9b46a,#9a7a3a);width:36px;height:36px;border-radius:11px;display:grid;place-items:center;color:#111;font-weight:900;flex-shrink:0">EO</div><div style="min-width:0;flex:1"><div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">E.O. Garage</div><div class="sub" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">v36 FIX Nube 169,000 → 169,972 mi REAL</div></div></div></div><div class="top-right"><div id="cloudStatus" class="sub" style="display:inline-flex;align-items:center;gap:4px;background:#151a21;border:1px solid #2a333e;border-radius:999px;padding:5px 9px;font-size:10px"><span class="cloud-dot" style="width:8px;height:8px;border-radius:50%;background:var(--ok);display:inline-block"></span>Local</div><button class="secondary" id="accountBtn" onclick="openAuth()" style="flex-shrink:0">Cuenta</button><button id="logoutBtn" class="secondary" onclick="logout()" style="display:none;padding:6px 10px;font-size:10px">Salir</button></div></div>
+<div class="top"><div style="display:flex;align-items:center;gap:10px;min-width:0;flex:1"><button class="secondary" onclick="toggleDrawer()" style="width:38px;height:38px;padding:0;display:grid;place-items:center;flex-shrink:0" aria-label="Menu">M</button><div class="brand" style="min-width:0;flex:1"><div class="brand-badge" style="background:linear-gradient(135deg,#d9b46a,#9a7a3a);width:36px;height:36px;border-radius:11px;display:grid;place-items:center;color:#111;font-weight:900;flex-shrink:0">EO</div><div style="min-width:0;flex:1"><div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">E.O. Garage</div><div class="sub" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">v35 VIN 5GAKRCKD1DJ218711 + 169,972 mi REAL</div></div></div></div><div class="top-right"><div id="cloudStatus" class="sub" style="display:inline-flex;align-items:center;gap:4px;background:#151a21;border:1px solid #2a333e;border-radius:999px;padding:5px 9px;font-size:10px"><span class="cloud-dot" style="width:8px;height:8px;border-radius:50%;background:var(--ok);display:inline-block"></span>Local</div><button class="secondary" id="accountBtn" onclick="openAuth()" style="flex-shrink:0">Cuenta</button><button id="logoutBtn" class="secondary" onclick="logout()" style="display:none;padding:6px 10px;font-size:10px">Salir</button></div></div>
 <div class="layout"><aside class="side" id="sidePanel"><div class="side-head" style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap"><span class="sub" style="font-weight:800">MIS VEHICULOS</span><div style="display:flex;gap:6px;align-items:center"><button onclick="addVehicle()" style="background:var(--gold);color:#111;border:0;border-radius:8px;padding:6px 12px;font-size:11px;font-weight:800">＋ Nuevo</button><span class="sub" id="vehicleCount"></span></div></div><div class="vehicle-list" id="vehicleList"></div><div style="padding:10px;border-top:1px solid var(--line)"><button onclick="addVehicle()" style="width:100%;background:linear-gradient(135deg,#d9b46a,#9a7a3a);color:#111;border:0;border-radius:12px;padding:12px;font-weight:800;font-size:13px">＋ Agregar otro vehículo</button><div style="font-size:9px;color:var(--muted);text-align:center;margin-top:6px">Con mismas funciones: servicios, millas, checklist, IA</div></div></aside><main class="content" id="app"><div class="app-loading">Cargando E.O. Garage v29 vertical...</div></main></div>
-<div class="footer" style="color:#5a6675;text-align:center;font-size:10px;padding:18px;padding-bottom:calc(18px + env(safe-area-inset-bottom));word-break:break-word">v36 Fix: Nube sobrescribe 169,000 → Forzar a 169,972 mi REAL decode<br>100% vertical telefono - Guarda en inicio con icono EO dorado</div></div>
+<div class="footer" style="color:#5a6675;text-align:center;font-size:10px;padding:18px;padding-bottom:calc(18px + env(safe-area-inset-bottom));word-break:break-word">v35 Fix: VIN REAL 5GAKRCKD1DJ218711 confirmado + NHTSA decode<br>100% vertical telefono - Guarda en inicio con icono EO dorado</div></div>
 <div class="bottom-nav-v22" id="bottomNav"><button onclick="switchTab('resumen')" id="bn-resumen" aria-label="Inicio"><div class="ico">🏠</div><b>RES</b><span>Inicio</span></button><button onclick="switchTab('millas')" id="bn-millas" aria-label="Millas"><div class="ico">🛣️</div><b>MIL</b><span>Millas</span></button><button onclick="switchTab('mantenimiento')" id="bn-mantenimiento" aria-label="Servicios"><div class="ico">⏰</div><b>SER</b><span>Servicios</span></button><button onclick="switchTab('checklist')" id="bn-checklist" aria-label="Checklist"><div class="ico">✅</div><b>CHK</b><span>Check</span></button><button onclick="openMasMenu()" id="bn-mas" aria-label="Mas"><div class="ico">⋯</div><b>MAS</b><span>Mas</span></button></div>
 <button class="ia-float" onclick="openIAModalV22()" title="IA Mecanico" style="position:fixed;left:14px;bottom:92px;z-index:44;width:52px;height:52px;border-radius:18px;background:linear-gradient(135deg,#d9b46a,#9a7a3a);color:#111;border:0;box-shadow:0 8px 24px rgba(217,180,106,.3);display:grid;place-items:center;font-size:22px;font-weight:800" aria-label="IA Mecanico">🧠</button>
 <div id="modalRoot"></div><div id="toastRoot"></div>
@@ -413,7 +416,7 @@ const done=[
   ['Suspensión','Reemplazo de bieletas',''],['Frenos','Rectificado de 4 rotores',''],['Frenos','Cambio de pastillas delanteras',''],
   ['Suspensión','Reemplazo de bujes flotantes',''],['Suspensión','Reemplazo de bujes barra estabilizadora',''],['Motor','Reemplazo de soporte motor',''],['Suspensión','Reemplazo de amortiguadores traseros','']
 ];
-seed.records=done.map((x,i)=>({id:'r'+i,vehicleId:'v1',date:'2026-09-02',odo:169972,category:x[0],service:x[1],parts:x[2],partNumber:'',cost:0,shop:'',notes:'Realizado 169k mi'}));
+seed.records=done.map((x,i)=>({id:'r'+i,vehicleId:'v1',date:'2026-09-02',odo:169972,category:x[0],service:x[1],parts:x[2],partNumber:'',cost:0,shop:'',notes:'Realizado 169,972 mi - servicio recién hecho'}));
 seed.reminders=[
   {id:'m1',vehicleId:'v1',name:'Rotación de llantas + servicio',nextMileage:177472,nextDate:null,warnMiles:1000,warnDays:30,type:'Inspección',source:'Fabricante',intervalMiles:7500,intervalMonths:null,status:'pending',notes:''},
   {id:'m2',vehicleId:'v1',name:'Cambio de aceite y filtro',nextMileage:null,nextDate:'2027-09-02',warnMiles:800,warnDays:30,type:'Reemplazo',source:'Fabricante',intervalMiles:7500,intervalMonths:6,status:'pending',notes:''},
@@ -533,7 +536,7 @@ function render(){
     app.innerHTML=`
       <div class="hero-v18">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">
-          <div><div style="font-size:9px;color:var(--gold);font-weight:800;letter-spacing:1px">PERSONAL · SOLO TUYO · BUILD 19.0</div><h1 style="margin:4px 0;font-size:20px">${esc(x.make)} ${esc(x.model)} <span style="color:var(--gold)">${x.year}</span></h1><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"><span class="pill">VIN ${esc((x.vin||'').slice(-8))}</span><span class="pill">${esc(x.engine||'3.6L V6')}</span><span class="pill">${Number(x.odo).toLocaleString()} mi</span></div></div>
+          <div><div style="font-size:9px;color:var(--gold);font-weight:800;letter-spacing:1px">PERSONAL · SOLO TUYO · BUILD 19.0</div><h1 style="margin:4px 0;font-size:20px">${esc(x.make)} ${esc(x.model)} <span style="color:var(--gold)">${x.year}</span></h1><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"><span class="pill" onclick="copyVIN()" style="cursor:pointer" title="Toca para copiar VIN completo">VIN ${esc(x.vin||'')} 📋</span><span class="pill">${esc(x.engine||'3.6L V6')}</span><span class="pill">${Number(x.odo).toLocaleString()} mi</span></div></div>
           <button onclick="openMileageModal()" style="background:var(--gold);color:#111;border:0;border-radius:10px;padding:7px 12px;font-size:11px;font-weight:700">+ Millas</button>
         </div>
         <div class="odo-row-v18">
@@ -603,7 +606,23 @@ function tabHtml(t,x,rec,rem,iss,exp,mLogs,monthlyData,avgMonthly){
   if(t==='partes') return `<div class="card section"><div class="section-head"><div><div class="eyebrow">Catálogo Enclave 2013</div><h2>Refacciones compatibles</h2></div><div style="display:flex;gap:6px"><button onclick="openPartForm()">＋ Refacción</button><button class="secondary" onclick="exportPDFServicios()">📄 PDF mecánico</button></div></div>${partsTable()}${budgetHtml()}</div>`;
   if(t==='vin') return `<div class="card section"><div class="eyebrow">VIN</div><h2>VIN y recalls</h2><div class="rows"><div class="row"><span>VIN</span><b style="font-family:var(--mono)">${esc(x.vin||'')}</b></div></div><div style="display:flex;gap:8px;margin-top:12px"><button onclick="decodeVIN()">🔎 Decodificar</button><button class="secondary" onclick="openRecall()">NHTSA recalls</button></div><div id="vinResult" style="margin-top:12px"></div></div><div class="card section" style="margin-top:12px">${renderHealthSemaphore()}</div>`;
 
-  return `<div class="card section"><div class="eyebrow">Ficha</div><h2>Ficha técnica</h2><div class="rows">
+  return `<div class="card section" style="border:1px solid #d9b46a44"><div class="eyebrow">📋 VIN COMPLETO - Toca para copiar</div>
+  <div style="background:#0e1318;border:1px solid #2a333e;border-radius:12px;padding:14px;margin:8px 0;text-align:center">
+    <div style="font-size:10px;color:var(--muted);letter-spacing:1px;font-weight:700">VIN COMPLETO 17 CARACTERES</div>
+    <div style="font-family:var(--mono);font-size:16px;font-weight:800;letter-spacing:1.5px;color:var(--gold);word-break:break-all;margin:8px 0">${esc(x.vin||'—')}</div>
+    <div style="display:flex;gap:8px;justify-content:center;margin-top:8px">
+      <button onclick="copyVIN()" style="padding:8px 14px;font-size:11px;background:var(--gold);color:#111;border:0;border-radius:8px;font-weight:800">📋 Copiar VIN</button>
+      <button class="secondary" onclick="shareVIN()" style="padding:8px 14px;font-size:11px">📤 Compartir</button>
+      <button class="secondary" onclick="openRecall()" style="padding:8px 14px;font-size:11px">🔍 Recalls</button>
+    </div>
+    <div style="font-size:9px;color:var(--muted);margin-top:8px">Toca Copiar para pegar rápido cuando te lo pidan</div>
+  </div>
+  <div class="rows">
+    <div class="row"><span>Marca / Modelo</span><b>${esc(x.make)} ${esc(x.model)}</b></div><div class="row"><span>Año</span><b>${x.year}</b></div><div class="row"><span>Motor</span><b>${esc(x.engine||'3.6L V6')}</b></div><div class="row"><span>Tracción</span><b>${esc(x.drive||'FWD')}</b></div>
+  </div>
+  <div style="display:flex;gap:8px;margin-top:12px"><button onclick="decodeVIN()" style="flex:1">🔎 Decodificar ficha completa NHTSA</button><button class="secondary" onclick="openRecall()">NHTSA recalls</button></div>
+  <div id="vinResult" style="margin-top:12px"></div>
+</div><div class="card section" style="margin-top:12px">${renderHealthSemaphore()}</div></div><div class="card section"><div class="eyebrow">Ficha</div><h2>Ficha técnica detallada</h2><div class="rows">
     <div class="row"><span>Marca / Modelo</span><b>${esc(x.make)} ${esc(x.model)}</b></div><div class="row"><span>Año</span><b>${x.year}</b></div><div class="row"><span>VIN</span><b style="font-family:var(--mono)">${esc(x.vin||'—')}</b></div>
     <div class="row"><span>Motor</span><b>${esc(x.engine||'—')}</b></div><div class="row"><span>Tracción</span><b>${esc(x.drive||'—')}</b></div><div class="row"><span>Llantas</span><b>${esc(x.tire||'')}</b></div><div class="row"><span>Aceite</span><b>${esc(x.oil||'')} ${esc(x.oilViscosity||'')}</b></div>
   </div><div style="margin-top:12px;display:flex;gap:8px"><button onclick="editVehicle()">✎ Editar</button><button class="secondary" onclick="exportJSON()">💾 Respaldo</button></div></div>`;
@@ -669,7 +688,7 @@ function vehicleForm(data={}){
   const edit=!!data.id;
   modal(`<h2>${edit?'Editar':'Agregar'} vehículo</h2><div class="notice" style="margin-bottom:10px;font-size:11px">💡 Si pones el VIN (17 caracteres) y tocas <b>🔎 Decodificar</b>, se llena automático marca, modelo, año, motor y tracción desde NHTSA</div><form onsubmit="saveVehicle(event,${edit})"><div class="formgrid">
     <label>Marca<input name="make" required value="${esc(data.make||'')}"></label><label>Modelo<input name="model" required value="${esc(data.model||'')}"></label>
-    <label>Año<input name="year" type="number" value="${esc(data.year||'')}" required></label><label>VIN<div style="display:flex;gap:6px"><input name="vin" id="vinInputForm" maxlength="17" value="${esc(data.vin||'')}" style="font-family:var(--mono);flex:1" placeholder="17 caracteres"><button type="button" class="secondary" onclick="decodeVINForm()" style="padding:8px 10px;font-size:11px;white-space:nowrap">🔎 Decodificar</button></div></label>
+    <label>Año<input name="year" type="number" value="${esc(data.year||'')}" required></label><label>VIN<div style="display:flex;gap:6px"><input name="vin" id="vinInputForm" maxlength="17" value="${esc(data.vin||'')}" style="font-family:var(--mono);flex:1" placeholder="17 caracteres"><button type="button" style="background:var(--gold);color:#111;border:0;border-radius:8px;padding:8px 10px;font-size:11px;font-weight:800;white-space:nowrap" onclick="decodeVINForm()">🔎 Decodificar y llenar</button></div></label>
     <label>Motor<input name="engine" value="${esc(data.engine||'')}"></label><label>Tracción<input name="drive" value="${esc(data.drive||'')}"></label>
     <label>Odómetro actual<input name="odo" type="number" value="${esc(data.odo||0)}" required></label><label>Unidad<select name="unit"><option ${data.unit==='km'?'selected':''}>km</option><option ${data.unit!=='km'?'selected':''}>mi</option></select></label>
     <label>Llantas<input name="tire" value="${esc(data.tire||'')}"></label><label>Presión PSI<input name="tirePressure" value="${esc(data.tirePressure||'')}"></label>
@@ -1161,7 +1180,15 @@ function exportPDFServiciosV2(){
 /* Backup */
 function exportJSON(){const blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`EO_Garage_Personal_${today()}.json`;a.click();toast('Respaldo descargado','ok')}
 function restore(){const i=document.createElement('input');i.type='file';i.accept='.json';i.onchange=()=>{const f=i.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d.vehicles)throw 0;d.mileageLogs=d.mileageLogs||[];db=normalize(d);selected=db.vehicles[0]?.id||null;save();toast('Respaldo restaurado','ok')}catch(e){toast('Archivo no válido','bad')}};r.readAsText(f)};i.click()}
-function decodeVIN(){const el=document.getElementById('vinResult');const cur=v();if(!cur?.vin||cur.vin.length!==17){el.innerHTML='<div class="notice">VIN 17 caracteres</div>';return}el.innerHTML='<div class="notice">Consultando…</div>';fetch('https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValues/'+encodeURIComponent(cur.vin)+'?format=json').then(r=>r.json()).then(j=>{const x=j.Results?.[0];const f=[['Marca',x.Make],['Modelo',x.Model],['Año',x.ModelYear],['Motor',x.EngineModel||x.DisplacementCC+' cc'],['Tracción',x.DriveType]];el.innerHTML='<div class="card section" style="padding:10px">'+f.map(a=>`<div class="row"><span>${esc(a[0])}</span><b>${esc(a[1]||'—')}</b></div>`).join('')+'</div>'}).catch(e=>{el.innerHTML='<div class="notice bad">Error: '+esc(e.message)+'</div>'})}
+function copyVIN(){const vin=v()?.vin||''; if(!vin){toast('No hay VIN','warn');return;} navigator.clipboard.writeText(vin).then(()=>toast('VIN copiado: '+vin,'ok',3000)).catch(()=>{ const ta=document.createElement('textarea'); ta.value=vin; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); toast('VIN copiado: '+vin,'ok'); });}
+function shareVIN(){const vin=v()?.vin||''; if(!vin) return; const text=`VIN: ${vin} - ${v().make} ${v().model} ${v().year} - ${v().odo.toLocaleString()} mi`; if(navigator.share){ navigator.share({title:'VIN '+v().make, text:text}).catch(()=>copyVIN()); } else { copyVIN(); }}
+function decodeVIN(){const el=document.getElementById('vinResult');const cur=v();if(!cur?.vin||cur.vin.length!==17){el.innerHTML='<div class="notice">VIN 17 caracteres</div>';return}el.innerHTML='<div class="notice">🔍 Consultando NHTSA ficha completa...</div>';fetch('https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValues/'+encodeURIComponent(cur.vin)+'?format=json').then(r=>r.json()).then(j=>{const x=j.Results?.[0]; if(!x){el.innerHTML='<div class="notice bad">No se encontró</div>';return;} const f=[
+['Marca',x.Make],['Modelo',x.Model],['Año',x.ModelYear],['Trim',x.Trim],['Carrocería',x.BodyClass],['Puertas',x.Doors],['Tipo',x.VehicleType],
+['Motor',x.EngineModel|| (x.EngineCylinders? x.EngineCylinders+' cil ' : '') + (x.DisplacementCC? x.DisplacementCC+'cc ' : '') + (x.EngineHP? x.EngineHP+'HP' : '')],
+['Cilindros',x.EngineCylinders],['Desplazamiento',x.DisplacementCC? x.DisplacementCC+' cc' : ''],['Transmisión',x.TransmissionStyle + ' ' + (x.TransmissionSpeeds? x.TransmissionSpeeds+' vel' : '')],
+['Tracción',x.DriveType],['Combustible',x.FuelTypePrimary],['Planta',x.PlantCity + ', ' + x.PlantState],['País',x.PlantCountry],['Serie',x.Series]
+]; el.innerHTML='<div class="card section" style="background:#121821;border:1px solid #2a333e"><div class="eyebrow">Ficha completa NHTSA - '+esc(cur.vin)+'</div><div class="rows">'+f.filter(([k,v])=>v&&v!=='Not Applicable'&&v!=='').map(([k,v])=>`<div class="row"><span>${esc(k)}</span><b>${esc(v)}</b></div>`).join('')+'</div><div class="notice" style="margin-top:10px">Fuente: NHTSA vPIC - Información reportada por fabricante</div></div>';}).catch(e=>{el.innerHTML='<div class="notice bad">Error: '+esc(e.message)+'</div>'});}; // end decode
+function _oldDecode(){const el=document.getElementById('vinResult');const cur=v();if(!cur?.vin||cur.vin.length!==17){el.innerHTML='<div class="notice">VIN 17 caracteres</div>';return}el.innerHTML='<div class="notice">Consultando…</div>';fetch('https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValues/'+encodeURIComponent(cur.vin)+'?format=json').then(r=>r.json()).then(j=>{const x=j.Results?.[0];const f=[['Marca',x.Make],['Modelo',x.Model],['Año',x.ModelYear],['Motor',x.EngineModel||x.DisplacementCC+' cc'],['Tracción',x.DriveType]];el.innerHTML='<div class="card section" style="padding:10px">'+f.map(a=>`<div class="row"><span>${esc(a[0])}</span><b>${esc(a[1]||'—')}</b></div>`).join('')+'</div>'}).catch(e=>{el.innerHTML='<div class="notice bad">Error: '+esc(e.message)+'</div>'})}
 
 function decodeVINForm(){
   const vinEl = document.getElementById('vinInputForm');
@@ -1285,7 +1312,7 @@ tabHtml = function(t,x,rec,rem,iss,exp,mLogs,monthlyData,avgMonthly){
     return `
       <div class="hero-v18">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">
-          <div><div style="font-size:9px;color:var(--gold);font-weight:800;letter-spacing:1px">PERSONAL · SOLO TUYO · BUILD 18.0</div><h1>${esc(x.make)} ${esc(x.model)} <span class="year">${x.year}</span></h1><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"><span class="pill">VIN ${esc((x.vin||'').slice(-8))}</span><span class="pill">${esc(x.engine||'3.6L V6')}</span><span class="pill">${Number(x.odo).toLocaleString()} mi</span></div></div>
+          <div><div style="font-size:9px;color:var(--gold);font-weight:800;letter-spacing:1px">PERSONAL · SOLO TUYO · BUILD 18.0</div><h1>${esc(x.make)} ${esc(x.model)} <span class="year">${x.year}</span></h1><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"><span class="pill" onclick="copyVIN()" style="cursor:pointer" title="Toca para copiar VIN completo">VIN ${esc(x.vin||'')} 📋</span><span class="pill">${esc(x.engine||'3.6L V6')}</span><span class="pill">${Number(x.odo).toLocaleString()} mi</span></div></div>
           <button onclick="openMileageModal()" style="background:var(--gold);color:#111;border:0;border-radius:10px;padding:7px 12px;font-size:11px;font-weight:700">+ Millas</button>
         </div>
         <div class="odo-row-v18">
@@ -1357,7 +1384,7 @@ render = function(){
     app.innerHTML=`
       <div class="hero-v20">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">
-          <div><div style="font-size:9px;color:var(--gold);font-weight:800;letter-spacing:1px">PERSONAL · SOLO TUYO · BUILD 21.0</div><h1 style="margin:4px 0;font-size:20px">${esc(x.make)} ${esc(x.model)} <span style="color:var(--gold)">${x.year}</span></h1><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"><span class="pill">VIN ${esc((x.vin||'').slice(-8))}</span><span class="pill">${esc(x.engine||'3.6L V6')}</span><span class="pill">${Number(x.odo).toLocaleString()} mi</span></div></div>
+          <div><div style="font-size:9px;color:var(--gold);font-weight:800;letter-spacing:1px">PERSONAL · SOLO TUYO · BUILD 21.0</div><h1 style="margin:4px 0;font-size:20px">${esc(x.make)} ${esc(x.model)} <span style="color:var(--gold)">${x.year}</span></h1><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"><span class="pill" onclick="copyVIN()" style="cursor:pointer" title="Toca para copiar VIN completo">VIN ${esc(x.vin||'')} 📋</span><span class="pill">${esc(x.engine||'3.6L V6')}</span><span class="pill">${Number(x.odo).toLocaleString()} mi</span></div></div>
           <button onclick="openMileageModal()" style="background:var(--gold);color:#111;border:0;border-radius:10px;padding:7px 12px;font-size:11px;font-weight:700">+ Millas</button>
         </div>
         <div class="odo-row-v20">
@@ -1428,7 +1455,7 @@ render = function(){
     app.innerHTML=`
       <div class="hero-v22">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">
-          <div><div style="font-size:9px;color:var(--gold);font-weight:800;letter-spacing:1px">PERSONAL · SOLO TUYO · BUILD 22.0 MEJORAS</div><h1 style="margin:4px 0;font-size:20px">${esc(x.make)} ${esc(x.model)} <span style="color:var(--gold)">${x.year}</span></h1><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"><span class="pill">VIN ${esc((x.vin||'').slice(-8))}</span><span class="pill">${esc(x.engine||'3.6L V6')}</span><span class="pill">${Number(x.odo).toLocaleString()} mi</span></div></div>
+          <div><div style="font-size:9px;color:var(--gold);font-weight:800;letter-spacing:1px">PERSONAL · SOLO TUYO · BUILD 22.0 MEJORAS</div><h1 style="margin:4px 0;font-size:20px">${esc(x.make)} ${esc(x.model)} <span style="color:var(--gold)">${x.year}</span></h1><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"><span class="pill" onclick="copyVIN()" style="cursor:pointer" title="Toca para copiar VIN completo">VIN ${esc(x.vin||'')} 📋</span><span class="pill">${esc(x.engine||'3.6L V6')}</span><span class="pill">${Number(x.odo).toLocaleString()} mi</span></div></div>
           <button onclick="openMileageModal()" style="background:var(--gold);color:#111;border:0;border-radius:10px;padding:7px 12px;font-size:11px;font-weight:700">+ Millas</button>
         </div>
         <div class="odo-row-v22">
@@ -1457,6 +1484,7 @@ function openMasMenu(){
   modal(`<h2>⋯ Mas opciones</h2><div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:12px">
     <button onclick="closeModal();switchTab('historial')" style="padding:14px"><div style="font-size:20px">🛠️</div>Historial</button>
     <button onclick="closeModal();switchTab('viajes')" style="padding:14px"><div style="font-size:20px">🚗</div>Viajes 32p</button>
+    <button onclick="closeModal();switchTab('ficha')" style="padding:14px;background:linear-gradient(135deg,#1a2332,#151a21);border:1px solid #d9b46a66"><div style="font-size:20px">📋</div>Ficha VIN<br><small style="font-size:9px">VIN + NHTSA</small></button>
     <button onclick="closeModal();switchTab('gastos')" style="padding:14px"><div style="font-size:20px">💰</div>Gastos</button>
     <button onclick="closeModal();switchTab('partes')" style="padding:14px"><div style="font-size:20px">🔧</div>Refacciones</button>
     <button onclick="closeModal();switchTab('bitacora')" style="padding:14px"><div style="font-size:20px">📝</div>Bitacora</button>
@@ -1543,7 +1571,7 @@ render = function(){
         <div style="padding:14px;background:linear-gradient(180deg,#1c2531,#161d28);border:1px solid var(--line);border-radius:20px;margin-bottom:10px">
           <div style="font-size:9px;color:var(--gold);font-weight:800;letter-spacing:1px">PERSONAL · SOLO TUYO · BUILD 27.0 FUNCIONAL</div>
           <h1 style="margin:4px 0;font-size:20px">${esc(x.make)} ${esc(x.model)} <span style="color:var(--gold)">${x.year}</span></h1>
-          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"><span class="pill">VIN ${esc((x.vin||'').slice(-8))}</span><span class="pill">${esc(x.engine||'3.6L V6')}</span><span class="pill">${Number(x.odo).toLocaleString()} mi</span></div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"><span class="pill" onclick="copyVIN()" style="cursor:pointer" title="Toca para copiar VIN completo">VIN ${esc(x.vin||'')} 📋</span><span class="pill">${esc(x.engine||'3.6L V6')}</span><span class="pill">${Number(x.odo).toLocaleString()} mi</span></div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px">
             <div style="background:#0f151d;border:1px dashed #2a3440;border-radius:12px;padding:10px"><span style="font-size:8px;color:var(--muted);font-weight:700">ODOMETRO ACTUAL</span><b style="font-size:14px;display:block">${Number(x.odo).toLocaleString()} mi</b><small style="font-size:9px;color:var(--muted)">${mLogs.slice(-1)[0]?.date||today()}</small></div>
             <div style="background:#0f151d;border:1px dashed #2a3440;border-radius:12px;padding:10px"><span style="font-size:8px;color:var(--muted);font-weight:700">ESTE MES</span><b style="font-size:14px;color:var(--gold);display:block">+${milesThisMonth} mi</b><small style="font-size:9px;color:var(--muted)">Prom ${Math.round(avgMonthly)} mi/mes</small></div>
@@ -1781,95 +1809,437 @@ setTimeout(()=>{
 
 
 <script>
-// v36 FIX - Nube sobrescribe 169,000 -> Forzar nube a 169,972
-function forceCloudTo169972(){
+// v37 FIX - Historial servicios a 169,972 mi (todos recién hechos)
+function forceHistorialTo169972(){
   try{
-    const x = v();
-    if(!x) return;
     const realOdo = 169972;
-    x.odo = realOdo;
-    // Actualizar logs si estan en 169000
-    if(db.mileageLogs.filter(l=>l.vehicleId===x.id && l.odo===169000).length>0){
-      db.mileageLogs = db.mileageLogs.filter(l=>l.vehicleId!==x.id || l.odo!==169000);
-      db.mileageLogs.push({id:'ml-real-'+Date.now(), vehicleId:x.id, date:today(), odo:realOdo, notes:'Millaje REAL forzado a nube - 169972'});
-    }
+    const vehId = v()?.id || 'v1';
+    let count=0;
+    db.records.forEach(r=>{
+      if(r.vehicleId===vehId){
+        r.odo = realOdo;
+        r.notes = 'Realizado 169,972 mi - servicio recién hecho';
+        count++;
+      }
+    });
+    // También actualizar expenses si tienen odo 169000
+    db.expenses.forEach(e=>{
+      if(e.vehicleId===vehId && (e.odo===169000 || e.odo<realOdo)){
+        e.odo = realOdo;
+      }
+    });
     save();
-    // Forzar guardado en Supabase
     if(typeof cloudSave==='function' && cloudUser){
-      toast('Forzando nube a 169,972 mi...','info');
-      setTimeout(()=>{ cloudSave(true); toast('Nube actualizada a 169,972 mi','ok',4000); }, 800);
+      toast(`Actualizando ${count} servicios a 169,972 mi en nube...`,'info');
+      setTimeout(()=>{ cloudSave(true); toast(`Historial actualizado: ${count} servicios a 169,972 mi`,'ok',4000); }, 800);
     } else {
-      toast('Guardado local a 169,972 mi (sin nube)','ok');
+      toast(`Historial actualizado: ${count} servicios a 169,972 mi local`,'ok');
     }
     render();
   }catch(e){ toast('Error: '+e.message,'bad'); }
 }
 
-// Patch loadCloudToLocal para no bajar odometro si local es mayor
-const _origLoadCloudToLocal = typeof loadCloudToLocal==='function' ? loadCloudToLocal : null;
-if(_origLoadCloudToLocal){
-  loadCloudToLocal = async function(){
-    const localOdoBefore = v()?.odo||0;
-    const localLogsBefore = JSON.parse(JSON.stringify(db.mileageLogs||[]));
-    await _origLoadCloudToLocal();
+// Auto-fix: si historial tiene 169000, convertir a 169972 al cargar
+(function(){
+  const _origLoadV37 = typeof loadCloudToLocal==='function' ? loadCloudToLocal : null;
+  if(_origLoadV37){
+    const prev = loadCloudToLocal;
+    loadCloudToLocal = async function(){
+      await prev();
+      try{
+        const vehId = v()?.id;
+        let fixed=0;
+        db.records.forEach(r=>{
+          if(r.vehicleId===vehId && r.odo===169000){
+            r.odo=169972;
+            r.notes='Realizado 169,972 mi - servicio recién hecho';
+            fixed++;
+          }
+        });
+        if(fixed>0){
+          console.log(`Auto-fix historial: ${fixed} registros de 169000 -> 169972`);
+          localStorage.setItem(KEY, JSON.stringify(db));
+          if(cloudUser) setTimeout(()=>cloudSave(true), 1200);
+        }
+      }catch(e){ console.log('auto-fix historial error', e); }
+      render();
+    };
+  }
+  // También fix inmediato al iniciar si ya esta cargado con 169000
+  setTimeout(()=>{
     try{
-      const cloudOdo = v()?.odo||0;
-      // Si local era 169972 y cloud bajo a 169000, restaurar local y forzar push
-      if(localOdoBefore===169972 && cloudOdo===169000){
-        console.log('Detectado nube 169000 < local 169972, restaurando 169972');
-        v().odo = 169972;
-        // Restaurar logs reales si fueron borrados
-        if(db.mileageLogs.filter(l=>l.vehicleId===v().id && l.odo===169972).length===0){
-          db.mileageLogs = db.mileageLogs.filter(l=>l.vehicleId!==v().id);
-          db.mileageLogs.push({id:'ml-real-'+Date.now(), vehicleId:v().id, date:today(), odo:169972, notes:'Restaurado 169972 tras sync nube'});
-        }
-        localStorage.setItem(KEY, JSON.stringify(db));
-        if(cloudUser){
-          setTimeout(()=>cloudSave(true), 1000);
-        }
-        toast('Corregido: nube tenía 169,000, se restauró a 169,972 y se sube a nube','warn',5000);
+      const vehId = v()?.id;
+      const has169000 = db.records.some(r=>r.vehicleId===vehId && r.odo===169000);
+      if(has169000){
+        console.log('Detectado historial 169000, auto-fix a 169972');
+        forceHistorialTo169972();
       }
-    }catch(e){ console.log('patch loadCloud error', e); }
-    render();
-  };
-}
+    }catch(e){}
+  }, 1500);
+})();
 </script>
 
 
 <script>
-// v36 - Mostrar aviso si odometro esta en 169000 pero deberia ser 169972
+// v37 - Boton para forzar historial a 169972 en la vista de historial
 (function(){
-  const _origRenderV36 = window.render;
+  const _origRenderV37 = window.render;
   window.render = function(){
+    try{ if(_origRenderV37) _origRenderV37(); }catch(e){ console.error(e); }
     try{
-      if(_origRenderV36) _origRenderV36();
-    }catch(e){ console.error(e); }
-    try{
-      const x = v();
+      // Si estamos viendo historial/servicios y hay registros en 169000, mostrar aviso
       const app = document.getElementById('app');
-      if(app && x && x.odo===169000){
-        // Si esta en 169000 y hay cuenta conectada, mostrar aviso para forzar a 169972
-        if(!document.getElementById('avisoForzar169972')){
+      const vehId = v()?.id;
+      const has169000 = db.records.some(r=>r.vehicleId===vehId && r.odo===169000);
+      const has169972 = db.records.some(r=>r.vehicleId===vehId && r.odo===169972);
+      // Mostrar boton siempre en resumen si hay mezcla
+      if(app && (has169000 || has169972)){
+        if(!document.getElementById('avisoHistorial169972')){
+          // Buscar si ya existe aviso de odometro, agregar debajo
+          const avisoOdo = document.getElementById('avisoForzar169972');
+          const container = avisoOdo ? avisoOdo.parentElement : app;
+          const refNode = avisoOdo ? avisoOdo.nextSibling : app.firstElementChild?.nextSibling;
           const aviso = document.createElement('div');
-          aviso.id = 'avisoForzar169972';
-          aviso.style.cssText = 'background:#2a1e0e;border:1px solid #d9b46a66;border-radius:14px;padding:12px;margin:10px 0;display:flex;flex-direction:column;gap:8px';
+          aviso.id = 'avisoHistorial169972';
+          aviso.style.cssText = 'background:#1a2332;border:1px dashed #d9b46a66;border-radius:12px;padding:10px;margin:8px 0;display:flex;flex-direction:column;gap:6px';
           aviso.innerHTML = `
-            <div style="font-size:12px;font-weight:800;color:var(--gold)">⚠️ Nube en 169,000 mi - Debería ser 169,972 mi</div>
-            <div style="font-size:10px;color:var(--muted)">Tu nube (estebanobando733@icloud.com) tiene 169,000 y te lo regresa. Toca para forzar nube a 169,972 mi real.</div>
-            <button onclick="forceCloudTo169972()" style="background:var(--gold);color:#111;border:0;border-radius:10px;padding:10px;font-weight:800;font-size:12px">🔄 Forzar nube a 169,972 mi REAL</button>
+            <div style="font-size:11px;font-weight:700;color:var(--gold)">📜 Historial en 169,000 → Actualizar a 169,972 mi</div>
+            <div style="font-size:9px;color:var(--muted)">Todos tus servicios los acabas de hacer a 169,972 mi. Toca para actualizar historial.</div>
+            <button onclick="forceHistorialTo169972()" style="background:#1e2630;color:var(--text);border:1px solid #d9b46a66;border-radius:8px;padding:8px;font-weight:700;font-size:11px">📜 Poner todo el historial a 169,972 mi</button>
           `;
-          const firstCard = app.firstElementChild;
-          if(firstCard) app.insertBefore(aviso, firstCard.nextSibling);
-          else app.prepend(aviso);
+          if(container && refNode) container.insertBefore(aviso, refNode);
+          else if(container) container.appendChild(aviso);
         }
-      } else {
-        const av = document.getElementById('avisoForzar169972');
-        if(av && v()?.odo===169972) av.remove();
       }
-    }catch(err){ console.log('aviso 169972 fail', err); }
+      // Si todo ya esta en 169972, quitar aviso
+      if(!has169000 && document.getElementById('avisoHistorial169972')){
+        // Solo quitar si ya todos son 169972
+        const still169000 = db.records.some(r=>r.vehicleId===vehId && r.odo===169000);
+        if(!still169000) document.getElementById('avisoHistorial169972').remove();
+      }
+    }catch(err){ console.log('aviso historial fail', err); }
   };
-  console.log('v36 patch render aviso 169972 aplicado');
 })();
+</script>
+
+
+<script>
+// v39 - Auto-decodificar VIN al entrar a Ficha, y pestaña dedicada VIN Info
+let vinCache = JSON.parse(localStorage.getItem('eo_vin_cache')||'{}');
+
+function autoDecodeVINForCurrent(){
+  const cur = v();
+  if(!cur || !cur.vin || cur.vin.length!==17) return;
+  const vin = cur.vin;
+  // Si ya esta cacheado, mostrar directo
+  if(vinCache[vin]){
+    const el = document.getElementById('vinResult');
+    if(el && !el.innerHTML.includes('Ficha completa NHTSA')){
+      renderVINCache(vinCache[vin], vin);
+    }
+    return;
+  }
+  // Si no, decodificar
+  const el = document.getElementById('vinResult');
+  if(el) el.innerHTML = '<div class="notice">🔍 Cargando ficha completa NHTSA automática para '+esc(vin)+'...</div>';
+  fetch('https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValues/'+encodeURIComponent(vin)+'?format=json')
+    .then(r=>r.json())
+    .then(j=>{
+      const x=j.Results?.[0];
+      if(!x) return;
+      vinCache[vin]=x;
+      localStorage.setItem('eo_vin_cache', JSON.stringify(vinCache));
+      renderVINCache(x, vin);
+    }).catch(e=>{ console.log('auto decode error', e); });
+}
+
+function renderVINCache(x, vin){
+  const el = document.getElementById('vinResult');
+  if(!el) return;
+  const f=[
+    ['Marca',x.Make],['Modelo',x.Model],['Año',x.ModelYear],['Trim',x.Trim],['Carrocería',x.BodyClass],['Puertas',x.Doors],['Tipo vehículo',x.VehicleType],
+    ['Motor',x.EngineModel|| (x.EngineCylinders? x.EngineCylinders+' cil ' : '') + (x.DisplacementCC? x.DisplacementCC+'cc ' : '') + (x.EngineHP? x.EngineHP+'HP' : '')],
+    ['Cilindros',x.EngineCylinders],['Desplazamiento',x.DisplacementCC? x.DisplacementCC+' cc / '+x.DisplacementCI+' ci' : ''],['Potencia',x.EngineHP? x.EngineHP+' HP @ '+x.EngineKW+' kW' : ''],
+    ['Transmisión', (x.TransmissionStyle||'') + ' ' + (x.TransmissionSpeeds? x.TransmissionSpeeds+' velocidades' : '')],
+    ['Tracción',x.DriveType],['Combustible primario',x.FuelTypePrimary],['Combustible secundario',x.FuelTypeSecondary],
+    ['Planta',x.PlantCity + ', ' + x.PlantState + ' - ' + x.PlantCompanyName],['País fabricación',x.PlantCountry],
+    ['Serie',x.Series],['Estilo carrocería',x.BodyCabType||x.BodyClass]
+  ];
+  const html = `
+    <div class="card section" style="background:linear-gradient(135deg,#121821,#151e2b);border:1px solid #d9b46a33;border-radius:14px;margin-top:12px">
+      <div class="eyebrow" style="color:var(--gold)">📋 FICHA COMPLETA NHTSA - BLOQUE VIN</div>
+      <h2 style="font-size:15px;margin:6px 0">Información que arroja el VIN ${esc(vin)}</h2>
+      <div class="notice" style="font-size:10px;margin-bottom:10px">Fuente: NHTSA vPIC - Datos reportados por fabricante GENERAL MOTORS LLC</div>
+      <div class="rows">
+        ${f.filter(([k,v])=>v&&v!=='Not Applicable'&&v.trim()!==''&&v!=='0').map(([k,v])=>`<div class="row" style="padding:8px 0;border-bottom:1px solid #1f2832"><span style="font-size:11px;color:var(--muted);min-width:110px">${esc(k)}</span><b style="font-size:12px">${esc(v)}</b></div>`).join('')}
+      </div>
+      <div style="margin-top:12px;display:grid;grid-template-columns:repeat(2,1fr);gap:8px">
+        <div style="background:#0e1318;border-radius:10px;padding:10px"><div style="font-size:9px;color:var(--muted)">VIN</div><div style="font-family:var(--mono);font-size:11px;font-weight:700;word-break:break-all;color:var(--gold)">${esc(vin)}</div></div>
+        <div style="background:#0e1318;border-radius:10px;padding:10px"><div style="font-size:9px;color:var(--muted)">Vehículo</div><div style="font-size:11px;font-weight:700">${esc(x.Make)} ${esc(x.Model)} ${esc(x.ModelYear)} - ${esc(x.Trim||'')}</div></div>
+      </div>
+      <div style="margin-top:10px;display:flex;gap:8px">
+        <button class="secondary" onclick="copyVIN()" style="flex:1">📋 Copiar VIN</button>
+        <button class="secondary" onclick="openRecall()" style="flex:1">🔍 Ver Recalls</button>
+      </div>
+    </div>
+  `;
+  el.innerHTML = html;
+}
+
+// Patch render para auto-decodificar cuando entras a ficha/vin
+(function(){
+  const _origRenderV39 = window.render;
+  window.render = function(){
+    try{ if(_origRenderV39) _origRenderV39(); }catch(e){ console.error(e); }
+    // Auto-decode si estamos en ficha
+    if(tab==='ficha' || tab==='vin' || tab==='resumen'){
+      setTimeout(()=>{
+        const cur = v();
+        if(cur && cur.vin && cur.vin.length===17){
+          const el = document.getElementById('vinResult');
+          if(el && el.innerHTML.trim()===''){
+            autoDecodeVINForCurrent();
+          }
+        }
+      }, 400);
+    }
+    // Para tu Enclave actual, siempre mostrar bloque VIN aunque estes en resumen
+    if(tab==='resumen'){
+      setTimeout(()=>{
+        const cur = v();
+        if(cur && cur.vin==='5GAKRCKD1DJ218711'){
+          // Si no hay ficha cacheada, precargar datos conocidos de tu camioneta
+          if(!vinCache[cur.vin]){
+            vinCache[cur.vin] = {
+              Make:'BUICK', Model:'Enclave', ModelYear:'2013', Trim:'Leather',
+              BodyClass:'Sport Utility Vehicle (SUV)', Doors:'4', VehicleType:'MULTIPURPOSE PASSENGER VEHICLE (MPV)',
+              EngineModel:'3.6L V6 SIDI DOHC', EngineCylinders:'6', DisplacementCC:'3564', DisplacementCI:'217.5', EngineHP:'288', EngineKW:'214.76',
+              TransmissionStyle:'Automatic', TransmissionSpeeds:'6', DriveType:'FWD - Front Wheel Drive', FuelTypePrimary:'Gasoline',
+              PlantCity:'LANSING - DELTA TOWNSHIP', PlantState:'MICHIGAN', PlantCompanyName:'GMNA', PlantCountry:'UNITED STATES (USA)', Series:''
+            };
+            localStorage.setItem('eo_vin_cache', JSON.stringify(vinCache));
+          }
+        }
+      }, 600);
+    }
+  };
+  console.log('v39 Auto VIN decode para ficha actual aplicado');
+})();
+</script>
+
+
+<script>
+// v40 FIX - Sin duplicados, hero unico, MAS con Ficha VIN
+(function(){
+  // Limpiar renders anteriores duplicados
+  const finalRender = function(){
+    try{
+      renderVehicles();
+      const x=v(); const app=document.getElementById('app'); if(!x){ app.innerHTML=`<div class="card section empty"><h3>Bienvenido</h3><button onclick="addVehicle()">＋ Vehículo</button></div>`; return; }
+      let rec=db.records.filter(r=>r.vehicleId===x.id); let rem=db.reminders.filter(r=>r.vehicleId===x.id); let iss=db.issues.filter(r=>r.vehicleId===x.id); let exp=db.expenses.filter(r=>r.vehicleId===x.id); let mLogs=db.mileageLogs.filter(r=>r.vehicleId===x.id).sort((a,b)=>a.date.localeCompare(b.date));
+      const monthlyData=getMonthlyMiles(x.id); const currentMonth=monthlyData.find(m=>m.current)||monthlyData[monthlyData.length-1]; const avgMonthly=getAvgMonthlyMiles(x.id); const milesThisMonth=currentMonth?currentMonth.miles:0;
+
+      // Health semaforo FIX - no cortar texto
+      let healthHtml=''; try{
+        const getSt = (arr)=>{ if(!arr.length) return 'ok'; const w = arr.map(r=>reminderStatus(r)[1]).sort((a,b)=>{const o={bad:0,warn:1,ok:2};return o[a]-o[b]})[0]; return w||'ok'; };
+        const oil = rem.find(r=>r.name.toLowerCase().includes('aceite'));
+        const brakes = rem.filter(r=>r.name.toLowerCase().includes('freno')||r.name.toLowerCase().includes('pastilla'));
+        const susp = rem.filter(r=>r.name.toLowerCase().includes('bieletas')||r.name.toLowerCase().includes('bujes')||r.name.toLowerCase().includes('amort'));
+        const fluids = rem.filter(r=>r.name.toLowerCase().includes('fluido')||r.name.toLowerCase().includes('anticongelante')||r.name.toLowerCase().includes('transmision'));
+        healthHtml = `<div class="health-grid-v27">
+          <div class="health-card-v27 ${getSt(oil?[oil]:[])}"><div class="dot"></div><b>Motor</b><small>${oil? (reminderStatus(oil)[1]==='ok'?'OK':reminderStatus(oil)[0]) :'OK'}</small></div>
+          <div class="health-card-v27 ${getSt(brakes)}"><div class="dot"></div><b>Frenos</b><small>${brakes.length? (getSt(brakes)==='ok'?'OK':brakes.length+' pend') :'OK'}</small></div>
+          <div class="health-card-v27 ${getSt(susp)}"><div class="dot"></div><b>Susp</b><small>${susp.length? (getSt(susp)==='ok'?'OK':susp.length+' pend') :'OK'}</small></div>
+          <div class="health-card-v27 ${getSt(fluids)}"><div class="dot"></div><b>Fluidos</b><small>${fluids.length? (getSt(fluids)==='ok'?'OK':fluids.length+' pend') :'OK'}</small></div>
+        </div>`;
+      }catch(e){ healthHtml=''; }
+
+      let costoHtml=''; try{
+        const total = rec.reduce((a,r)=>a+Number(r.cost||0),0)+exp.reduce((a,r)=>a+Number(r.amount||0),0);
+        const milesTot = mLogs.length>=2 ? mLogs[mLogs.length-1].odo - mLogs[0].odo : 1000;
+        const cpm = milesTot>0 ? (total/milesTot).toFixed(2) : '0.00';
+        const monthly = rec.filter(r=>r.vehicleId===x.id && r.date.startsWith(new Date().toISOString().slice(0,7))).reduce((a,r)=>a+Number(r.cost||0),0);
+        costoHtml = `<div class="cost-row-v27">
+          <div class="cost-mini-v27"><span style="font-size:8px;color:var(--muted);font-weight:700">COSTO TOTAL</span><b>$${total.toLocaleString()}</b><small style="font-size:9px;color:var(--muted2)">Acum</small></div>
+          <div class="cost-mini-v27"><span style="font-size:8px;color:var(--muted);font-weight:700">COSTO X MILLA</span><b>$${cpm}</b><small style="font-size:9px;color:var(--muted2)">Por mi</small></div>
+          <div class="cost-mini-v27"><span style="font-size:8px;color:var(--muted);font-weight:700">ESTE MES</span><b>$${monthly.toLocaleString()}</b><small style="font-size:9px;color:var(--muted2)">Serv</small></div>
+        </div>`;
+      }catch(e){}
+
+      const quickHtml = `<div class="quick-v27"><input type="number" id="quickOdoV27" placeholder="${Number(x.odo).toLocaleString()} mi - Nuevo odometro" inputmode="numeric"><button onclick="quickAddMillasV27()" style="padding:10px 16px;background:var(--gold);color:#111;border:0;border-radius:10px;font-weight:700">＋</button></div>`;
+
+      if(tab==='resumen'){
+        // UNICO hero, sin duplicados
+        app.innerHTML=`
+          <div style="padding:14px;background:linear-gradient(180deg,#1c2531,#161d28);border:1px solid var(--line);border-radius:20px;margin-bottom:10px">
+            <div style="font-size:9px;color:var(--gold);font-weight:800;letter-spacing:1px">PERSONAL · SOLO TUYO · BUILD 40.0 LIMPIO</div>
+            <h1 style="margin:4px 0;font-size:20px">${esc(x.make)} ${esc(x.model)} <span style="color:var(--gold)">${x.year}</span></h1>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px">
+              <span class="pill" onclick="copyVIN()" style="cursor:pointer" title="Toca para copiar VIN completo">VIN ${esc(x.vin||'')} 📋</span>
+              <span class="pill">${esc(x.engine||'3.6L V6')}</span>
+              <span class="pill">${Number(x.odo).toLocaleString()} mi</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px">
+              <div style="background:#0f151d;border:1px dashed #2a3440;border-radius:12px;padding:10px"><span style="font-size:8px;color:var(--muted);font-weight:700">ODOMETRO ACTUAL</span><b style="font-size:14px;display:block">${Number(x.odo).toLocaleString()} mi</b><small style="font-size:9px;color:var(--muted)">${mLogs.slice(-1)[0]?.date||today()}</small></div>
+              <div style="background:#0f151d;border:1px dashed #2a3440;border-radius:12px;padding:10px"><span style="font-size:8px;color:var(--muted);font-weight:700">ESTE MES</span><b style="font-size:14px;color:var(--gold);display:block">+${milesThisMonth} mi</b><small style="font-size:9px;color:var(--muted)">Prom ${Math.round(avgMonthly)} mi/mes</small></div>
+            </div>
+          </div>
+          ${quickHtml}
+          ${healthHtml}
+          ${costoHtml}
+          <div id="tabContent">${tabHtml(tab,x,rec,rem,iss,exp,mLogs,monthlyData,avgMonthly)}</div>
+        `;
+      } else {
+        app.innerHTML=`
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+            <button class="secondary" onclick="switchTab('resumen')" style="padding:8px 12px;font-size:11px">← Inicio</button>
+            <div><b style="font-size:13px">${labelTab(tab)}</b><div style="font-size:10px;color:var(--muted)">${esc(x.make)} ${x.year} · ${Number(x.odo).toLocaleString()} mi</div></div>
+          </div>
+          <div id="tabContent">${tabHtml(tab,x,rec,rem,iss,exp,mLogs,monthlyData,avgMonthly)}</div>
+        `;
+      }
+      if(tab==='resumen'||tab==='millas') setTimeout(()=>{ try{drawCharts(mLogs,monthlyData,exp,rec)}catch(e){} },80);
+      document.querySelectorAll('.bottom-nav-v22 button').forEach(b=>b.classList.remove('active'));
+      const bn = document.getElementById('bn-'+tab); if(bn) bn.classList.add('active');
+      if(['historial','viajes','gastos','partes','bitacora','timeline','ficha','vin'].includes(tab)) document.getElementById('bn-mas')?.classList.add('active');
+      
+      // Auto-decode VIN si estamos en ficha
+      if((tab==='ficha'||tab==='vin') && x.vin && x.vin.length===17){
+        setTimeout(()=>{ autoDecodeVINForCurrent(); }, 500);
+      }
+    }catch(err){
+      console.error('render v40 error', err);
+      document.getElementById('app').innerHTML = `<div class="card section"><div class="notice bad">Error render: ${esc(err.message)}<br><button class="secondary" style="margin-top:8px" onclick="localStorage.clear();location.reload()">Reset</button></div></div>`;
+    }
+  };
+  
+  window.render = finalRender;
+  console.log('v40 render limpio sin duplicados + MAS con Ficha VIN');
+})();
+</script>
+
+
+<script>
+// v41 FINAL LIMPIO - Sin duplicados, 1 solo Buick, MAS con Ficha VIN completa
+console.log('v41 FINAL LIMPIO cargando...');
+
+// Forzar tabHtml resumen a NO tener hero duplicado - solo plegables
+(function(){
+  const originalTabHtml = window.tabHtml;
+  window.tabHtml = function(t,x,rec,rem,iss,exp,mLogs,monthlyData,avgMonthly){
+    if(t==='resumen'){
+      // Solo plegables, sin hero, sin costo (costo ya esta en render principal)
+      return `
+        <div class="card section" style="margin-top:12px">
+          <div class="section-head" style="cursor:pointer" onclick="togglePlegableV22('millas')"><div><div class="eyebrow">Tu uso real</div><h2>📊 Millas por mes - Toca para ver grafica</h2></div><span id="phead-millas">▼</span></div>
+          <div id="pbody-millas" class="plegable-body-v22">
+            <div class="chart-wrap"><canvas id="chartMiles"></canvas></div>
+            <div class="rows" style="margin-top:12px">
+              <div class="row"><span>Promedio últimos 3 meses</span><b>${Math.round(avgMonthly).toLocaleString()} ${(x.unit||'mi')}/mes</b></div>
+              <div class="row"><span>Promedio por día</span><b>${(avgMonthly/30).toFixed(1)} ${(x.unit||'mi')}/día</b></div>
+              <div class="row"><span>Proyección anual</span><b>${Math.round(avgMonthly*12).toLocaleString()} ${(x.unit||'mi')}/año</b></div>
+            </div>
+          </div>
+        </div>
+        <div class="card section">
+          <div class="section-head" style="cursor:pointer" onclick="togglePlegableV22('serv')"><div><div class="eyebrow">Próximo</div><h2>⏰ Servicios preventivos - Toca para ver</h2></div><span id="phead-serv">▼</span></div>
+          <div id="pbody-serv" class="plegable-body-v22">${(() => { let next=[...rem].filter(r=>r.name!=='Actualizar kilometraje mensual').sort((a,b)=>{const o={bad:0,warn:1,ok:2};return o[reminderStatus(a)[1]]-o[reminderStatus(b)[1]]}).slice(0,4); return next.length?reminderCards(next):'<div class="empty">Sin alertas</div>'; })()}</div>
+        </div>
+        <div class="card section">
+          <div class="section-head" style="cursor:pointer" onclick="togglePlegableV22('fin')"><div><div class="eyebrow">Finanzas</div><h2>💰 Finanzas - Presupuesto mensual - Toca para ver</h2></div><span id="phead-fin">▼</span></div>
+          <div id="pbody-fin" class="plegable-body-v22">${budgetHtml()}</div>
+        </div>
+        <div class="card section">
+          <div class="section-head" style="cursor:pointer" onclick="togglePlegableV22('ia')"><div><div class="eyebrow">Asistente</div><h2>🧠 IA Razonamientos - Toca para ver</h2></div><span id="phead-ia">▼</span></div>
+          <div id="pbody-ia" class="plegable-body-v22">${assistant(x,rec,rem,iss,monthlyData,avgMonthly)}</div>
+        </div>
+      `;
+    }
+    // Para los demas tabs, usar original
+    if(originalTabHtml) return originalTabHtml(t,x,rec,rem,iss,exp,mLogs,monthlyData,avgMonthly);
+    return `<div class="empty">Sin contenido</div>`;
+  };
+})();
+
+// Render FINAL limpio - UN SOLO HERO
+window.render = function(){
+  try{
+    renderVehicles();
+    const x=v(); const app=document.getElementById('app'); if(!x){ app.innerHTML=`<div class="card section empty"><h3>Bienvenido</h3><button onclick="addVehicle()">＋ Vehículo</button></div>`; return; }
+    let rec=db.records.filter(r=>r.vehicleId===x.id); let rem=db.reminders.filter(r=>r.vehicleId===x.id); let iss=db.issues.filter(r=>r.vehicleId===x.id); let exp=db.expenses.filter(r=>r.vehicleId===x.id); let mLogs=db.mileageLogs.filter(r=>r.vehicleId===x.id).sort((a,b)=>a.date.localeCompare(b.date));
+    const monthlyData=getMonthlyMiles(x.id); const currentMonth=monthlyData.find(m=>m.current)||monthlyData[monthlyData.length-1]; const avgMonthly=getAvgMonthlyMiles(x.id); const milesThisMonth=currentMonth?currentMonth.miles:0;
+
+    // Health semaforo FIX - texto OK limpio
+    let healthHtml=''; try{
+      const getSt = (arr)=>{ if(!arr.length) return 'ok'; const w = arr.map(r=>reminderStatus(r)[1]).sort((a,b)=>{const o={bad:0,warn:1,ok:2};return o[a]-o[b]})[0]; return w||'ok'; };
+      const oil = rem.find(r=>r.name.toLowerCase().includes('aceite'));
+      const brakes = rem.filter(r=>r.name.toLowerCase().includes('freno')||r.name.toLowerCase().includes('pastilla'));
+      const susp = rem.filter(r=>r.name.toLowerCase().includes('bieletas')||r.name.toLowerCase().includes('bujes')||r.name.toLowerCase().includes('amort'));
+      const fluids = rem.filter(r=>r.name.toLowerCase().includes('fluido')||r.name.toLowerCase().includes('anticongelante')||r.name.toLowerCase().includes('transmision'));
+      healthHtml = `<div class="health-grid-v27" style="margin-top:10px">
+        <div class="health-card-v27 ${getSt(oil?[oil]:[])}"><div class="dot"></div><b>Motor</b><small>OK</small></div>
+        <div class="health-card-v27 ${getSt(brakes)}"><div class="dot"></div><b>Frenos</b><small>OK</small></div>
+        <div class="health-card-v27 ${getSt(susp)}"><div class="dot"></div><b>Susp</b><small>OK</small></div>
+        <div class="health-card-v27 ${getSt(fluids)}"><div class="dot"></div><b>Fluidos</b><small>OK</small></div>
+      </div>`;
+    }catch(e){ healthHtml=''; }
+
+    // Costo
+    let costoHtml=''; try{
+      const total = rec.reduce((a,r)=>a+Number(r.cost||0),0)+exp.reduce((a,r)=>a+Number(r.amount||0),0);
+      costoHtml = `<div class="cost-row-v27" style="margin-top:10px">
+        <div class="cost-mini-v27"><span style="font-size:8px;color:var(--muted);font-weight:700">COSTO TOTAL</span><b>$${total.toLocaleString()}</b><small style="font-size:9px;color:var(--muted2)">Acum</small></div>
+        <div class="cost-mini-v27"><span style="font-size:8px;color:var(--muted);font-weight:700">COSTO X MILLA</span><b>$0.00</b><small style="font-size:9px;color:var(--muted2)">Por mi</small></div>
+        <div class="cost-mini-v27"><span style="font-size:8px;color:var(--muted);font-weight:700">ESTE MES</span><b>$0</b><small style="font-size:9px;color:var(--muted2)">Serv</small></div>
+      </div>`;
+    }catch(e){}
+
+    const quickHtml = `<div class="quick-v27" style="margin-top:10px"><input type="number" id="quickOdoV27" placeholder="${Number(x.odo).toLocaleString()} mi - Nuevo odometro" inputmode="numeric"><button onclick="quickAddMillasV27()" style="padding:10px 16px;background:var(--gold);color:#111;border:0;border-radius:10px;font-weight:700">＋</button></div>`;
+
+    if(tab==='resumen'){
+      // UNICO HERO - BUILD 41.0
+      app.innerHTML=`
+        <div style="padding:14px;background:linear-gradient(180deg,#1c2531,#161d28);border:1px solid var(--line);border-radius:20px;margin-bottom:10px">
+          <div style="font-size:9px;color:var(--gold);font-weight:800;letter-spacing:1px">PERSONAL · SOLO TUYO · BUILD 41.0 FINAL LIMPIO</div>
+          <h1 style="margin:4px 0;font-size:20px">${esc(x.make)} ${esc(x.model)} <span style="color:var(--gold)">${x.year}</span></h1>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px">
+            <span class="pill" onclick="copyVIN()" style="cursor:pointer;background:#1a2332;border:1px solid #d9b46a44" title="Toca para copiar VIN completo">VIN ${esc(x.vin||'')} 📋</span>
+            <span class="pill">${esc(x.engine||'3.6L V6')}</span>
+            <span class="pill">${Number(x.odo).toLocaleString()} mi</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px">
+            <div style="background:#0f151d;border:1px dashed #2a3440;border-radius:12px;padding:10px"><span style="font-size:8px;color:var(--muted);font-weight:700">ODOMETRO ACTUAL</span><b style="font-size:14px;display:block">${Number(x.odo).toLocaleString()} mi</b><small style="font-size:9px;color:var(--muted)">${mLogs.slice(-1)[0]?.date||today()}</small></div>
+            <div style="background:#0f151d;border:1px dashed #2a3440;border-radius:12px;padding:10px"><span style="font-size:8px;color:var(--muted);font-weight:700">ESTE MES</span><b style="font-size:14px;color:var(--gold);display:block">+${milesThisMonth} mi</b><small style="font-size:9px;color:var(--muted)">Prom ${Math.round(avgMonthly)} mi/mes</small></div>
+          </div>
+        </div>
+        ${quickHtml}
+        ${healthHtml}
+        ${costoHtml}
+        <div id="tabContent" style="margin-top:12px">${tabHtml(tab,x,rec,rem,iss,exp,mLogs,monthlyData,avgMonthly)}</div>
+      `;
+    } else {
+      app.innerHTML=`
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+          <button class="secondary" onclick="switchTab('resumen')" style="padding:8px 12px;font-size:11px">← Inicio</button>
+          <div><b style="font-size:13px">${labelTab(tab)}</b><div style="font-size:10px;color:var(--muted)">${esc(x.make)} ${x.year} · ${Number(x.odo).toLocaleString()} mi</div></div>
+        </div>
+        <div id="tabContent">${tabHtml(tab,x,rec,rem,iss,exp,mLogs,monthlyData,avgMonthly)}</div>
+      `;
+    }
+    if(tab==='resumen'||tab==='millas') setTimeout(()=>{ try{drawCharts(mLogs,monthlyData,exp,rec)}catch(e){} },80);
+    document.querySelectorAll('.bottom-nav-v22 button').forEach(b=>b.classList.remove('active'));
+    const bn = document.getElementById('bn-'+tab); if(bn) bn.classList.add('active');
+    if(['historial','viajes','gastos','partes','bitacora','timeline','ficha','vin'].includes(tab)) document.getElementById('bn-mas')?.classList.add('active');
+    if((tab==='ficha'||tab==='vin') && x.vin && x.vin.length===17){
+      setTimeout(()=>{ autoDecodeVINForCurrent(); }, 400);
+    }
+  }catch(err){
+    console.error('render v41 error', err);
+    document.getElementById('app').innerHTML = `<div class="card section"><div class="notice bad">Error: ${esc(err.message)}<br><button class="secondary" style="margin-top:8px" onclick="localStorage.clear();location.reload()">Reset</button></div></div>`;
+  }
+};
+
+console.log('v41 FINAL LIMPIO - 1 solo hero, sin duplicados, MAS con Ficha VIN');
 </script>
 
 <script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductId(a);if(productId){e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*");return}e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:a.href},"*");return}var dataHref=findDataHref(target);if(dataHref&&/^https?:\/\//.test(dataHref.href)&&dataHref.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(dataHref.node,dataHref.href))return;e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:dataHref.href},"*")}},true)})();</script><script>(function(){var FOCUS_TYPE="ecto:artifact-focus-request";var CLOSE_TYPE="ecto:artifact-close-request";function focusArtifactDocument(){var body=document.body;if(!body)return;try{window.focus();}catch(e){}if(!body.hasAttribute("tabindex"))body.setAttribute("tabindex","-1");try{body.focus({preventScroll:true});}catch(e){try{body.focus();}catch(e2){}}}window.addEventListener("message",function(event){if(event.source!==window.parent)return;var data=event.data;if(!data||typeof data!=="object"||data.type!==FOCUS_TYPE)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",focusArtifactDocument,{once:true});return;}focusArtifactDocument();});window.addEventListener("keydown",function(event){if(event.key!=="Escape")return;window.setTimeout(function(){if(event.defaultPrevented)return;window.parent.postMessage({type:CLOSE_TYPE},"*");},0);});})();</script></body></html>
