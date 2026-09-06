@@ -28,7 +28,7 @@
 <meta name="apple-mobile-web-app-title" content="E.O. Garage">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="description" content="E.O. Garage - Buick Enclave 2013 vertical telefono">
-<meta name="eo-garage-version" content="42.0-logo-garaje-ilustrativo-dorado">
+<meta name="eo-garage-version" content="43.0-fix-pantalla-negra">
 <title>E.O. Garage</title>
 <link rel="icon" type="image/png" sizes="32x32" href="eo_icon_32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="eo_icon_180.png">
@@ -2240,6 +2240,124 @@ window.render = function(){
 };
 
 console.log('v41 FINAL LIMPIO - 1 solo hero, sin duplicados, MAS con Ficha VIN');
+</script>
+
+
+<script>
+// v43 FIX Pantalla negra - Render limpio unico, sin duplicados, sin espacio negro
+console.log('v43 FIX pantalla negra cargando...');
+
+// Asegurar funciones necesarias existan
+if(typeof togglePlegableV22 !== 'function'){
+  window.togglePlegableV22 = function(id){
+    const body = document.getElementById('pbody-'+id);
+    if(!body) return;
+    body.style.display = body.style.display==='none' ? 'block' : 'none';
+  };
+}
+if(typeof autoDecodeVINForCurrent !== 'function'){
+  window.autoDecodeVINForCurrent = function(){
+    const cur = v(); if(!cur || !cur.vin || cur.vin.length!==17) return;
+    const el = document.getElementById('vinResult'); if(!el) return;
+    if(el.innerHTML.includes('FICHA COMPLETA')) return;
+    el.innerHTML = '<div class="notice">🔍 Cargando ficha NHTSA '+esc(cur.vin)+'...</div>';
+    fetch('https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValues/'+encodeURIComponent(cur.vin)+'?format=json')
+      .then(r=>r.json()).then(j=>{
+        const x=j.Results?.[0]; if(!x) return;
+        const f=[
+          ['Marca',x.Make],['Modelo',x.Model],['Año',x.ModelYear],['Trim',x.Trim],
+          ['Carrocería',x.BodyClass],['Puertas',x.Doors],['Tipo',x.VehicleType],
+          ['Motor',x.EngineModel|| x.DisplacementCC+'cc '+x.EngineCylinders+'cil'],
+          ['Transmisión',x.TransmissionStyle+' '+x.TransmissionSpeeds],['Tracción',x.DriveType],
+          ['Combustible',x.FuelTypePrimary],['Planta',x.PlantCity+', '+x.PlantState]
+        ];
+        el.innerHTML = '<div class="card section" style="border:1px solid #d9b46a44"><div class="eyebrow">📋 FICHA COMPLETA NHTSA - '+esc(cur.vin)+'</div><div class="rows">'+f.filter(([k,v])=>v&&v!=='Not Applicable').map(([k,v])=>'<div class="row"><span>'+esc(k)+'</span><b>'+esc(v)+'</b></div>').join('')+'</div></div>';
+      }).catch(e=>{ el.innerHTML='<div class="notice bad">Error NHTSA</div>'; });
+  };
+}
+if(typeof copyVIN !== 'function'){
+  window.copyVIN = function(){ const vin=v()?.vin||''; navigator.clipboard.writeText(vin).then(()=>toast('VIN copiado: '+vin,'ok')).catch(()=>{ toast('VIN: '+vin,'ok'); }); };
+}
+if(typeof shareVIN !== 'function'){
+  window.shareVIN = function(){ const vin=v()?.vin||''; if(navigator.share){ navigator.share({title:'VIN', text:'VIN: '+vin}); } else { copyVIN(); } };
+}
+
+// Render FINAL v43 - SIN ESPACIO NEGRO, 1 SOLO HERO
+window.render = function(){
+  try{
+    if(typeof renderVehicles === 'function') renderVehicles();
+    const x = (typeof v === 'function') ? v() : null;
+    const app = document.getElementById('app');
+    if(!x){ app.innerHTML='<div class="card section empty"><h3>Bienvenido</h3><button onclick="addVehicle()">＋ Vehículo</button></div>'; return; }
+    let rec=db.records.filter(r=>r.vehicleId===x.id);
+    let rem=db.reminders.filter(r=>r.vehicleId===x.id);
+    let exp=db.expenses.filter(r=>r.vehicleId===x.id);
+    let mLogs=db.mileageLogs.filter(r=>r.vehicleId===x.id).sort((a,b)=>a.date.localeCompare(b.date));
+    const monthlyData= (typeof getMonthlyMiles==='function') ? getMonthlyMiles(x.id) : [];
+    const avgMonthly= (typeof getAvgMonthlyMiles==='function') ? getAvgMonthlyMiles(x.id) : 0;
+    const currentMonth=monthlyData.find(m=>m.current)||monthlyData[monthlyData.length-1];
+    const milesThisMonth=currentMonth?currentMonth.miles:0;
+
+    if(tab==='resumen'){
+      app.innerHTML=`
+        <div style="padding:14px;background:linear-gradient(180deg,#1c2531,#161d28);border:1px solid var(--line);border-radius:20px;margin-bottom:12px">
+          <div style="font-size:9px;color:var(--gold);font-weight:800;letter-spacing:1px">PERSONAL · BUILD 43.0 FIX NEGRO · VIN COMPLETO</div>
+          <h1 style="margin:4px 0;font-size:20px">${esc(x.make)} ${esc(x.model)} <span style="color:var(--gold)">${x.year}</span></h1>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px">
+            <span class="pill" onclick="copyVIN()" style="cursor:pointer;background:#1a2332;border:1px solid #d9b46a44">VIN ${esc(x.vin||'')} 📋</span>
+            <span class="pill">${esc(x.engine||'3.6L V6')}</span>
+            <span class="pill">${Number(x.odo).toLocaleString()} mi</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px">
+            <div style="background:#0f151d;border:1px dashed #2a3440;border-radius:12px;padding:10px"><span style="font-size:8px;color:var(--muted);font-weight:700">ODOMETRO ACTUAL</span><b style="font-size:14px;display:block">${Number(x.odo).toLocaleString()} mi</b><small style="font-size:9px;color:var(--muted)">${mLogs.slice(-1)[0]?.date||''}</small></div>
+            <div style="background:#0f151d;border:1px dashed #2a3440;border-radius:12px;padding:10px"><span style="font-size:8px;color:var(--muted);font-weight:700">ESTE MES</span><b style="font-size:14px;color:var(--gold);display:block">+${milesThisMonth} mi</b><small style="font-size:9px;color:var(--muted)">Prom ${Math.round(avgMonthly)} mi/mes</small></div>
+          </div>
+        </div>
+        <div class="quick-v27" style="margin-bottom:10px"><input type="number" id="quickOdoV27" placeholder="${Number(x.odo).toLocaleString()} mi - Nuevo odometro" inputmode="numeric"><button onclick="quickAddMillasV27()" style="padding:10px 16px;background:var(--gold);color:#111;border:0;border-radius:10px;font-weight:700">＋</button></div>
+        <div id="tabContent">${(typeof tabHtml==='function')? tabHtml(tab,x,rec,rem,[],exp,mLogs,monthlyData,avgMonthly) : '<div class="empty">Cargando...</div>'}</div>
+      `;
+    } else {
+      app.innerHTML=`
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+          <button class="secondary" onclick="switchTab('resumen')" style="padding:8px 12px;font-size:11px">← Inicio</button>
+          <div><b style="font-size:13px">${(typeof labelTab==='function'?labelTab(tab):tab)}</b><div style="font-size:10px;color:var(--muted)">${esc(x.make)} ${x.year} · ${Number(x.odo).toLocaleString()} mi</div></div>
+        </div>
+        <div id="tabContent">${(typeof tabHtml==='function')? tabHtml(tab,x,rec,rem,[],exp,mLogs,monthlyData,avgMonthly) : ''}</div>
+      `;
+    }
+    // Fix bottom padding para que no haya espacio negro grande
+    document.querySelector('.wrap').style.paddingBottom = '100px';
+    if(tab==='resumen'||tab==='millas') setTimeout(()=>{ try{ if(typeof drawCharts==='function') drawCharts(mLogs,monthlyData,exp,rec); }catch(e){} },100);
+    document.querySelectorAll('.bottom-nav-v22 button').forEach(b=>b.classList.remove('active'));
+    const bn = document.getElementById('bn-'+tab); if(bn) bn.classList.add('active');
+    if(['historial','viajes','gastos','partes','bitacora','timeline','ficha','vin'].includes(tab)) document.getElementById('bn-mas')?.classList.add('active');
+    if((tab==='ficha'||tab==='vin') && x.vin){ setTimeout(()=>autoDecodeVINForCurrent(), 500); }
+  }catch(err){
+    console.error('render v43 error', err);
+    const app=document.getElementById('app');
+    if(app) app.innerHTML = '<div class="card section"><div class="notice bad">Error: '+esc(err.message)+'<br><pre style="font-size:10px;white-space:pre-wrap">'+esc(err.stack||'')+'</pre><button class="secondary" style="margin-top:8px" onclick="localStorage.clear();location.reload()">Reset App</button></div></div>';
+  }
+};
+
+// Fix MAS menu con Ficha VIN
+if(typeof openMasMenu === 'function'){
+  const oldMas = openMasMenu;
+  window.openMasMenu = function(){
+    modal(`<h2>⋯ Mas opciones</h2><div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:12px">
+      <button onclick="closeModal();switchTab('historial')" style="padding:14px"><div style="font-size:20px">🛠️</div>Historial</button>
+      <button onclick="closeModal();switchTab('viajes')" style="padding:14px"><div style="font-size:20px">🚗</div>Viajes 32p</button>
+      <button onclick="closeModal();switchTab('ficha')" style="padding:14px;background:linear-gradient(135deg,#1a2332,#151a21);border:1px solid #d9b46a66"><div style="font-size:20px">📋</div>Ficha VIN<br><small style="font-size:9px">VIN + NHTSA</small></button>
+      <button onclick="closeModal();switchTab('gastos')" style="padding:14px"><div style="font-size:20px">💰</div>Gastos</button>
+      <button onclick="closeModal();switchTab('partes')" style="padding:14px"><div style="font-size:20px">🔧</div>Refacciones</button>
+      <button onclick="closeModal();switchTab('bitacora')" style="padding:14px"><div style="font-size:20px">📝</div>Bitacora</button>
+      <button onclick="closeModal();switchTab('timeline')" style="padding:14px"><div style="font-size:20px">📊</div>Timeline</button>
+      <button onclick="closeModal();openIAModalV22()" style="padding:14px;background:linear-gradient(135deg,#d9b46a,#9a7a3a);color:#111"><div style="font-size:20px">🧠</div>IA Mecanico</button>
+    </div><button class="secondary" style="width:100%;margin-top:12px" onclick="closeModal()">Cerrar</button>`);
+  };
+}
+
+console.log('v43 FIX pantalla negra - 1 solo hero, sin espacio negro');
+setTimeout(()=>{ try{ render(); }catch(e){ console.error(e); } }, 200);
 </script>
 
 <script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductId(a);if(productId){e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*");return}e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:a.href},"*");return}var dataHref=findDataHref(target);if(dataHref&&/^https?:\/\//.test(dataHref.href)&&dataHref.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(dataHref.node,dataHref.href))return;e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:dataHref.href},"*")}},true)})();</script><script>(function(){var FOCUS_TYPE="ecto:artifact-focus-request";var CLOSE_TYPE="ecto:artifact-close-request";function focusArtifactDocument(){var body=document.body;if(!body)return;try{window.focus();}catch(e){}if(!body.hasAttribute("tabindex"))body.setAttribute("tabindex","-1");try{body.focus({preventScroll:true});}catch(e){try{body.focus();}catch(e2){}}}window.addEventListener("message",function(event){if(event.source!==window.parent)return;var data=event.data;if(!data||typeof data!=="object"||data.type!==FOCUS_TYPE)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",focusArtifactDocument,{once:true});return;}focusArtifactDocument();});window.addEventListener("keydown",function(event){if(event.key!=="Escape")return;window.setTimeout(function(){if(event.defaultPrevented)return;window.parent.postMessage({type:CLOSE_TYPE},"*");},0);});})();</script></body></html>
