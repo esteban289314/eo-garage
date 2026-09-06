@@ -25,117 +25,130 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
 <meta name="theme-color" content="#0b0d10">
-<meta name="color-scheme" content="dark">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="E.O. Garage">
-<meta name="eo-garage-version" content="15.0.0-super-pro-final">
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23d9b46a'/%3E%3Ctext x='50' y='62' font-size='46' text-anchor='middle' font-weight='900' fill='%23111'%3EEO%3C/text%3E%3C/svg%3E">
-<title>E.O. Garage v15 Super Pro Final · Solo para ti</title>
+<meta name="eo-garage-version" content="15.2-app-final-todo">
+<title>E.O. Garage v15.2 Final · App Limpia + Todo</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.115.0"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 <style>
+
 :root{
-  --bg:#080a0d; --bg1:#12151a; --card:#151a21f5; --card2:#1e2630; --line:#2a333e; --line2:#3d4a5a;
-  --text:#f5f7f9; --muted:#9aa6b5; --muted2:#6b7888; --gold:#d9b46a; --gold2:#e8c47e; --goldSoft:rgba(217,180,106,.14);
-  --ok:#45d58a; --okBg:#132a1f; --warn:#f0c75e; --warnBg:#2e2815; --bad:#ff6b72; --badBg:#3a1e20; --blue:#7aa8ff; --blueBg:#18273f;
-  --r-xl:20px; --r-lg:16px; --r-md:12px; --shadow:0 12px 40px rgba(0,0,0,.45); --font:-apple-system,BlinkMacSystemFont,"SF Pro Display",Inter,"Segoe UI",Roboto,Arial,sans-serif; --mono:ui-monospace,Menlo,monospace;
+  --bg:#080a0d; --bg1:#0f1318; --card:#171e27; --card2:#1d2632; --card3:#222e3c;
+  --line:#252f3c; --line2:#2e3a4b;
+  --text:#f3f5f7; --muted:#8d9aab; --muted2:#5f6b7a;
+  --gold:#d9b46a; --goldSoft:rgba(217,180,106,.12);
+  --ok:#45d58a; --warn:#f0c75e; --bad:#ff6b72; --blue:#7aa8ff;
+  --r:22px; --r-sm:14px; --shadow:0 10px 30px rgba(0,0,0,.35);
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Display",Inter,sans-serif; --mono:ui-monospace,Menlo,monospace;
 }
-*{box-sizing:border-box} html{scroll-behavior:smooth}
-body{margin:0;background:radial-gradient(1000px 500px at 15% -10%,#1d2530 0,transparent 60%),linear-gradient(180deg,var(--bg1),var(--bg));color:var(--text);font-family:var(--font);min-height:100vh;line-height:1.5;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
-button,input,select,textarea{font:inherit} button{border:0;border-radius:12px;padding:11px 16px;background:var(--gold);color:#111;font-weight:700;cursor:pointer;transition:.18s}
-button:hover{background:var(--gold2);transform:translateY(-1px)} .secondary{background:#1f2730;color:var(--text);border:1px solid var(--line)} .ghost{background:transparent;color:var(--muted)}
-.wrap{max-width:1200px;margin:auto;padding:14px 16px 110px}
-.top{position:sticky;top:0;z-index:30;display:flex;justify-content:space-between;gap:12px;align-items:center;margin:0 -16px 16px;padding:12px 16px;background:rgba(8,10,13,.86);backdrop-filter:blur(16px) saturate(1.2);border-bottom:1px solid rgba(255,255,255,.06);padding-top:calc(12px + env(safe-area-inset-top))}
-.brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:18px} .brand-badge{width:36px;height:36px;border-radius:11px;background:linear-gradient(135deg,#d9b46a,#9a7a3a);display:grid;place-items:center;color:#111}
-.sub{color:var(--muted);font-size:12.5px} .top-right{display:flex;gap:7px;align-items:center}
-.layout{display:grid;grid-template-columns:280px 1fr;gap:14px;align-items:start}
-.side{position:sticky;top:68px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-xl);overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.25)}
-.side-head{padding:14px 14px 8px;display:flex;justify-content:space-between} .vehicle-list{padding:8px;display:grid;gap:7px;max-height:70vh;overflow:auto}
-.vehicle{padding:12px;border-radius:14px;border:1px solid transparent;cursor:pointer;transition:.18s} .vehicle:hover{background:var(--card2)} .vehicle.active{background:linear-gradient(180deg,#222b36,#1b232e);border-color:#3d4a5a}
-.vehicle b{font-size:14px;display:flex;justify-content:space-between} .vehicle small{color:var(--muted);font-size:11.5px}
-.content{min-width:0;display:grid;gap:12px}
-.hero{padding:20px;display:flex;justify-content:space-between;gap:16px;align-items:flex-start;background:linear-gradient(180deg,rgba(26,33,42,.98),rgba(18,23,31,.98));border:1px solid var(--line);border-radius:var(--r-xl);box-shadow:var(--shadow)}
-.hero h1{margin:6px 0 8px;font-size:28px;letter-spacing:-.5px} .eyebrow{font-size:10px;letter-spacing:1.5px;color:var(--gold);font-weight:800;text-transform:uppercase}
-.pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px} .pill{padding:5px 10px;border-radius:999px;background:#1e262f;border:1px solid #2b3643;color:var(--muted);font-size:11px}
-.odo{margin-top:12px;display:inline-grid;gap:2px;padding:10px 14px;background:#10151b;border:1px dashed #2a3440;border-radius:12px;min-width:170px} .odo span{font-size:9.5px;color:var(--muted);font-weight:700;letter-spacing:1px} .odo b{font-size:22px}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px} .stat{padding:14px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);transition:.18s;position:relative;overflow:hidden} .stat:hover{transform:translateY(-2px);border-color:var(--line2)} .stat .n{font-size:22px;font-weight:900} .stat .l{font-size:11.5px;color:var(--muted);margin-top:2px}
-.tabs{display:flex;gap:5px;overflow:auto;padding:3px;background:#11161d;border:1px solid var(--line);border-radius:999px;width:max-content;max-width:100%} .tab{background:transparent;color:var(--muted);border:0;border-radius:999px;padding:7px 13px;font-size:12.5px;font-weight:600} .tab.active{background:var(--text);color:#0d1116}
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-xl);box-shadow:0 8px 24px rgba(0,0,0,.22)} .section{padding:16px}
-.section-head{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px} .section-head h2{margin:0;font-size:16px}
-.rows{display:grid} .row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #1f2730;align-items:center} .row:last-child{border:0} .row span{color:var(--muted);font-size:12.5px} .row b{font-size:13px;text-align:right}
-.badge{font-size:10.5px;padding:4px 8px;border-radius:999px;font-weight:700;border:1px solid transparent} .ok{background:var(--okBg);color:#6de3a5;border-color:#1e4a32} .warn{background:var(--warnBg);color:#f6d76e;border-color:#4a3f1e} .bad{background:var(--badBg);color:#ff9ba0;border-color:#5a2a2d} .info{background:var(--blueBg);color:#9fc3ff;border-color:#243a5a}
-.table{overflow:auto;border-radius:12px;border:1px solid var(--line)} .table table{width:100%;border-collapse:collapse;min-width:640px;background:#12171e}
-.table th,.table td{padding:11px 9px;border-bottom:1px solid #1f2832;font-size:12.5px;text-align:left;vertical-align:top} .table th{color:var(--muted);font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;background:#0f141a;position:sticky;top:0}
-.empty{padding:30px;text-align:center;color:var(--muted);display:grid;gap:8px;place-items:center} .notice{padding:11px 13px;border-radius:12px;background:#171e27;border:1px solid #2a3543;color:#c9d2dc;font-size:12.5px}
-.formgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px} label{display:grid;gap:5px;color:#cbd1d7;font-size:11.5px;font-weight:600} input,select,textarea{width:100%;background:#0e1318;color:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 11px;outline:none} input:focus,select:focus,textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--goldSoft)} textarea{min-height:84px;resize:vertical} .full{grid-column:1/-1}
-.modalbg{position:fixed;inset:0;background:rgba(0,0,0,.64);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;padding:12px;z-index:60} .modal{width:min(760px,100%);max-height:92vh;overflow:auto;background:#161d26;border:1px solid #2f3a47;border-radius:20px;padding:20px;box-shadow:0 20px 80px rgba(0,0,0,.6)}
-.chart-wrap{background:#0f141a;border:1px solid var(--line);border-radius:12px;padding:10px} .chart-wrap canvas{width:100%!important;height:220px!important}
-.split{display:grid;grid-template-columns:1.3fr .7fr;gap:12px} .mini-list{display:grid;gap:7px} .mini{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:11px;border:1px solid var(--line);border-radius:12px;background:#11161c}
-#toastRoot{position:fixed;right:12px;bottom:86px;z-index:200;display:grid;gap:8px;pointer-events:none} .toast{pointer-events:auto;min-width:250px;max-width:360px;padding:11px 13px;border-radius:14px;background:#1b242f;border:1px solid #2e3a48;display:flex;gap:9px;align-items:flex-start;box-shadow:0 10px 30px rgba(0,0,0,.4)}
-.toast.ok{border-color:#1f4a32;background:#14261d} .toast.bad{border-color:#5a2a2d;background:#2a1a1c}
-.bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:35;background:rgba(15,19,26,.94);backdrop-filter:blur(18px) saturate(1.3);border-top:1px solid rgba(255,255,255,.07);display:none;gap:2px;padding:6px 6px calc(6px + env(safe-area-inset-bottom));justify-content:space-around}
-.bottom-nav button{flex:1;background:transparent;color:var(--muted);border-radius:12px;padding:8px 4px;font-size:10px;display:grid;gap:2px;place-items:center} .bottom-nav button.active{background:#1e2833;color:var(--text)} .bottom-nav b{font-size:14px}
-@media(max-width:900px){.layout{grid-template-columns:1fr}.side{position:fixed;left:10px;right:10px;top:64px;z-index:40;transform:translateY(-10px);opacity:0;pointer-events:none;transition:.22s;max-height:78vh}.side.open{transform:translateY(0);opacity:1;pointer-events:auto}.grid{grid-template-columns:repeat(2,1fr)}.split{grid-template-columns:1fr}.formgrid{grid-template-columns:1fr}.tabs{display:none}.bottom-nav{display:flex}.wrap{padding-bottom:110px}}
-.footer{color:#5a6675;text-align:center;font-size:10.5px;padding:18px}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent} html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;line-height:1.45;padding-bottom:90px}
+button{font:inherit;border:0;border-radius:14px;padding:12px 16px;font-weight:700;cursor:pointer;transition:.15s}
+.btn-gold{background:var(--gold);color:#111}.btn-gold:active{transform:scale(.98)}
+.btn-sec{background:var(--card2);color:var(--text);border:1px solid var(--line)}.btn-ghost{background:transparent;color:var(--muted)}
+.app{max-width:480px;margin:0 auto;min-height:100vh;position:relative;background:linear-gradient(180deg,var(--bg1),var(--bg));}
+.top{position:sticky;top:0;z-index:20;padding:calc(14px + env(safe-area-inset-top)) 16px 12px;background:rgba(8,10,13,.88);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand{display:flex;align-items:center;gap:10px}.logo{width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,#d9b46a,#9a7a3a);display:grid;place-items:center;color:#111;font-weight:900}
+.top h1{font-size:16px;margin:0;line-height:1.1} .top p{margin:0;font-size:11px;color:var(--muted)}
+.vehicle-switch{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--card);border:1px solid var(--line);border-radius:999px;cursor:pointer}
+.vehicle-switch b{font-size:13px} .vehicle-switch span{font-size:11px;color:var(--muted)}
+
+.content{padding:14px 14px 20px;display:grid;gap:14px}
+.hero{background:linear-gradient(180deg,#1c2531,#161d28);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;top:-40px;right:-40px;width:140px;height:140px;background:radial-gradient(circle,var(--goldSoft),transparent 70%);border-radius:50%}
+.hero-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;position:relative}
+.hero h2{margin:4px 0 2px;font-size:22px;letter-spacing:-.4px} .eyebrow{font-size:9px;letter-spacing:1.4px;color:var(--gold);font-weight:800;text-transform:uppercase}
+.odo-big{margin-top:12px;display:flex;gap:10px}
+.odo-card{flex:1;background:#0f151d;border:1px solid var(--line);border-radius:16px;padding:12px}
+.odo-card span{font-size:9px;color:var(--muted);font-weight:700;letter-spacing:.8px;display:block;margin-bottom:2px}
+.odo-card b{font-size:18px} .odo-card small{font-size:10px;color:var(--muted2);display:block;margin-top:2px}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat-app{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;min-height:92px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+.stat-app .icon{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;font-size:16px;margin-bottom:8px}
+.stat-app .n{font-size:20px;font-weight:800;letter-spacing:-.3px} .stat-app .l{font-size:11px;color:var(--muted);margin-top:2px}
+.stat-app .badge-pos{position:absolute;top:10px;right:10px;font-size:10px;padding:3px 8px;border-radius:999px;font-weight:700}
+
+.card-app{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px;box-shadow:0 4px 16px rgba(0,0,0,.18)}
+.card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.card-head h3{margin:0;font-size:14px} .card-head .action{font-size:11px;color:var(--gold);background:transparent;padding:4px 8px;border-radius:8px;border:0}
+
+.list{display:grid;gap:8px}
+.row-app{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px;background:var(--card2);border:1px solid transparent;border-radius:14px;transition:.15s}
+.row-app:active{transform:scale(.99);border-color:var(--line2)}
+.row-app .left{display:flex;gap:10px;align-items:center;min-width:0;flex:1}
+.row-app .left .ico{width:36px;height:36px;border-radius:11px;background:#1f2a38;display:grid;place-items:center;font-size:16px;flex-shrink:0}
+.row-app b{font-size:13px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row-app span{font-size:11px;color:var(--muted);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.badge{font-size:10px;padding:4px 8px;border-radius:999px;font-weight:700;border:1px solid transparent}
+.ok{background:#132a1f;color:#6de3a5;border-color:#1e4a32} .warn{background:#2e2815;color:#f6d76e;border-color:#4a3f1e} .bad{background:#3a1e20;color:#ff9ba0;border-color:#5a2a2d} .info{background:#18273f;color:#9fc3ff;border-color:#243a5a}
+
+.tabs-app{display:flex;gap:4px;padding:4px;background:#0f141b;border:1px solid var(--line);border-radius:999px;overflow:auto;scrollbar-width:none}
+.tabs-app::-webkit-scrollbar{display:none}
+.tab-app{white-space:nowrap;background:transparent;color:var(--muted);border:0;border-radius:999px;padding:8px 14px;font-size:12px;font-weight:600;flex-shrink:0}
+.tab-app.active{background:var(--text);color:#0d1116}
+
+.fab{position:fixed;bottom:88px;right:16px;z-index:15;width:56px;height:56px;border-radius:50%;background:var(--gold);color:#111;display:grid;place-items:center;font-size:24px;box-shadow:0 8px 24px rgba(0,0,0,.4),0 0 0 1px rgba(217,180,106,.3);transition:.2s}
+.fab:active{transform:scale(.92)}
+
+.bottom-nav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;z-index:20;width:100%;max-width:480px;background:rgba(15,19,26,.92);backdrop-filter:blur(20px) saturate(1.2);border-top:1px solid rgba(255,255,255,.07);display:flex;justify-content:space-around;padding:6px 6px calc(8px + env(safe-area-inset-bottom));}
+.bottom-nav button{flex:1;background:transparent;color:var(--muted);border-radius:14px;padding:8px 4px;font-size:10px;display:grid;gap:3px;place-items:center;min-width:0}
+.bottom-nav button.active{color:var(--text);background:#1e2833} .bottom-nav b{font-size:18px}
+
+.sheet{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);display:flex;align-items:flex-end;justify-content:center}
+.sheet-box{width:100%;max-width:480px;background:var(--bg1);border-top:1px solid var(--line);border-radius:24px 24px 0 0;padding:20px 16px 24px;max-height:88vh;overflow:auto;box-shadow:0 -10px 40px rgba(0,0,0,.5);animation:slideUp .25s ease}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px} label{display:grid;gap:5px;color:#cbd1d7;font-size:11px;font-weight:600} input,select,textarea{width:100%;background:#0e1318;color:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 12px;outline:none;font-size:13px}
+input:focus,select:focus,textarea:focus{border-color:var(--gold)} textarea{min-height:80px} .full{grid-column:1/-1}
+.notice{padding:10px 12px;border-radius:12px;background:#171e27;border:1px solid #2a3543;color:#c9d2dc;font-size:11.5px}
+.chart-wrap{background:#0f141a;border:1px solid var(--line);border-radius:16px;padding:10px}
+#toastRoot{position:fixed;right:12px;left:12px;bottom:90px;z-index:100;display:grid;gap:8px;pointer-events:none;max-width:480px;margin:0 auto}
+.toast{pointer-events:auto;padding:11px 13px;border-radius:14px;background:#1b242f;border:1px solid #2e3a48;display:flex;gap:9px;box-shadow:0 10px 30px rgba(0,0,0,.4);font-size:12px}
+.footer{text-align:center;color:#5a6675;font-size:10px;padding:20px 0}
+
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="app">
   <div class="top">
-    <div style="display:flex;align-items:center;gap:10px">
-      <button class="secondary" onclick="toggleDrawer()" style="width:38px;height:38px;padding:0;display:grid;place-items:center">☰</button>
-      <div class="brand"><div class="brand-badge">EO</div><div><div>E.O. Garage v15 Super Pro Final</div><div class="sub">Solo tus vehículos · Sin fotos · PDF mecánico · Checklist · Reporte mensual</div></div></div>
-    </div>
-    <div class="top-right">
-      <button onclick="openMileageModal()">＋ Millas</button>
-      <button class="secondary" onclick="addVehicle()">＋ Vehículo</button>
-      <button class="secondary" id="accountBtn" onclick="openAuth()">Cuenta</button>
-    </div>
+    <div class="brand"><div class="logo">EO</div><div><h1>E.O. Garage v15.2</h1><p id="topSub">App final · Todo parejo · Todo en uno</p></div></div>
+    <div class="vehicle-switch" onclick="openVehicleDrawer()"><div><b id="topVehicle">Enclave</b><span id="topOdo">169,000 mi</span></div><span>▼</span></div>
   </div>
-
-  <div class="layout">
-    <aside class="side" id="sidePanel">
-      <div class="side-head"><span class="sub" style="font-weight:800;letter-spacing:1px">MIS VEHÍCULOS</span><span class="sub" id="vehicleCount"></span></div>
-      <div class="vehicle-list" id="vehicleList"></div>
-      <div style="padding:10px;border-top:1px solid var(--line);display:flex;gap:6px">
-        <button class="secondary" style="flex:1" onclick="openMonthlyReport()">📊 Reporte mes</button>
-        <button class="secondary" style="flex:1" onclick="openMileageModal()">📝 Millas</button>
-      </div>
-    </aside>
-    <main class="content" id="app"></main>
-  </div>
-  <div class="footer">E.O. Garage v15 Super Pro Final · Solo para ti · Reporte mensual de millas · Recordatorios inteligentes · Supabase</div>
+  <div class="content" id="appContent"></div>
+  <div class="footer">v15.2 Final · App limpia + PDF v2 + Checklist 28p + Viajes 32p + Salud + Refacciones + Millas + Timeline + Bitácora · Sin fotos</div>
 </div>
 
 <div class="bottom-nav" id="bottomNav">
-  <button onclick="switchTab('resumen')" id="bn-resumen"><b>📊</b>Resumen</button>
+  <button onclick="switchTab('resumen')" id="bn-resumen"><b>🏠</b>Inicio</button>
   <button onclick="switchTab('millas')" id="bn-millas"><b>🛣️</b>Millas</button>
-  <button onclick="switchTab('historial')" id="bn-historial"><b>🛠️</b>Historial</button>
-  <button onclick="switchTab('mantenimiento')" id="bn-mantenimiento"><b>⏰</b>Servicios</button>
-  <button onclick="switchTab('checklist')" id="bn-checklist"><b>✅</b>Check</button>
-  <button onclick="switchTab('gastos')" id="bn-gastos"><b>💰</b>Gastos</button>
+  <button onclick="switchTab('mantenimiento')" id="bn-mantenimiento"><b>🔧</b>Servicios</button>
+  <button onclick="switchTab('viajes')" id="bn-viajes"><b>🚗</b>Viajes</button>
+  <button onclick="switchTab('mas')" id="bn-mas"><b>⋯</b>Más</button>
 </div>
+
+<button class="fab" onclick="openMileageModal()">＋</button>
 
 <div id="modalRoot"></div>
 <div id="toastRoot"></div>
-
+<div id="drawerRoot"></div>
 <div id="authGate" style="display:none;position:fixed;inset:0;background:rgba(8,10,13,.94);backdrop-filter:blur(14px);z-index:100;align-items:center;justify-content:center;padding:16px">
-  <div class="card section" style="width:min(420px,100%)">
-    <div class="brand" style="margin-bottom:8px"><div class="brand-badge">EO</div> E.O. Garage</div>
-    <div class="sub" style="margin:5px 0 14px">Solo tus datos, en tu nube</div>
+  <div class="card-app" style="width:min(420px,100%)">
+    <div class="brand" style="margin-bottom:8px"><div class="logo">EO</div> E.O. Garage v15.2</div>
+    <div class="sub" style="margin:5px 0 14px;color:var(--muted);font-size:11px">Solo tus datos, en tu nube</div>
     <form id="authForm">
       <div class="formgrid"><label class="full">Correo<input id="authEmail" type="email" required placeholder="tu correo"></label><label class="full">Contraseña<input id="authPassword" type="password" required minlength="6" placeholder="••••••"></label></div>
-      <div style="display:flex;gap:8px;margin-top:12px"><button type="submit" style="flex:1">Entrar</button><button type="button" class="secondary" id="signupBtn" style="flex:1">Crear cuenta</button></div>
+      <div style="display:flex;gap:8px;margin-top:12px"><button type="submit" class="btn-gold" style="flex:1">Entrar</button><button type="button" class="btn-sec" id="signupBtn" style="flex:1">Crear cuenta</button></div>
       <div id="authMsg" class="notice" style="margin-top:10px">Conecta para nube.</div>
-      <button type="button" class="ghost" style="width:100%;margin-top:8px" onclick="closeAuth()">Seguir local</button>
+      <button type="button" class="btn-ghost" style="width:100%;margin-top:8px" onclick="closeAuth()">Seguir local</button>
     </form>
   </div>
 </div>
 
-<button id="logoutBtn" class="secondary" onclick="logout()" style="position:fixed;right:10px;bottom:96px;z-index:90;display:none;padding:7px 11px;font-size:11px;border-radius:999px">Cerrar sesión</button>
-<div id="cloudStatus" class="sub" style="position:fixed;right:10px;bottom:12px;z-index:90;background:#151a21;border:1px solid #2a333e;border-radius:999px;padding:6px 10px">☁️ Local</div>
+<button id="logoutBtn" class="btn-sec" onclick="logout()" style="position:fixed;right:10px;bottom:96px;z-index:90;display:none;padding:7px 11px;font-size:11px;border-radius:999px">Cerrar sesión</button>
+<div id="cloudStatus" class="sub" style="position:fixed;right:10px;bottom:12px;z-index:90;background:#171e27;border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:10px">☁️ Local</div>
 
 <script>
 const SUPABASE_URL='https://wwwovjmdlvsqoicdidve.supabase.co';
@@ -969,6 +982,888 @@ let saveDebounce=null;
 async function save(){try{localStorage.setItem(KEY,JSON.stringify(db))}catch(e){toast('LocalStorage lleno','bad')}render();clearTimeout(saveDebounce);saveDebounce=setTimeout(()=>{if(cloudUser)cloudSave(true)},700)}
 
 try{render();document.getElementById('bn-resumen')?.classList.add('active');}catch(err){document.getElementById('app').innerHTML=`<div class="card section"><h2>Error</h2><div class="notice">${esc(err.message||err)}</div></div>`}
+
+const SUPABASE_URL='https://wwwovjmdlvsqoicdidve.supabase.co';
+const SUPABASE_KEY='sb_publishable_Z2WJKL5aWa2WlZvtDevj0w_nWR5Cidh';
+const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+let cloudUser=null, cloudReady=false, cloudSyncing=false, saveQueue=false;
+const KEY='eo_garage_v15_personal';
+const LEGACY_KEYS=['eo_garage_v15_build001','eo_garage_v15','eo_garage_v12','eo_garage_v11','eo_garage_v10'];
+
+const seed={
+  vehicles:[{id:'v1',make:'Buick',model:'Enclave',year:2013,vin:'5GAKRCKD1DJ218711',engine:'3.6L V6',drive:'FWD',odo:169000,unit:'mi',fuel:'Gasolina',tire:'P255/60R19',tirePressure:'35',oil:'Castrol EDGE full sintético',oilViscosity:'5W-30',oilFilter:'STP',spark:'Bosch Double Iridium',notes:'Vehículo principal',serviceNotes:''}],
+  records:[], reminders:[], issues:[], expenses:[], mileageLogs:[], inspections:[], partsCatalog:[], quickNotes:[], travelLogs:[], travelChecklists:[],
+  settings:{}
+};
+const done=[
+  ['Motor','Cambio de aceite de motor','Castrol EDGE'],['Motor','Cambio de filtro de aceite','STP'],['Admisión','Cambio de filtro de aire',''],
+  ['Motor','Cambio de bujías','Bosch Double Iridium'],['Motor','Limpieza de sensores',''],['Motor','Limpieza de cuerpo de aceleración',''],
+  ['Refrigeración','Reemplazo de bomba de agua',''],['Refrigeración','Cambio de anticongelante',''],['Motor','Cambio de banda serpentina',''],
+  ['Motor','Cambio de damper/polea de cigüeñal',''],['A/C','Servicio A/C',''],['Transmisión','Cambio de fluido transmisión',''],
+  ['Suspensión','Reemplazo de bieletas',''],['Frenos','Rectificado de 4 rotores',''],['Frenos','Cambio de pastillas delanteras',''],
+  ['Suspensión','Reemplazo de bujes flotantes',''],['Suspensión','Reemplazo de bujes barra estabilizadora',''],['Motor','Reemplazo de soporte motor',''],['Suspensión','Reemplazo de amortiguadores traseros','']
+];
+seed.records=done.map((x,i)=>({id:'r'+i,vehicleId:'v1',date:'2026-09-02',odo:169000,category:x[0],service:x[1],parts:x[2],partNumber:'',cost:0,shop:'',notes:'Realizado 169k mi'}));
+seed.reminders=[
+  {id:'m1',vehicleId:'v1',name:'Rotación de llantas + servicio',nextMileage:176500,nextDate:null,warnMiles:1000,warnDays:30,type:'Inspección',source:'Fabricante',intervalMiles:7500,intervalMonths:null,status:'pending',notes:''},
+  {id:'m2',vehicleId:'v1',name:'Cambio de aceite y filtro',nextMileage:null,nextDate:'2027-09-02',warnMiles:800,warnDays:30,type:'Reemplazo',source:'Fabricante',intervalMiles:7500,intervalMonths:6,status:'pending',notes:''},
+  {id:'m3',vehicleId:'v1',name:'Inspección filtro aire motor',nextMileage:176500,nextDate:null,warnMiles:1000,warnDays:30,type:'Inspección',source:'Fabricante',intervalMiles:15000,intervalMonths:12,status:'pending',notes:''},
+  {id:'m-monthly',vehicleId:'v1',name:'Actualizar kilometraje mensual',nextMileage:null,nextDate:new Date(new Date().getFullYear(), new Date().getMonth()+1, 1).toISOString().slice(0,10),warnMiles:0,warnDays:3,type:'Inspección',source:'E.O. Mensual',intervalMiles:null,intervalMonths:1,status:'pending',notes:'Recordatorio mensual para registrar millas recorridas'}
+];
+seed.mileageLogs=[
+  {id:'ml1',vehicleId:'v1',date:'2026-08-01',odo:167500,notes:'Inicio mes agosto'},
+  {id:'ml2',vehicleId:'v1',date:'2026-09-01',odo:168800,notes:'Inicio septiembre - 1300 mi en agosto'},
+  {id:'ml3',vehicleId:'v1',date:'2026-09-02',odo:169000,notes:'Actual - después de servicios'}
+];
+
+
+
+const ROAD_TRIP_TEMPLATE = [
+  {cat:'Documentos', items:['Licencia vigente','Seguro / póliza','Tarjeta circulación','Verificación vigente','INE / identificación']},
+  {cat:'Llantas y Herramienta', items:['Presión 35 PSI (4 + refacción)','Refacción inflada','Gato hidráulico','Llave cruz / cruceta','Llanta refacción herramientas']},
+  {cat:'Motor y Fluidos', items:['Nivel aceite motor','Nivel anticongelante','Líquido limpiaparabrisas lleno','Nivel líquido frenos','Banda / fugas visibles']},
+  {cat:'Seguridad', items:['Botiquín primeros auxilios','Extintor','Cables pasa corriente','Linterna / lámpara','Triángulos / reflejantes','Cargador celular / power bank']},
+  {cat:'Luces y Eléctrico', items:['Luces bajas / altas','Intermitentes / direccionales','Luces freno / reversa','Claxon']},
+  {cat:'Equipaje Viaje', items:['Agua / snacks','Cobija ligera','Herramienta básica','Dinero efectivo']},
+];
+
+const PARTS_CATALOG_DEFAULT = [
+  {cat:'Motor', name:'Aceite 5W-30 Full Sintético', partNumber:'Castrol EDGE 5W-30', brand:'Castrol', lastPrice:850, where:'AutoZone', notes:'Para Enclave 3.6L - 5.7L con filtro'},
+  {cat:'Motor', name:'Filtro aceite', partNumber:'STP S8765 / AC PF63', brand:'STP', lastPrice:180, where:'AutoZone', notes:'Compatible Enclave 2013 3.6L'},
+  {cat:'Motor', name:'Bujías Double Iridium', partNumber:'Bosch 9602 / 9603', brand:'Bosch', lastPrice:420, where:'AutoZone', notes:'6 piezas - cada 30k mi'},
+  {cat:'Motor', name:'Filtro aire motor', partNumber:'STP SA8765', brand:'STP', lastPrice:280, where:'AutoZone', notes:''},
+  {cat:'Motor', name:'Banda serpentina', partNumber:'Gates K060950', brand:'Gates', lastPrice:650, where:'AutoZone', notes:''},
+  {cat:'Frenos', name:'Pastillas delanteras', partNumber:'Duralast Gold DG1362', brand:'Duralast', lastPrice:950, where:'AutoZone', notes:''},
+  {cat:'Frenos', name:'Pastillas traseras', partNumber:'Duralast Gold DG1363', brand:'Duralast', lastPrice:850, where:'AutoZone', notes:''},
+  {cat:'Llantas', name:'Llanta P255/60R19', partNumber:'P255/60R19 108H', brand:'Michelin/BFGoodrich', lastPrice:3200, where:'Costco', notes:'35 PSI - rotación cada 7500 mi'},
+  {cat:'Fluidos', name:'Anticongelante Dex-Cool', partNumber:'Prestone Dex-Cool Naranja', brand:'Prestone', lastPrice:380, where:'AutoZone', notes:'50/50 premezclado'},
+  {cat:'Filtros', name:'Filtro cabina A/C', partNumber:'STP CAF1810P', brand:'STP', lastPrice:220, where:'AutoZone', notes:'Cada 15k mi'},
+];
+
+const INSPECTION_TEMPLATE = [
+  {cat:'Motor', items:['Nivel aceite motor','Nivel anticongelante','Fugas aceite motor','Banda serpentina / damper','Soportes de motor','Filtro aire motor','Bujías / bobinas','Cuerpo aceleración / sensores']},
+  {cat:'Frenos', items:['Pastillas delanteras','Pastillas traseras','Discos / rotores','Nivel líquido frenos','Freno estacionamiento','Mangueras frenos']},
+  {cat:'Suspensión y Dirección', items:['Amortiguadores delanteros','Amortiguadores traseros','Bieletas / link kits','Bujes barra estabilizadora','Bujes flotantes / horquillas','Terminales dirección / rótulas','Alineación']},
+  {cat:'Llantas', items:['Presión llantas (35 PSI)','Desgaste / dibujo','Rotación','Llantas: P255/60R19']},
+  {cat:'Fluidos', items:['Aceite transmisión','Dirección hidráulica','Líquido frenos','Anticongelante']},
+  {cat:'Eléctrico / Luces', items:['Batería / terminales','Luces delanteras / altas','Luces traseras / freno','Intermitentes']},
+  {cat:'A/C y Otros', items:['A/C - gas / fugas','Filtro cabina','Limpiaparabrisas','Correa accesorios']},
+];
+
+function esc(s){return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+function today(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
+function money(n){return new Intl.NumberFormat('es-MX',{style:'currency',currency:'MXN',maximumFractionDigits:0}).format(Number(n)||0)}
+function money2(n){return new Intl.NumberFormat('es-MX',{style:'currency',currency:'MXN'}).format(Number(n)||0)}
+function daysBetween(a,b){return Math.ceil((new Date(a)-new Date(b))/86400000)}
+function normalize(d){d=d&&typeof d==='object'?d:{};d.vehicles=Array.isArray(d.vehicles)?d.vehicles:[];d.records=Array.isArray(d.records)?d.records:[];d.reminders=Array.isArray(d.reminders)?d.reminders:[];d.issues=Array.isArray(d.issues)?d.issues:[];d.expenses=Array.isArray(d.expenses)?d.expenses:[];d.mileageLogs=Array.isArray(d.mileageLogs)?d.mileageLogs:[];d.inspections=Array.isArray(d.inspections)?d.inspections:[];d.partsCatalog=Array.isArray(d.partsCatalog)?d.partsCatalog:[];d.quickNotes=Array.isArray(d.quickNotes)?d.quickNotes:[];d.travelLogs=Array.isArray(d.travelLogs)?d.travelLogs:[];d.travelChecklists=Array.isArray(d.travelChecklists)?d.travelChecklists:[];d.settings=d.settings&&typeof d.settings==='object'?d.settings:{};return d}
+function load(){try{let raw=localStorage.getItem(KEY);if(!raw){for(const k of LEGACY_KEYS){const v=localStorage.getItem(k);if(v){raw=v;break;}}}if(raw){const d=JSON.parse(raw);if(d&&Array.isArray(d.vehicles))return d;}}catch(e){}return JSON.parse(JSON.stringify(seed))}
+let db=normalize(load());
+if(!db.partsCatalog.length){db.partsCatalog=JSON.parse(JSON.stringify(PARTS_CATALOG_DEFAULT)).map((p,i)=>({...p,id:'part-'+i,vehicleId:'v1'}));}
+let selected=db.vehicles[0]?.id||null;let tab='resumen';
+function v(){return db.vehicles.find(x=>x.id===selected)||db.vehicles[0]||null}
+function reminderStatus(r){let x=v();if(!x)return['—','info'];let m=r.nextMileage?Number(r.nextMileage)-Number(x.odo):Infinity;let d=r.nextDate?daysBetween(r.nextDate,today()):Infinity;if(m<0||d<0)return['Vencido','bad'];if(m<=Number(r.warnMiles||1000)||d<=Number(r.warnDays||30))return['Próximo','warn'];return['Al día','ok']}
+function toast(msg,type='info',ms=3400){const root=document.getElementById('toastRoot');const el=document.createElement('div');el.className=`toast ${type}`;el.innerHTML=`<div>${type==='ok'?'✓':type==='bad'?'✕':type==='warn'?'⚠':'☁️'}</div><div style="flex:1;font-size:12.5px">${esc(msg)}</div><button class="ghost" style="width:24px;height:24px;padding:0" onclick="this.parentElement.remove()">✕</button>`;root.appendChild(el);setTimeout(()=>{el.style.opacity='0';setTimeout(()=>el.remove(),200)},ms)}
+
+/* Mileage logic */
+function getMonthlyMiles(vehicleId){
+  const logs=[...db.mileageLogs.filter(l=>l.vehicleId===vehicleId)].sort((a,b)=>a.date.localeCompare(b.date));
+  const result=[];
+  for(let i=1;i<logs.length;i++){
+    const prev=logs[i-1],curr=logs[i];
+    const miles=curr.odo-prev.odo;
+    const days=daysBetween(curr.date,prev.date)||30;
+    result.push({from:prev.date,to:curr.date,miles,days,avgPerDay:miles/days,prevOdo:prev.odo,currOdo:curr.odo});
+  }
+  // Current month (from last log to today with current odo)
+  if(logs.length){
+    const last=logs[logs.length-1];
+    const currOdo=v()?.odo||last.odo;
+    const currDate=today();
+    if(currDate!==last.date){
+      const miles=currOdo-last.odo;
+      const days=daysBetween(currDate,last.date)||1;
+      result.push({from:last.date,to:currDate,miles,days,avgPerDay:miles/days,prevOdo:last.odo,currOdo,current:true});
+    }
+  }
+  return result;
+}
+function getAvgMonthlyMiles(vehicleId){
+  const monthly=getMonthlyMiles(vehicleId);
+  if(!monthly.length)return 0;
+  const last3=monthly.slice(-3);
+  return last3.reduce((a,b)=>a+b.miles,0)/last3.length;
+}
+
+function renderVehicles(){
+  const list=document.getElementById('vehicleList');const count=document.getElementById('vehicleCount');if(!list)return;
+  count.textContent=db.vehicles.length?`${db.vehicles.length}`:'';
+  if(!db.vehicles.length){list.innerHTML=`<div class="empty">Sin vehículos</div>`;return;}
+  list.innerHTML=db.vehicles.map(x=>{
+    const alerts=db.reminders.filter(r=>r.vehicleId===x.id&&r.name!=='Actualizar kilometraje mensual'&&reminderStatus(r)[1]!=='ok').length;
+    const monthlyAlert=db.reminders.find(r=>r.vehicleId===x.id&&r.name==='Actualizar kilometraje mensual'&&reminderStatus(r)[1]!=='ok');
+    const avg=getAvgMonthlyMiles(x.id);
+    return `<div class="vehicle ${x.id===selected?'active':''}" onclick="selectVehicle('${x.id}')"><b><span>${esc(x.make)} ${esc(x.model)}</span><span style="font-size:10px;padding:2px 6px;border-radius:999px;background:${alerts?'var(--warnBg)':'var(--okBg)'};color:${alerts?'var(--warn)':'var(--ok)'}">${alerts? alerts+' ⚠' : '✓'}</span></b><small>${x.year} · ${Number(x.odo).toLocaleString()} ${esc(x.unit||'mi')} ${avg?`· ~${Math.round(avg)} mi/mes`:''}</small>${monthlyAlert?`<div style="margin-top:4px"><span class="badge warn" style="font-size:9px">📝 Actualizar millas este mes</span></div>`:''}</div>`
+  }).join('');
+}
+function selectVehicle(id){selected=id;tab='resumen';document.getElementById('sidePanel')?.classList.remove('open');render();}
+function toggleDrawer(){document.getElementById('sidePanel')?.classList.toggle('open')}
+function labelTab(t){return {resumen:'Resumen',millas:'Millas / Mes',historial:'Historial',mantenimiento:'Servicios',checklist:'Checklist',viajes:'Viajes',bitacora:'Bitácora',timeline:'Timeline',gastos:'Gastos',partes:'Refacciones',vin:'VIN',ficha:'Ficha'}[t]||t}
+function switchTab(t){tab=t;render();document.querySelectorAll('.bottom-nav button').forEach(b=>b.classList.remove('active'));document.getElementById('bn-'+t)?.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
+
+function render(){
+  renderVehicles();
+  const x=v();const app=document.getElementById('app');if(!x){app.innerHTML=`<div class="card section empty"><h3>Bienvenido</h3><button onclick="addVehicle()">＋ Vehículo</button></div>`;return;}
+  let rec=db.records.filter(r=>r.vehicleId===x.id);let rem=db.reminders.filter(r=>r.vehicleId===x.id);let iss=db.issues.filter(r=>r.vehicleId===x.id);let exp=db.expenses.filter(r=>r.vehicleId===x.id);let mLogs=db.mileageLogs.filter(r=>r.vehicleId===x.id).sort((a,b)=>a.date.localeCompare(b.date));
+  const maintTotal=rec.reduce((a,r)=>a+Number(r.cost||0),0);const expTotal=exp.reduce((a,r)=>a+Number(r.amount||0),0);const total=maintTotal+expTotal;
+  const alerts=rem.filter(r=>r.name!=='Actualizar kilometraje mensual'&&reminderStatus(r)[1]!=='ok').length;const open=iss.filter(r=>!['resuelto'].includes(String(r.status||'').toLowerCase())).length;
+  const monthlyData=getMonthlyMiles(x.id);const currentMonth=monthlyData.find(m=>m.current)||monthlyData[monthlyData.length-1];const avgMonthly=getAvgMonthlyMiles(x.id);const milesThisMonth=currentMonth?currentMonth.miles:0;
+
+  // Check if need monthly update reminder (if last log > 25 days ago)
+  const lastLog=mLogs[mLogs.length-1];const daysSinceLastLog=lastLog?daysBetween(today(),lastLog.date):999;
+  const needsMonthlyUpdate=daysSinceLastLog>25;
+
+  app.innerHTML=`
+    <div class="hero card">
+      <div style="min-width:0">
+        <div class="eyebrow">Personal · Solo tuyo · Build 15.0 Super Pro</div>
+        <h1>${esc(x.make)} ${esc(x.model)} <span style="color:var(--gold)">${x.year}</span></h1>
+        <div class="pills"><span class="pill"><b>VIN</b> ${esc(x.vin||'Sin VIN')}</span><span class="pill">${esc(x.engine||'Motor')}</span><span class="pill">${Number(x.odo||0).toLocaleString()} ${esc(x.unit||'mi')}</span></div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
+          <div class="odo"><span>ODÓMETRO ACTUAL</span><b>${Number(x.odo||0).toLocaleString()} ${esc(x.unit||'mi')}</b><small>Última actualización: ${lastLog?lastLog.date:'—'}</small></div>
+          <div class="odo" style="border-color:${needsMonthlyUpdate?'#f0c75e':'#2a3440'}"><span>ESTE MES</span><b style="color:${needsMonthlyUpdate?'var(--warn)':'var(--text)'}">${milesThisMonth>=0?'+'+milesThisMonth.toLocaleString()+' '+(x.unit||'mi'):'—'}</b><small>${currentMonth? Math.round(currentMonth.avgPerDay)+' por día' : ''} · Prom 3 meses: ${Math.round(avgMonthly)} mi</small></div>
+          <div class="odo"><span>COSTO TOTAL</span><b>${money(total)}</b><small>${money(maintTotal)} mant. + ${money(expTotal)} gastos</small></div>
+        </div>
+        ${needsMonthlyUpdate?`<div class="notice" style="margin-top:12px;border-color:var(--warn);background:var(--warnBg)">📝 Han pasado ${daysSinceLastLog} días sin actualizar millas. Toca <b>＋ Millas</b> para registrar tu kilometraje actual y mantener precisos los servicios preventivos.</div>`:''}
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:7px;align-self:flex-start">
+        <button onclick="openMileageModal()">📝 ＋ Millas</button>
+        <button class="secondary" onclick="openMonthlyReport()">📊 Reporte</button>
+        <button class="secondary" onclick="openTravelChecklistForm()">🚗 Viaje</button>
+        <button class="secondary" onclick="recordForm()">＋ Servicio</button>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="stat"><div class="n">${milesThisMonth>=0?milesThisMonth.toLocaleString():'—'}</div><div class="l">${(x.unit||'mi')} este mes</div><div style="position:absolute;top:8px;right:8px;font-size:10px;padding:3px 7px;border-radius:999px;background:var(--blueBg);color:var(--blue)">${avgMonthly?Math.round(avgMonthly)+' prom':''}</div></div>
+      <div class="stat"><div class="n">${rec.length}</div><div class="l">Servicios registrados</div></div>
+      <div class="stat"><div class="n">${alerts}</div><div class="l">Alertas preventivas</div><div style="position:absolute;top:8px;right:8px;font-size:10px;padding:3px 7px;border-radius:999px;background:${alerts?'var(--warnBg)':'var(--okBg)'};color:${alerts?'var(--warn)':'var(--ok)'}">${alerts?'atención':'al día'}</div></div>
+      <div class="stat"><div class="n">${open}</div><div class="l">Diagnósticos abiertos</div></div>
+    </div>
+
+    <div class="tabs">${['resumen','millas','historial','mantenimiento','checklist','viajes','bitacora','timeline','gastos','partes','ficha'].map(t=>`<button class="tab ${tab===t?'active':''}" onclick="switchTab('${t}')">${labelTab(t)}</button>`).join('')}</div>
+    <div id="tabContent">${tabHtml(tab,x,rec,rem,iss,exp,mLogs,monthlyData,avgMonthly)}</div>
+  `;
+  if(tab==='resumen'||tab==='millas') setTimeout(()=>drawCharts(mLogs,monthlyData,exp,rec),80);
+}
+
+function tabHtml(t,x,rec,rem,iss,exp,mLogs,monthlyData,avgMonthly){
+  if(t==='resumen'){
+    let next=[...rem].filter(r=>r.name!=='Actualizar kilometraje mensual').sort((a,b)=>{const o={bad:0,warn:1,ok:2};return o[reminderStatus(a)[1]]-o[reminderStatus(b)[1]]}).slice(0,4);
+    const monthlyRem=rem.find(r=>r.name==='Actualizar kilometraje mensual');
+    return `<div class="split">
+      <div class="card section"><div class="section-head"><div><div class="eyebrow">Tu uso real</div><h2>Millas por mes</h2></div><button class="secondary" onclick="openMileageModal()">＋ Actualizar</button></div>
+        <div class="chart-wrap"><canvas id="chartMiles"></canvas></div>
+        <div class="rows" style="margin-top:12px">
+          <div class="row"><span>Promedio últimos 3 meses</span><b>${Math.round(avgMonthly).toLocaleString()} ${(x.unit||'mi')}/mes</b></div>
+          <div class="row"><span>Promedio por día</span><b>${(avgMonthly/30).toFixed(1)} ${(x.unit||'mi')}/día</b></div>
+          <div class="row"><span>Proyección anual</span><b>${Math.round(avgMonthly*12).toLocaleString()} ${(x.unit||'mi')}/año</b></div>
+          <div class="row"><span>Próximo cambio aceite estimado</span><b>${(() => {
+            const oilRem=rem.find(r=>r.name.toLowerCase().includes('aceite'));
+            if(!oilRem||!oilRem.nextMileage)return '—';
+            const remaining=oilRem.nextMileage - x.odo;
+            const months=avgMonthly? (remaining/avgMonthly).toFixed(1) : '—';
+            return `${oilRem.nextMileage.toLocaleString()} mi · en ~${months} meses`;
+          })()}</b></div>
+        </div>
+      </div>
+      <div class="card section"><div class="eyebrow">Próximo</div><h2>Servicios preventivos</h2>${next.length?reminderCards(next):'<div class="empty">Sin alertas</div>'}${monthlyRem?`<div style="margin-top:12px"><div class="eyebrow">Mensual</div>${reminderCards([monthlyRem])}</div>`:''}<div style="margin-top:12px"><div class="eyebrow">Salud vehículo</div>${renderHealthSemaphore()}</div><div style="margin-top:12px">${budgetHtml()}</div></div>
+    </div>
+    <div class="card section"><div class="section-head"><div><div class="eyebrow">Asistente personal</div><h2>Recomendaciones según tu uso</h2></div><button class="secondary" onclick="openMonthlyReport()">Ver reporte completo</button></div>${assistant(x,rec,rem,iss,monthlyData,avgMonthly)}</div>`;
+  }
+  if(t==='millas'){
+    return `<div class="card section"><div class="section-head"><div><div class="eyebrow">Bitácora de uso</div><h2>Historial de millas mensuales</h2></div><div style="display:flex;gap:6px"><button onclick="openMileageModal()">＋ Registrar millas hoy</button><button class="secondary" onclick="openMonthlyReport()">📊 Reporte</button></div></div>
+    <div class="chart-wrap" style="margin-bottom:12px"><canvas id="chartMilesFull"></canvas></div>
+    ${mileageTable(mLogs,monthlyData)}</div>`;
+  }
+  if(t==='historial') return `<div class="card section"><div class="section-head"><div><div class="eyebrow">Orden</div><h2>Historial de servicios</h2></div><button onclick="recordForm()">＋ Servicio</button></div>${recordTable(rec)}</div>`;
+  if(t==='mantenimiento') return `<div class="card section"><div class="section-head"><div><div class="eyebrow">Preventivo</div><h2>Servicios programados</h2></div><div style="display:flex;gap:6px;flex-wrap:wrap"><button onclick="reminderForm()">＋ Programar</button><button class="secondary" onclick="generateSmartReminders()">🧠 Auto IA</button><button class="secondary" style="background:#1e2833;border-color:#d9b46a;color:#d9b46a" onclick="exportPDFServicios()">📄 PDF para mecánico</button></div></div>${reminderTable(rem)}<div class="notice" style="margin-top:12px">El PDF incluye VIN, odómetro actual, servicios pendientes con millas y fechas estimadas, y tu promedio mensual de ${Math.round(avgMonthly)} mi/mes.</div></div>`;
+  if(t==='checklist') return `<div class="card section"><div class="section-head"><div><div class="eyebrow">Inspección 28 puntos</div><h2>Checklist de inspección</h2></div><div style="display:flex;gap:6px;flex-wrap:wrap"><button onclick="openInspectionForm()">＋ Nueva inspección</button><button class="secondary" onclick="exportPDFChecklist()">📄 PDF Checklist</button></div></div>${inspectionTable(db.inspections.filter(i=>i.vehicleId===x.id))}</div>`;
+
+  if(t==='problemas') return `<div class="card section"><div class="section-head"><div><div class="eyebrow">Diagnóstico</div><h2>Problemas y seguimiento</h2></div><button onclick="issueForm()">＋ Problema</button></div>${issueTable(iss)}</div>`;
+  if(t==='gastos') return `<div class="grid"><div class="stat"><div class="n">${money(exp.reduce((a,r)=>a+Number(r.amount||0),0)+rec.reduce((a,r)=>a+Number(r.cost||0),0))}</div><div class="l">Total acumulado</div></div><div class="stat"><div class="n">${money(rec.reduce((a,r)=>a+Number(r.cost||0),0))}</div><div class="l">Mantenimiento</div></div><div class="stat"><div class="n">${money(exp.reduce((a,r)=>a+Number(r.amount||0),0))}</div><div class="l">Otros gastos</div></div><div class="stat"><div class="n">${(avgMonthly? ( (exp.reduce((a,r)=>a+Number(r.amount||0),0)+rec.reduce((a,r)=>a+Number(r.cost||0),0)) / Math.max(1, monthlyData.length) ).toFixed(0) : '0')}</div><div class="l">Prom gasto/mes</div></div></div><div class="card section"><div class="section-head"><div><div class="eyebrow">Finanzas</div><h2>Gastos</h2></div><button onclick="expenseForm()">＋ Gasto</button></div>${expenseTable(exp)}</div>`;
+  if(t==='viajes') return `<div class="card section"><div class="section-head"><div><div class="eyebrow">Carretera</div><h2>Checklist viajes + Modo viaje</h2></div><div style="display:flex;gap:6px;flex-wrap:wrap"><button onclick="openTravelChecklistForm()">＋ Checklist carretera</button><button class="secondary" onclick="openTravelLogForm()">🛣️ Iniciar viaje</button></div></div>${travelChecklistTable()}<div class="notice" style="margin-top:12px">Checklist carretera: 6 categorías, ${ROAD_TRIP_TEMPLATE.reduce((a,c)=>a+c.items.length,0)} puntos. Marca todo antes de salir. Genera PDF para llevar.</div><div class="card section" style="margin-top:12px"><div class="section-head"><h2>Viajes registrados</h2></div><div class="table"><table><thead><tr><th>Fecha</th><th>Destino</th><th>Odo</th><th>Millas</th><th></th></tr></thead><tbody>${db.travelLogs.filter(l=>l.vehicleId===selected).map(l=>`<tr><td>${esc(l.startDate||'')}</td><td>${esc(l.destination||'')}</td><td>${Number(l.startOdo||0).toLocaleString()} → ${l.endOdo?Number(l.endOdo).toLocaleString():'—'}</td><td>${l.miles?l.miles.toLocaleString()+' mi':'en curso'}</td><td>${l.status==='en_curso'?`<button class="secondary" onclick="closeTravelLog('${l.id}')">Cerrar viaje</button>`:''}</td></tr>`).join('')||'<tr><td colspan=5 class="sub">Sin viajes</td></tr>'}</tbody></table></div></div></div>`;
+  if(t==='bitacora') return `<div class="card section"><div class="section-head"><div><div class="eyebrow">Notas rápidas</div><h2>Bitácora</h2></div><div style="display:flex;gap:6px"><button onclick="openNoteForm()">＋ Nota rápida</button><button class="secondary" onclick="openQuickSearch()">🔍 Buscar</button></div></div>${notesTable()}</div>`;
+  if(t==='timeline') return `<div class="card section"><div class="section-head"><div><div class="eyebrow">Historial completo</div><h2>Timeline</h2></div><button class="secondary" onclick="exportJSON()">💾 Respaldo</button></div>${timelineHtml()}</div>`;
+  if(t==='partes') return `<div class="card section"><div class="section-head"><div><div class="eyebrow">Catálogo Enclave 2013</div><h2>Refacciones compatibles</h2></div><div style="display:flex;gap:6px"><button onclick="openPartForm()">＋ Refacción</button><button class="secondary" onclick="exportPDFServicios()">📄 PDF mecánico</button></div></div>${partsTable()}${budgetHtml()}</div>`;
+  if(t==='vin') return `<div class="card section"><div class="eyebrow">VIN</div><h2>VIN y recalls</h2><div class="rows"><div class="row"><span>VIN</span><b style="font-family:var(--mono)">${esc(x.vin||'')}</b></div></div><div style="display:flex;gap:8px;margin-top:12px"><button onclick="decodeVIN()">🔎 Decodificar</button><button class="secondary" onclick="openRecall()">NHTSA recalls</button></div><div id="vinResult" style="margin-top:12px"></div></div><div class="card section" style="margin-top:12px">${renderHealthSemaphore()}</div>`;
+
+  return `<div class="card section"><div class="eyebrow">Ficha</div><h2>Ficha técnica</h2><div class="rows">
+    <div class="row"><span>Marca / Modelo</span><b>${esc(x.make)} ${esc(x.model)}</b></div><div class="row"><span>Año</span><b>${x.year}</b></div><div class="row"><span>VIN</span><b style="font-family:var(--mono)">${esc(x.vin||'—')}</b></div>
+    <div class="row"><span>Motor</span><b>${esc(x.engine||'—')}</b></div><div class="row"><span>Tracción</span><b>${esc(x.drive||'—')}</b></div><div class="row"><span>Llantas</span><b>${esc(x.tire||'')}</b></div><div class="row"><span>Aceite</span><b>${esc(x.oil||'')} ${esc(x.oilViscosity||'')}</b></div>
+  </div><div style="margin-top:12px;display:flex;gap:8px"><button onclick="editVehicle()">✎ Editar</button><button class="secondary" onclick="exportJSON()">💾 Respaldo</button></div></div>`;
+}
+
+function reminderCards(a){return `<div class="mini-list">${a.map(r=>{let s=reminderStatus(r);let due=[];if(r.nextMileage)due.push(Number(r.nextMileage).toLocaleString()+' '+(v().unit||''));if(r.nextDate)due.push(r.nextDate);return `<div class="mini" onclick="editReminder('${r.id}')" style="cursor:pointer"><div><b>${esc(r.name)}</b><span>${due.join(' · ')} · ${esc(r.type||'')}</span></div><span class="badge ${s[1]}">${s[0]}</span></div>`}).join('')}</div>`}
+function assistant(x,rec,rem,iss,monthlyData,avgMonthly){
+  let out=[];
+  const due=rem.filter(r=>r.name!=='Actualizar kilometraje mensual'&&reminderStatus(r)[1]!=='ok');
+  if(due.length)out.push(`<b>Atención:</b> ${due.length} servicios próximos o vencidos. Revisa pestaña Servicios.`);
+  if(avgMonthly>1500)out.push(`<b>Uso alto:</b> ${Math.round(avgMonthly).toLocaleString()} mi/mes es uso intenso. Reduce intervalo de aceite a 5,000 mi.`);
+  else if(avgMonthly>0&&avgMonthly<300)out.push(`<b>Uso bajo:</b> ${Math.round(avgMonthly)} mi/mes. Cambia aceite mínimo cada 6 meses aunque no llegues a millas.`);
+  const open=iss.filter(i=>i.status!=='resuelto');if(open.length)out.push(`<b>Diagnóstico:</b> ${open.length} problemas abiertos.`);
+  if(monthlyData.length>=2){
+    const last=monthlyData[monthlyData.length-1],prev=monthlyData[monthlyData.length-2];
+    const diff=last.miles-prev.miles;
+    if(Math.abs(diff)>300)out.push(`<b>Variación:</b> este mes recorriste ${diff>0?'+':''}${diff} mi vs mes anterior.`);
+  }
+  if(!out.length)out.push(`<b>Todo en orden:</b> ${Math.round(avgMonthly)} mi/mes promedio. Mantén actualización mensual de millas.`);
+  return `<div class="rows">${out.map(s=>`<div class="notice">${s}</div>`).join('')}</div>`;
+}
+
+/* Tables */
+function recordTable(a){if(!a.length)return `<div class="empty">Sin registros<br><button onclick="recordForm()">Registrar primer servicio</button></div>`;a=[...a].sort((x,y)=>y.date.localeCompare(x.date));return `<div class="table"><table><thead><tr><th>Fecha</th><th>Trabajo</th><th>Cat</th><th>Costo</th><th></th></tr></thead><tbody>${a.map(r=>`<tr><td>${esc(r.date)}<br><small>${Number(r.odo).toLocaleString()}</small></td><td><b>${esc(r.service)}</b><br><span class="sub">${esc(r.shop||'')}${r.notes?' · '+esc(r.notes.slice(0,50)):''}</span></td><td>${esc(r.category||'')}</td><td>${money(r.cost)}</td><td><div style="display:flex;gap:4px"><button class="secondary" onclick="editRecord('${r.id}')">✎</button><button class="danger" style="border:0;background:var(--badBg);color:#ffb4b8;padding:6px 8px;border-radius:8px" onclick="delRecord('${r.id}')">×</button></div></td></tr>`).join('')}</tbody></table></div>`}
+function mileageTable(logs,monthly){
+  if(!logs.length)return `<div class="empty">Sin registros de millas. Usa ＋ Millas para empezar.</div>`;
+  logs=[...logs].sort((a,b)=>b.date.localeCompare(a.date));
+  return `<div class="table"><table><thead><tr><th>Fecha</th><th>Odo</th><th>Recorrido</th><th>Notas</th><th></th></tr></thead><tbody>${logs.map((l,i)=>{
+    const next=logs[i-1]; // because sorted desc
+    const prev=logs[i+1];
+    // Actually monthly array has calculated miles, match by date
+    const m=monthly.find(mm=>mm.to===l.date||mm.from===l.date);
+    const milesFromPrev=prev? l.odo-prev.odo : 0;
+    return `<tr><td>${esc(l.date)}</td><td><b>${Number(l.odo).toLocaleString()}</b> ${esc(v().unit||'mi')}</td><td>${i===logs.length-1?'Inicio':'+'+milesFromPrev.toLocaleString()+' '+(v().unit||'mi')}${m?`<br><small class="sub">${m.days} días · ${m.avgPerDay.toFixed(1)}/día</small>`:''}</td><td><span class="sub">${esc(l.notes||'')}</span></td><td><div style="display:flex;gap:4px"><button class="secondary" onclick="editMileage('${l.id}')">✎</button><button class="danger" style="border:0;background:var(--badBg);color:#ffb4b8;padding:6px 8px;border-radius:8px" onclick="delMileage('${l.id}')">×</button></div></td></tr>`
+  }).join('')}</tbody></table></div>`;
+}
+function reminderTable(a){if(!a.length)return `<div class="empty">Sin recordatorios</div>`;return `<div class="table"><table><thead><tr><th>Servicio</th><th>Próximo</th><th>Intervalo</th><th>Estado</th><th></th></tr></thead><tbody>${a.map(r=>{let s=reminderStatus(r);return `<tr><td><b>${esc(r.name)}</b><br><span class="sub">${esc(r.notes||'')}</span></td><td>${r.nextMileage?Number(r.nextMileage).toLocaleString():''} ${r.nextDate||''}</td><td>${(r.intervalMiles||'')+' '+(r.intervalMonths?r.intervalMonths+' meses':'')}</td><td><span class="badge ${s[1]}">${s[0]}</span></td><td><div style="display:flex;gap:4px;flex-wrap:wrap"><button class="secondary" onclick="completeReminder('${r.id}')">✓</button><button class="secondary" onclick="editReminder('${r.id}')">✎</button><button class="danger" style="border:0;background:var(--badBg);color:#ffb4b8;padding:6px 8px;border-radius:8px" onclick="delReminder('${r.id}')">×</button></div></td></tr>`}).join('')}</tbody></table></div>`}
+function issueTable(a){if(!a.length)return `<div class="empty">Sin diagnósticos</div>`;return `<div class="table"><table><thead><tr><th>Fecha</th><th>Problema</th><th>Costo</th><th>Estado</th><th></th></tr></thead><tbody>${a.map(r=>`<tr><td>${esc(r.date)}</td><td><b>${esc(r.title)}</b><br><span class="sub">${esc(r.description||'').slice(0,70)}</span></td><td>${money(r.cost||0)}</td><td><span class="badge ${r.status==='resuelto'?'ok':r.status==='en observación'?'warn':'bad'}">${esc(r.status)}</span></td><td><div style="display:flex;gap:4px"><button class="secondary" onclick="editIssue('${r.id}')">✎</button><button class="danger" style="border:0;background:var(--badBg);color:#ffb4b8;padding:6px 8px;border-radius:8px" onclick="delIssue('${r.id}')">×</button></div></td></tr>`).join('')}</tbody></table></div>`}
+function expenseTable(a){if(!a.length)return `<div class="empty">Sin gastos</div>`;a=[...a].sort((x,y)=>y.date.localeCompare(x.date));return `<div class="table"><table><thead><tr><th>Fecha</th><th>Concepto</th><th>Monto</th><th></th></tr></thead><tbody>${a.map(r=>`<tr><td>${esc(r.date)}</td><td><b>${esc(r.description)}</b><br><span class="sub">${esc(r.category||'')}</span></td><td>${money(r.amount)}</td><td><div style="display:flex;gap:4px"><button class="secondary" onclick="expenseForm(db.expenses.find(x=>x.id==='${r.id}'))">✎</button><button class="danger" style="border:0;background:var(--badBg);color:#ffb4b8;padding:6px 8px;border-radius:8px" onclick="delExpense('${r.id}')">×</button></div></td></tr>`).join('')}</tbody></table></div>`}
+
+/* Charts */
+let chartInstances={};
+function drawCharts(mLogs,monthlyData,exp,rec){
+  try{
+    const ctx=document.getElementById('chartMiles');if(ctx){
+      if(chartInstances.miles)chartInstances.miles.destroy();
+      const labels=monthlyData.map(m=>m.to.slice(5));const data=monthlyData.map(m=>m.miles);
+      chartInstances.miles=new Chart(ctx,{type:'bar',data:{labels,datasets:[{label:'Millas por mes',data,backgroundColor:'#d9b46a',borderRadius:8}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{color:'#9aa6b5',font:{size:10}}},y:{grid:{color:'#1f2a36'},ticks:{color:'#9aa6b5'}}}}});
+    }
+    const ctxFull=document.getElementById('chartMilesFull');if(ctxFull){
+      if(chartInstances.milesFull)chartInstances.milesFull.destroy();
+      const labels=monthlyData.map(m=>m.to);const data=monthlyData.map(m=>m.miles);const avgLine=monthlyData.map(()=>monthlyData.reduce((a,b)=>a+b.miles,0)/Math.max(monthlyData.length,1));
+      chartInstances.milesFull=new Chart(ctxFull,{type:'line',data:{labels,datasets:[{label:'Millas',data,borderColor:'#d9b46a',backgroundColor:'rgba(217,180,106,.15)',fill:true,tension:.3},{label:'Promedio',data:avgLine,borderColor:'#7aa8ff',borderDash:[6,4],tension:.3,pointRadius:0}]},options:{responsive:true,plugins:{legend:{labels:{color:'#9aa6b5'}}},scales:{x:{ticks:{color:'#6b7888'}},y:{grid:{color:'#1f2a36'},ticks:{color:'#9aa6b5'}}}}});
+    }
+  }catch(e){console.warn(e)}
+}
+
+/* Modals */
+function modal(html){document.getElementById('modalRoot').innerHTML=`<div class="modalbg" onclick="if(event.target===this)closeModal()"><div class="modal">${html}</div></div>`;setTimeout(()=>{document.querySelector('.modal input')?.focus()},40)}
+function closeModal(){document.getElementById('modalRoot').innerHTML=''}
+
+function vehicleForm(data={}){
+  const edit=!!data.id;
+  modal(`<h2>${edit?'Editar':'Agregar'} vehículo</h2><form onsubmit="saveVehicle(event,${edit})"><div class="formgrid">
+    <label>Marca<input name="make" required value="${esc(data.make||'')}"></label><label>Modelo<input name="model" required value="${esc(data.model||'')}"></label>
+    <label>Año<input name="year" type="number" value="${esc(data.year||'')}" required></label><label>VIN<input name="vin" maxlength="17" value="${esc(data.vin||'')}" style="font-family:var(--mono)"></label>
+    <label>Motor<input name="engine" value="${esc(data.engine||'')}"></label><label>Tracción<input name="drive" value="${esc(data.drive||'')}"></label>
+    <label>Odómetro actual<input name="odo" type="number" value="${esc(data.odo||0)}" required></label><label>Unidad<select name="unit"><option ${data.unit==='km'?'selected':''}>km</option><option ${data.unit!=='km'?'selected':''}>mi</option></select></label>
+    <label>Llantas<input name="tire" value="${esc(data.tire||'')}"></label><label>Presión PSI<input name="tirePressure" value="${esc(data.tirePressure||'')}"></label>
+    <label>Aceite<input name="oil" value="${esc(data.oil||'')}"></label><label>Viscosidad<input name="oilViscosity" value="${esc(data.oilViscosity||'')}"></label>
+    <label>Filtro<input name="oilFilter" value="${esc(data.oilFilter||'')}"></label><label>Bujías<input name="spark" value="${esc(data.spark||'')}"></label>
+    <label class="full">Notas<textarea name="notes">${esc(data.notes||'')}</textarea></label>
+  </div><div style="margin-top:14px;display:flex;gap:8px"><button>Guardar</button><button type="button" class="secondary" onclick="closeModal()">Cancelar</button>${edit?`<button type="button" class="danger" style="border:0;background:var(--badBg);color:#ffb4b8;padding:11px 16px;border-radius:12px" onclick="deleteVehicle('${data.id}')">Eliminar</button>`:''}</div></form>`);
+}
+function addVehicle(){vehicleForm()}function editVehicle(){vehicleForm(v())}
+function saveVehicle(e,edit){e.preventDefault();const o=Object.fromEntries(new FormData(e.target));o.year=+o.year||2020;o.odo=+o.odo||0;o.vin=(o.vin||'').toUpperCase();if(edit){Object.assign(v(),o)}else{o.id='v-'+Date.now();db.vehicles.push(o);selected=o.id}closeModal();save();toast(edit?'Vehículo actualizado':'Vehículo agregado','ok')}
+function deleteVehicle(id){if(db.vehicles.length<2){toast('Mínimo 1 vehículo','warn');return}if(confirm('¿Eliminar vehículo y todo su historial?')){db.vehicles=db.vehicles.filter(x=>x.id!==id);db.records=db.records.filter(x=>x.vehicleId!==id);db.reminders=db.reminders.filter(x=>x.vehicleId!==id);db.issues=db.issues.filter(x=>x.vehicleId!==id);db.expenses=db.expenses.filter(x=>x.vehicleId!==id);db.mileageLogs=db.mileageLogs.filter(x=>x.vehicleId!==id);db.inspections=db.inspections.filter(x=>x.vehicleId!==id);selected=db.vehicles[0]?.id||null;closeModal();save();toast('Eliminado','bad')}}
+
+function openMileageModal(data={}){
+  const edit=!!data.id;
+  const lastOdo=v()?.odo||0;
+  modal(`<h2>${edit?'Editar':'Registrar'} millas recorridas</h2>
+    <div class="notice" style="margin-bottom:12px">Registra tu kilometraje actual cada mes. Así calculamos millas por mes, promedio y cuándo te toca el próximo servicio.</div>
+    <form onsubmit="saveMileage(event,'${data.id||''}')">
+    <div class="formgrid">
+      <label>Fecha<input name="date" type="date" required value="${esc(data.date||today())}"></label>
+      <label>Odómetro actual<input name="odo" type="number" required value="${esc(data.odo??lastOdo)}" min="0"></label>
+      <label class="full">Notas (opcional)<input name="notes" value="${esc(data.notes||'')}" placeholder="Ej. Fin de mes, viaje a Tijuana, etc."></label>
+      <div class="full notice" id="mileageCalc" style="display:none"></div>
+    </div>
+    <div style="margin-top:12px;display:flex;gap:8px"><button>Guardar millas</button><button type="button" class="secondary" onclick="closeModal()">Cancelar</button></div>
+    </form>
+    <div class="sub" style="margin-top:10px">Últimos registros: ${(db.mileageLogs.filter(l=>l.vehicleId===selected).slice(-3).map(l=>`${l.date}: ${Number(l.odo).toLocaleString()}`).join(' · ')||'—')}</div>
+  `);
+  const odoInput=document.querySelector('input[name="odo"]');const dateInput=document.querySelector('input[name="date"]');
+  function calc(){
+    const val=Number(odoInput.value||0);const lastLog=[...db.mileageLogs.filter(l=>l.vehicleId===selected)].sort((a,b)=>b.date.localeCompare(a.date))[0];
+    if(lastLog&&val){const diff=val-lastLog.odo;const days=daysBetween(dateInput.value||today(),lastLog.date)||1;document.getElementById('mileageCalc').style.display='block';document.getElementById('mileageCalc').innerHTML=`Recorriste <b>${diff.toLocaleString()} ${(v().unit||'mi')}</b> en ${days} días · Promedio ${(diff/days).toFixed(1)}/día`;}
+  }
+  odoInput.addEventListener('input',calc);calc();
+}
+function saveMileage(e,editId){
+  e.preventDefault();const o=Object.fromEntries(new FormData(e.target));o.odo=+o.odo||0;o.vehicleId=selected;
+  if(o.odo < (v()?.odo||0) - 1000 && !confirm(`Tu odómetro actual es ${v()?.odo}. Estás guardando ${o.odo}, ¿es correcto?`))return;
+  if(editId){Object.assign(db.mileageLogs.find(x=>x.id===editId),o)}else{o.id='ml-'+Date.now();db.mileageLogs.push(o);if(o.odo>v().odo)v().odo=o.odo}
+  closeModal();save();toast(`Millas guardadas: ${o.odo.toLocaleString()} · +${(() => {const logs=[...db.mileageLogs.filter(l=>l.vehicleId===selected)].sort((a,b)=>a.date.localeCompare(b.date));if(logs.length<2)return 0;const prev=logs[logs.length-2];return o.odo-prev.odo})()} mi este periodo`,'ok');
+  // Check monthly reminder completion
+  const monthlyRem=db.reminders.find(r=>r.vehicleId===selected&&r.name==='Actualizar kilometraje mensual');
+  if(monthlyRem){monthlyRem.completedAt=today();const d=new Date();d.setMonth(d.getMonth()+1);d.setDate(1);monthlyRem.nextDate=d.toISOString().slice(0,10);save();}
+}
+function editMileage(id){openMileageModal(db.mileageLogs.find(x=>x.id===id))}function delMileage(id){if(confirm('¿Eliminar registro de millas?')){db.mileageLogs=db.mileageLogs.filter(x=>x.id!==id);save();toast('Eliminado','bad')}}
+
+function openMonthlyReport(){
+  const x=v();const monthly=getMonthlyMiles(x.id);const avg=getAvgMonthlyMiles(x.id);const totalMiles=monthly.reduce((a,b)=>a+b.miles,0);
+  const rec=db.records.filter(r=>r.vehicleId===x.id);const exp=db.expenses.filter(r=>r.vehicleId===x.id);
+  const totalCost=rec.reduce((a,r)=>a+Number(r.cost||0),0)+exp.reduce((a,r)=>a+Number(r.amount||0),0);
+  const costPerMile= x.odo? totalCost/x.odo :0;
+  modal(`<h2>📊 Reporte mensual - ${esc(x.make)} ${esc(x.model)}</h2>
+    <div class="grid" style="grid-template-columns:repeat(2,1fr)">
+      <div class="stat"><div class="n">${Math.round(avg).toLocaleString()} ${esc(x.unit||'mi')}</div><div class="l">Promedio por mes (últimos 3)</div></div>
+      <div class="stat"><div class="n">${totalMiles.toLocaleString()} ${esc(x.unit||'mi')}</div><div class="l">Total registrado en historial</div></div>
+      <div class="stat"><div class="n">${money(totalCost)}</div><div class="l">Costo total acumulado</div></div>
+      <div class="stat"><div class="n">${money2(costPerMile)}</div><div class="l">Costo por ${esc(x.unit||'mi')}</div></div>
+    </div>
+    <div class="card section" style="margin-top:12px;padding:12px">
+      <div class="eyebrow">Desglose mensual</div>
+      <div class="table"><table><thead><tr><th>Periodo</th><th>Millas</th><th>Prom/día</th></tr></thead><tbody>${monthly.slice(-6).reverse().map(m=>`<tr><td>${esc(m.from)} → ${esc(m.to)}${m.current?' (actual)':''}</td><td><b>${m.miles.toLocaleString()}</b></td><td>${m.avgPerDay.toFixed(1)}</td></tr>`).join('')}</tbody></table></div>
+    </div>
+    <div class="notice" style="margin-top:12px">Con ${Math.round(avg)} mi/mes, tu próximo servicio de aceite (${(() => {const r=db.reminders.find(rr=>rr.vehicleId===x.id&&rr.name.toLowerCase().includes('aceite'));return r?r.nextMileage?.toLocaleString():'—'})()}) te tocaría en ${(() => {const r=db.reminders.find(rr=>rr.vehicleId===x.id&&rr.name.toLowerCase().includes('aceite'));if(!r||!r.nextMileage||!avg)return '—';const remaining=r.nextMileage - x.odo;const months=remaining/avg;return `${months.toFixed(1)} meses (~${new Date(new Date().setMonth(new Date().getMonth()+months)).toLocaleDateString('es-MX')})`;})()}.</div>
+    <div style="margin-top:12px;display:flex;gap:8px"><button onclick="closeModal()">Cerrar</button><button class="secondary" onclick="exportMonthlyCSV()">Exportar CSV mensual</button></div>
+  `);
+}
+function exportMonthlyCSV(){
+  const x=v();const monthly=getMonthlyMiles(x.id);if(!monthly.length){toast('Sin datos','warn');return}
+  const csv=['Fecha Inicio,Fecha Fin,Odometro Inicio,Odometro Fin,Millas Recorridas,Dias,Promedio por Dia'].concat(monthly.map(m=>`${m.from},${m.to},${m.prevOdo},${m.currOdo},${m.miles},${m.days},${m.avgPerDay.toFixed(2)}`)).join('\n');
+  const blob=new Blob([csv],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`Reporte_Millas_${x.make}_${today()}.csv`;a.click();toast('CSV mensual exportado','ok');
+}
+
+/* Other forms (simplified without photos) */
+function recordForm(data={}){const edit=!!data.id;modal(`<h2>${edit?'Editar':'Registrar'} servicio</h2><form onsubmit="saveRecord(event,'${data.id||''}')"><div class="formgrid"><label>Fecha<input name="date" type="date" required value="${esc(data.date||today())}"></label><label>Odómetro<input name="odo" type="number" required value="${esc(data.odo??v().odo)}"></label><label class="full">Trabajo<input name="service" required value="${esc(data.service||'')}" placeholder="Ej. Cambio aceite y filtro"></label><label>Categoría<input name="category" value="${esc(data.category||'')}"></label><label>Costo MXN<input name="cost" type="number" step="0.01" value="${esc(data.cost||0)}"></label><label>Taller<input name="shop" value="${esc(data.shop||'')}"></label><label>Partes / Marca<input name="parts" value="${esc(data.parts||'')}"></label><label>Num parte<input name="partNumber" value="${esc(data.partNumber||'')}"></label><label class="full">Notas<textarea name="notes">${esc(data.notes||'')}</textarea></label></div><div style="margin-top:12px;display:flex;gap:8px"><button>Guardar</button><button type="button" class="secondary" onclick="closeModal()">Cancelar</button></div></form>`)}
+function saveRecord(e,editId){e.preventDefault();const o=Object.fromEntries(new FormData(e.target));o.odo=+o.odo||0;o.cost=+o.cost||0;o.vehicleId=selected;if(editId)Object.assign(db.records.find(x=>x.id===editId),o);else{o.id='r-'+Date.now();db.records.push(o);if(o.odo>v().odo)v().odo=o.odo;autoCreateReminderFromService(o);}closeModal();save();toast('Servicio guardado','ok')}
+function editRecord(id){recordForm(db.records.find(x=>x.id===id))}function delRecord(id){if(confirm('¿Eliminar registro?')){db.records=db.records.filter(x=>x.id!==id);save();toast('Eliminado','bad')}}
+
+function reminderForm(data={}){const edit=!!data.id;modal(`<h2>${edit?'Editar':'Programar'} servicio</h2><form onsubmit="saveReminder(event,'${data.id||''}')"><div class="formgrid"><label class="full">Servicio<input name="name" required value="${esc(data.name||'')}"></label><label>Próx km<input name="nextMileage" type="number" value="${esc(data.nextMileage||'')}"></label><label>Próx fecha<input name="nextDate" type="date" value="${esc(data.nextDate||'')}"></label><label>Intervalo km<input name="intervalMiles" type="number" value="${esc(data.intervalMiles||'')}"></label><label>Intervalo meses<input name="intervalMonths" type="number" value="${esc(data.intervalMonths||'')}"></label><label>Avise km<input name="warnMiles" type="number" value="${esc(data.warnMiles||1000)}"></label><label>Avise días<input name="warnDays" type="number" value="${esc(data.warnDays||30)}"></label><label>Tipo<select name="type"><option>Reemplazo</option><option ${data.type==='Inspección'?'selected':''}>Inspección</option></select></label><label>Fuente<select name="source"><option>Usuario</option><option ${data.source==='Fabricante'?'selected':''}>Fabricante</option><option ${data.source==='E.O. Mensual'?'selected':''}>E.O. Mensual</option></select></label><label class="full">Notas<textarea name="notes">${esc(data.notes||'')}</textarea></label></div><div style="margin-top:12px;display:flex;gap:8px"><button>Guardar</button><button type="button" class="secondary" onclick="closeModal()">Cancelar</button></div></form>`)}
+function saveReminder(e,editId){e.preventDefault();const o=Object.fromEntries(new FormData(e.target));o.vehicleId=selected;o.nextMileage=o.nextMileage?+o.nextMileage:null;o.intervalMiles=o.intervalMiles?+o.intervalMiles:null;o.intervalMonths=o.intervalMonths?+o.intervalMonths:null;o.warnMiles=+o.warnMiles||1000;o.warnDays=+o.warnDays||30;if(editId)Object.assign(db.reminders.find(x=>x.id===editId),o);else{o.id='m-'+Date.now();o.status='pending';db.reminders.push(o)}closeModal();save();toast('Recordatorio guardado','ok')}
+function editReminder(id){reminderForm(db.reminders.find(x=>x.id===id))}function delReminder(id){if(confirm('¿Eliminar?')){db.reminders=db.reminders.filter(x=>x.id!==id);save();toast('Eliminado','bad')}}
+async function completeReminder(id){const r=db.reminders.find(x=>x.id===id);if(!r)return;const odo=Number(v().odo||0);r.lastDoneOdo=odo;r.completedAt=today();if(r.intervalMiles)r.nextMileage=odo+Number(r.intervalMiles);if(r.intervalMonths){const d=new Date();d.setMonth(d.getMonth()+Number(r.intervalMonths));r.nextDate=d.toISOString().slice(0,10);}if(r.name==='Actualizar kilometraje mensual'){const d=new Date();d.setMonth(d.getMonth()+1);d.setDate(1);r.nextDate=d.toISOString().slice(0,10);}r.status='pending';save();toast(`Hecho · próximo ${r.nextMileage||r.nextDate||''}`,'ok')}
+
+function issueForm(data={}){const edit=!!data.id;modal(`<h2>${edit?'Editar':'Nuevo'} diagnóstico</h2><form onsubmit="saveIssue(event,'${data.id||''}')"><div class="formgrid"><label>Fecha<input name="date" type="date" value="${esc(data.date||today())}"></label><label>Odómetro<input name="odo" type="number" value="${esc(data.odo??v().odo)}"></label><label class="full">Título<input name="title" required value="${esc(data.title||'')}"></label><label>Severidad<select name="severity"><option>baja</option><option ${data.severity==='media'?'selected':''}>media</option><option ${data.severity==='alta'?'selected':''}>alta</option></select></label><label>Estado<select name="status"><option>abierto</option><option ${data.status==='en observación'?'selected':''}>en observación</option><option ${data.status==='resuelto'?'selected':''}>resuelto</option></select></label><label class="full">Descripción<textarea name="description" required>${esc(data.description||'')}</textarea></label><label>Costo estimado<input name="cost" type="number" step="0.01" value="${esc(data.cost||0)}"></label><label class="full">Notas<textarea name="notes">${esc(data.notes||'')}</textarea></label></div><div style="margin-top:12px;display:flex;gap:8px"><button>Guardar</button><button type="button" class="secondary" onclick="closeModal()">Cancelar</button></div></form>`)}
+function saveIssue(e,editId){e.preventDefault();const o=Object.fromEntries(new FormData(e.target));o.odo=+o.odo||0;o.cost=+o.cost||0;o.vehicleId=selected;if(editId)Object.assign(db.issues.find(x=>x.id===editId),o);else{o.id='i-'+Date.now();db.issues.push(o)}closeModal();save();toast('Diagnóstico guardado','ok')}
+function editIssue(id){issueForm(db.issues.find(x=>x.id===id))}function delIssue(id){if(confirm('¿Eliminar?')){db.issues=db.issues.filter(x=>x.id!==id);save();toast('Eliminado','bad')}}
+
+function expenseForm(data={}){const edit=!!data.id;modal(`<h2>${edit?'Editar':'Nuevo'} gasto</h2><form onsubmit="saveExpense(event,'${data.id||''}')"><div class="formgrid"><label>Fecha<input name="date" type="date" required value="${esc(data.date||today())}"></label><label>Odo<input name="odo" type="number" value="${esc(data.odo??v().odo)}"></label><label>Categoría<select name="category"><option ${data.category==='Gasolina'?'selected':''}>Gasolina</option><option ${data.category==='Piezas'?'selected':''}>Piezas</option><option ${data.category==='Seguro'?'selected':''}>Seguro</option><option ${data.category==='Otro'?'selected':''}>Otro</option></select></label><label>Monto MXN<input name="amount" type="number" step="0.01" required value="${esc(data.amount||0)}"></label><label class="full">Descripción<input name="description" required value="${esc(data.description||'')}"></label><label class="full">Notas<textarea name="notes">${esc(data.notes||'')}</textarea></label></div><div style="margin-top:12px;display:flex;gap:8px"><button>Guardar</button><button type="button" class="secondary" onclick="closeModal()">Cancelar</button></div></form>`)}
+function saveExpense(e,editId){e.preventDefault();const o=Object.fromEntries(new FormData(e.target));o.odo=+o.odo||0;o.amount=+o.amount||0;o.vehicleId=selected;if(editId)Object.assign(db.expenses.find(x=>x.id===editId),o);else{o.id=crypto.randomUUID();db.expenses.push(o)}closeModal();save();toast('Gasto guardado','ok')}
+function delExpense(id){if(confirm('¿Eliminar gasto?')){db.expenses=db.expenses.filter(x=>x.id!==id);save();toast('Eliminado','bad')}}
+
+const SERVICE_MAP=[
+  {kw:['aceite','oil'],name:'Cambio de aceite y filtro',miles:7500,months:6},
+  {kw:['filtro de aire','air filter'],name:'Cambio filtro de aire motor',miles:15000,months:12},
+  {kw:['bujía','spark','bujia'],name:'Cambio de bujías',miles:30000,months:24},
+  {kw:['frenos','pastilla','balata','rotor'],name:'Inspección de frenos',miles:15000,months:12},
+  {kw:['transmisión','transmision'],name:'Cambio fluido transmisión',miles:40000,months:36},
+  {kw:['anticongelante','refrigerante'],name:'Cambio anticongelante',miles:30000,months:24},
+  {kw:['llantas','rotación'],name:'Rotación de llantas',miles:7500,months:6},
+];
+function autoCreateReminderFromService(record){
+  const txt=(record.service+' '+record.category).toLowerCase();
+  for(const m of SERVICE_MAP){if(m.kw.some(k=>txt.includes(k))){const exists=db.reminders.some(r=>r.vehicleId===record.vehicleId&&r.name.toLowerCase().includes(m.name.toLowerCase().split(' ')[0])&&r.id!=='m-monthly');if(!exists){const nextMiles=Number(v().odo||record.odo)+m.miles;const d=new Date();d.setMonth(d.getMonth()+m.months);db.reminders.push({id:'m-'+Date.now()+Math.random().toString(16).slice(2),vehicleId:record.vehicleId,name:m.name,nextMileage:nextMiles,nextDate:d.toISOString().slice(0,10),warnMiles:800,warnDays:30,type:'Reemplazo',source:'E.O. IA',intervalMiles:m.miles,intervalMonths:m.months,status:'pending',notes:`Auto tras: ${record.service}`});toast(`🧠 Recordatorio creado: ${m.name}`,'ok');}break;}}
+}
+function generateSmartReminders(){let c=0;db.records.forEach(r=>{const b=db.reminders.length;autoCreateReminderFromService(r);if(db.reminders.length>b)c++;});if(c){save();toast(`IA generó ${c} recordatorios`,'ok');}else toast('Todo al día','info');}
+
+
+/* Inspections */
+function openInspectionForm(data={}){
+  const edit=!!data.id;
+  const existingItems = data.items || [];
+  // Build checklist with existing status
+  let htmlItems = '';
+  INSPECTION_TEMPLATE.forEach((group,gIdx)=>{
+    htmlItems+=`<div style="margin-top:14px"><div class="eyebrow" style="color:var(--gold)">${esc(group.cat)}</div><div style="display:grid;gap:8px;margin-top:8px">`;
+    group.items.forEach((itemName,iIdx)=>{
+      const key=`${gIdx}-${iIdx}`;
+      const existing = existingItems.find(it=>it.name===itemName) || {name:itemName,status:'pendiente',notes:''};
+      htmlItems+=`<div class="row" style="padding:8px 0"><span style="flex:1"><b style="font-size:12.5px">${esc(itemName)}</b></span><select id="ins-${key}-status" style="width:130px"><option value="pendiente" ${existing.status==='pendiente'?'selected':''}>Pendiente</option><option value="ok" ${existing.status==='ok'?'selected':''}>✓ OK</option><option value="atencion" ${existing.status==='atencion'?'selected':''}>⚠ Atención</option><option value="no_aplica" ${existing.status==='no_aplica'?'selected':''}>— N/A</option></select><input id="ins-${key}-notes" placeholder="Nota" value="${esc(existing.notes||'')}" style="width:140px"></div>`;
+    });
+    htmlItems+=`</div></div>`;
+  });
+
+  modal(`<h2>${edit?'Editar':'Nueva'} inspección - 28 puntos</h2><form onsubmit="saveInspection(event,'${data.id||''}')">
+    <div class="formgrid">
+      <label>Fecha<input name="date" type="date" required value="${esc(data.date||today())}"></label>
+      <label>Odómetro<input name="odo" type="number" required value="${esc(data.odo??v().odo)}"></label>
+      <label class="full">Notas generales<textarea name="notes" placeholder="Ruido al frenar, vibración 60-80, etc.">${esc(data.notes||'')}</textarea></label>
+    </div>
+    ${htmlItems}
+    <div style="margin-top:16px;display:flex;gap:8px"><button>Guardar inspección</button><button type="button" class="secondary" onclick="closeModal()">Cancelar</button></div>
+  </form>`);
+}
+function saveInspection(e,editId){
+  e.preventDefault();
+  const fd=new FormData(e.target);
+  const o={date:fd.get('date')||today(),odo:+(fd.get('odo')||0),notes:fd.get('notes')||'',vehicleId:selected};
+  const items=[];
+  INSPECTION_TEMPLATE.forEach((group,gIdx)=>{
+    group.items.forEach((itemName,iIdx)=>{
+      const key=`${gIdx}-${iIdx}`;
+      const status=document.getElementById(`ins-${key}-status`)?.value||'pendiente';
+      const notes=document.getElementById(`ins-${key}-notes`)?.value||'';
+      items.push({cat:group.cat,name:itemName,status,notes});
+    });
+  });
+  o.items=items;
+  const atencion=items.filter(it=>it.status==='atencion').length;
+  const ok=items.filter(it=>it.status==='ok').length;
+  o.overallStatus= atencion>0 ? `atencion (${atencion} puntos)` : `ok (${ok}/${items.length})`;
+  if(editId){Object.assign(db.inspections.find(x=>x.id===editId),o)}else{o.id='insp-'+Date.now();db.inspections.push(o);if(o.odo>v().odo)v().odo=o.odo}
+  closeModal();save();toast(`Inspección guardada: ${o.overallStatus}`,'ok');
+}
+function editInspection(id){openInspectionForm(db.inspections.find(x=>x.id===id))}
+function delInspection(id){if(confirm('¿Eliminar inspección?')){db.inspections=db.inspections.filter(x=>x.id!==id);save();toast('Eliminada','bad')}}
+function inspectionTable(arr){
+  if(!arr.length)return `<div class="empty"><div>✅ Sin inspecciones</div><div class="sub">Crea una inspección de 28 puntos para llevar al mecánico</div><button onclick="openInspectionForm()" style="margin-top:8px">＋ Nueva inspección</button></div>`;
+  arr=[...arr].sort((a,b)=>b.date.localeCompare(a.date));
+  return `<div class="table"><table><thead><tr><th>Fecha</th><th>Odo</th><th>Estado</th><th>Puntos atención</th><th></th></tr></thead><tbody>${arr.map(insp=>{
+    const atencion=insp.items.filter(i=>i.status==='atencion');
+    return `<tr><td>${esc(insp.date)}</td><td>${Number(insp.odo).toLocaleString()}</td><td><span class="badge ${atencion.length?'warn':'ok'}">${esc(insp.overallStatus||'pendiente')}</span><br><span class="sub">${esc(insp.notes||'').slice(0,60)}</span></td><td>${atencion.length?atencion.map(a=>`<span class="badge bad" style="margin:2px">${esc(a.name)}</span>`).join(''):'<span class="sub">Todo OK</span>'}</td><td><div style="display:flex;gap:4px"><button class="secondary" onclick="editInspection('${insp.id}')">✎</button><button class="secondary" onclick="exportPDFChecklist('${insp.id}')">📄</button><button class="danger" style="border:0;background:var(--badBg);color:#ffb4b8;padding:6px 8px;border-radius:8px" onclick="delInspection('${insp.id}')">×</button></div></td></tr>`
+  }).join('')}</tbody></table></div>`;
+}
+
+/* PDF Exports */
+function exportPDFServicios(){
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  const x=v();
+  const rem=db.reminders.filter(r=>r.vehicleId===x.id);
+  const pending=rem.filter(r=>reminderStatus(r)[1]!=='ok');
+  const monthly=getMonthlyMiles(x.id);
+  const avg=getAvgMonthlyMiles(x.id);
+  
+  // Header
+  doc.setFillColor(8,10,13);doc.rect(0,0,210,22,'F');
+  doc.setTextColor(217,180,106);doc.setFontSize(14);doc.setFont('helvetica','bold');doc.text('E.O. Garage - Servicios Pendientes',14,14);
+  doc.setTextColor(255,255,255);doc.setFontSize(9);doc.text(`Build 15.0 Super Pro Personal - ${today()}`,150,14);
+  
+  // Vehicle info
+  doc.setTextColor(0,0,0);doc.setFontSize(11);doc.setFont('helvetica','bold');doc.text(`${x.make} ${x.model} ${x.year}`,14,32);
+  doc.setFontSize(9);doc.setFont('helvetica','normal');
+  doc.text(`VIN: ${x.vin||'—'}`,14,38);
+  doc.text(`Motor: ${x.engine||'—'} | ${x.drive||''} | ${x.tire||''}`,14,43);
+  doc.text(`Odo actual: ${Number(x.odo).toLocaleString()} ${x.unit||'mi'} | Promedio: ${Math.round(avg).toLocaleString()} mi/mes`,14,48);
+  doc.text(`Fecha reporte: ${today()} | Total millas registradas: ${monthly.reduce((a,b)=>a+b.miles,0).toLocaleString()} mi`,14,53);
+  
+  // Pending services
+  doc.setFontSize(12);doc.setFont('helvetica','bold');doc.text('Servicios que requiere la camioneta:',14,64);
+  let y=72;
+  if(!pending.length){
+    doc.setFontSize(10);doc.setFont('helvetica','normal');doc.text('✓ No hay servicios pendientes. Todo al día.',14,y);
+    y+=8;
+  } else {
+    doc.setFontSize(9);doc.setFont('helvetica','bold');
+    doc.text('Servicio',14,y);doc.text('Próximo',90,y);doc.text('Estado',130,y);doc.text('Notas',155,y);
+    y+=4;doc.line(14,y,196,y);y+=5;
+    doc.setFont('helvetica','normal');
+    pending.forEach(r=>{
+      if(y>270){doc.addPage();y=20;}
+      const status=reminderStatus(r)[0];
+      const next=r.nextMileage? Number(r.nextMileage).toLocaleString()+' '+(x.unit||'mi') : (r.nextDate||'—');
+      const interval=(r.intervalMiles? r.intervalMiles+' mi' : '') + (r.intervalMonths? ' / '+r.intervalMonths+' meses' : '');
+      doc.text(r.name.substring(0,40),14,y);
+      doc.text(next,90,y);
+      doc.text(status,130,y);
+      doc.text((r.notes||interval||'').substring(0,30),155,y);
+      y+=6;
+      // Estimated date
+      if(r.nextMileage&&avg){
+        const remaining=r.nextMileage - x.odo;
+        if(remaining>0){
+          const months=remaining/avg;
+          const estDate=new Date();estDate.setMonth(estDate.getMonth()+months);
+          doc.setFontSize(7);doc.setTextColor(100,100,100);
+          doc.text(`Estimado: ${estDate.toLocaleDateString('es-MX')} (en ${months.toFixed(1)} meses)`,14,y);
+          doc.setFontSize(9);doc.setTextColor(0,0,0);
+          y+=4;
+        }
+      }
+    });
+  }
+  
+  // Monthly summary
+  y+=6;if(y>250){doc.addPage();y=20;}
+  doc.setFontSize(11);doc.setFont('helvetica','bold');doc.text('Resumen de uso mensual:',14,y);y+=8;
+  doc.setFontSize(8);doc.setFont('helvetica','normal');
+  monthly.slice(-6).reverse().forEach(m=>{
+    if(y>280){doc.addPage();y=20;}
+    doc.text(`${m.from} → ${m.to}: ${m.miles.toLocaleString()} mi en ${m.days} días (prom ${m.avgPerDay.toFixed(1)}/día)`,14,y);
+    y+=5;
+  });
+  
+  // Footer
+  doc.setFontSize(8);doc.setTextColor(100,100,100);
+  doc.text(`E.O. Garage v15 Super Pro Final | ${x.make} ${x.model} | Generado ${new Date().toLocaleString('es-MX')} | Para mecánico`,14,290);
+  
+  doc.save(`Servicios_${x.make}_${x.model}_${today()}.pdf`);
+  toast('PDF de servicios generado para mecánico','ok');
+}
+
+function exportPDFChecklist(inspectionId=null){
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  const x=v();
+  let insp=null;
+  if(inspectionId) insp=db.inspections.find(i=>i.id===inspectionId);
+  else insp=[...db.inspections.filter(i=>i.vehicleId===x.id)].sort((a,b)=>b.date.localeCompare(a.date))[0];
+  
+  if(!insp){toast('No hay inspección para exportar. Crea una primero.','warn');return;}
+  
+  doc.setFillColor(8,10,13);doc.rect(0,0,210,22,'F');
+  doc.setTextColor(217,180,106);doc.setFontSize(14);doc.setFont('helvetica','bold');doc.text('Checklist Inspección 28 Puntos',14,14);
+  doc.setTextColor(255,255,255);doc.setFontSize(9);doc.text(`${insp.date} - ${Number(insp.odo).toLocaleString()} mi`,150,14);
+  
+  doc.setTextColor(0,0,0);doc.setFontSize(11);doc.setFont('helvetica','bold');doc.text(`${x.make} ${x.model} ${x.year} - VIN ${x.vin||''}`,14,32);
+  doc.setFontSize(9);doc.setFont('helvetica','normal');doc.text(`Odo: ${Number(insp.odo).toLocaleString()} ${x.unit||'mi'} | Estado: ${insp.overallStatus} | ${insp.notes||''}`,14,38);
+  
+  let y=48;
+  let currentCat='';
+  insp.items.forEach(item=>{
+    if(y>270){doc.addPage();y=20;}
+    if(item.cat!==currentCat){
+      currentCat=item.cat;
+      y+=4;doc.setFontSize(10);doc.setFont('helvetica','bold');doc.setFillColor(240,240,240);doc.rect(14,y-4,182,8,'F');
+      doc.text(currentCat.toUpperCase(),16,y);y+=8;
+      doc.setFontSize(8);doc.setFont('helvetica','bold');doc.text('Punto',14,y);doc.text('Estado',100,y);doc.text('Nota',130,y);y+=3;doc.line(14,y,196,y);y+=4;
+    }
+    doc.setFontSize(8);doc.setFont('helvetica','normal');
+    const statusIcon=item.status==='ok'?'✓ OK':item.status==='atencion'?'⚠ ATENCIÓN':item.status==='no_aplica'?'— N/A':'○ Pendiente';
+    doc.text(item.name.substring(0,45),14,y);
+    doc.text(statusIcon,100,y);
+    doc.text((item.notes||'').substring(0,35),130,y);
+    y+=5;
+  });
+  
+  y+=6;doc.setFontSize(8);doc.setTextColor(100,100,100);
+  doc.text(`E.O. Garage v15 Personal | Inspección ${insp.date} | ${x.make} ${x.model} | ${insp.items.filter(i=>i.status==='atencion').length} puntos requieren atención`,14,290);
+  
+  doc.save(`Checklist_${x.make}_${insp.date}.pdf`);
+  toast('PDF Checklist generado','ok');
+}
+
+
+/* Super Pro - Health Semaphore */
+function getHealthByCategory(vehicleId){
+  const ins=[...db.inspections.filter(i=>i.vehicleId===vehicleId)].sort((a,b)=>b.date.localeCompare(a.date))[0];
+  if(!ins||!ins.items.length) return null;
+  const byCat={};
+  ins.items.forEach(it=>{
+    if(!byCat[it.cat]) byCat[it.cat]={total:0,ok:0,atencion:0};
+    byCat[it.cat].total++;
+    if(it.status==='ok') byCat[it.cat].ok++;
+    if(it.status==='atencion') byCat[it.cat].atencion++;
+  });
+  Object.keys(byCat).forEach(c=>{
+    const d=byCat[c];
+    d.pct = d.total? Math.round((d.ok/d.total)*100) : 0;
+    d.status = d.atencion>0 ? (d.pct<60?'bad':'warn') : 'ok';
+  });
+  return byCat;
+}
+function renderHealthSemaphore(){
+  const health=getHealthByCategory(selected);
+  if(!health) return '<div class="notice">Haz una inspección para ver salud por categoría</div>';
+  return '<div class="grid" style="grid-template-columns:repeat(3,1fr)">'+Object.entries(health).map(([cat,data])=>`
+    <div class="stat" style="border-color:${data.status==='ok'?'#1e4a32':data.status==='warn'?'#4a3f1e':'#5a2a2d'}">
+      <div style="display:flex;justify-content:space-between"><span style="font-size:11px;font-weight:800">${cat}</span><span class="badge ${data.status}">${data.pct}%</span></div>
+      <div style="margin-top:6px;height:6px;background:#1f2730;border-radius:999px;overflow:hidden"><div style="width:${data.pct}%;height:100%;background:${data.status==='ok'?'var(--ok)':data.status==='warn'?'var(--warn)':'var(--bad)'}"></div></div>
+      <div class="sub" style="margin-top:4px">${data.ok}/${data.total} OK · ${data.atencion} atención</div>
+    </div>`).join('')+'</div>';
+}
+
+/* Parts Catalog */
+function partsTable(){
+  const arr=db.partsCatalog.filter(p=>p.vehicleId===selected);
+  if(!arr.length) return '<div class="empty">Sin catálogo</div>';
+  return '<div class="table"><table><thead><tr><th>Cat</th><th>Refacción</th><th>Número parte</th><th>Precio último</th><th>Dónde</th><th></th></tr></thead><tbody>'+arr.map(p=>`<tr><td>${esc(p.cat)}</td><td><b>${esc(p.name)}</b><br><span class="sub">${esc(p.brand||'')}</span></td><td style="font-family:var(--mono);font-size:11px">${esc(p.partNumber||'')}</td><td>${money(p.lastPrice||0)}</td><td>${esc(p.where||'')}</td><td><div style="display:flex;gap:4px"><button class="secondary" onclick="editPart('${p.id}')">✎</button><button class="danger" style="border:0;background:var(--badBg);color:#ffb4b8;padding:6px 8px;border-radius:8px" onclick="delPart('${p.id}')">×</button></div></td></tr>`).join('')+'</tbody></table></div>';
+}
+function openPartForm(data={}){
+  const edit=!!data.id;
+  modal(`<h2>${edit?'Editar':'Agregar'} refacción compatible</h2><form onsubmit="savePart(event,'${data.id||''}')"><div class="formgrid"><label>Categoría<input name="cat" required value="${esc(data.cat||'Motor')}"></label><label>Nombre<input name="name" required value="${esc(data.name||'')}"></label><label>Número parte<input name="partNumber" value="${esc(data.partNumber||'')}"></label><label>Marca<input name="brand" value="${esc(data.brand||'')}"></label><label>Precio último<input name="lastPrice" type="number" value="${esc(data.lastPrice||0)}"></label><label>Dónde comprar<input name="where" value="${esc(data.where||'AutoZone')}"></label><label class="full">Notas<textarea name="notes">${esc(data.notes||'')}</textarea></label></div><div style="margin-top:12px;display:flex;gap:8px"><button>Guardar</button><button type="button" class="secondary" onclick="closeModal()">Cancelar</button></div></form>`);
+}
+function savePart(e,editId){
+  e.preventDefault();const o=Object.fromEntries(new FormData(e.target));o.lastPrice=+o.lastPrice||0;o.vehicleId=selected;
+  if(editId) Object.assign(db.partsCatalog.find(x=>x.id===editId),o); else {o.id='part-'+Date.now();db.partsCatalog.push(o);}
+  closeModal();save();toast('Refacción guardada','ok');
+}
+function editPart(id){openPartForm(db.partsCatalog.find(x=>x.id===id))}
+function delPart(id){if(confirm('¿Eliminar refacción?')){db.partsCatalog=db.partsCatalog.filter(x=>x.id!==id);save();toast('Eliminada','bad')}}
+
+/* Quick Notes Bitácora */
+function notesTable(){
+  const arr=[...db.quickNotes.filter(n=>n.vehicleId===selected)].sort((a,b)=>b.date.localeCompare(a.date));
+  if(!arr.length) return '<div class="empty">Sin notas<br><span class="sub">Registra ruidos, vibraciones, observaciones rápidas</span></div>';
+  return '<div class="mini-list">'+arr.map(n=>`<div class="mini"><div><b>${esc(n.date)} · ${Number(n.odo).toLocaleString()} mi</b><span>${esc(n.text)}</span></div><div style="display:flex;gap:4px"><button class="secondary" onclick="editNote('${n.id}')">✎</button><button class="danger" style="border:0;background:var(--badBg);color:#ffb4b8;padding:6px 8px;border-radius:8px" onclick="delNote('${n.id}')">×</button></div></div>`).join('')+'</div>';
+}
+function openNoteForm(data={}){
+  const edit=!!data.id;
+  modal(`<h2>${edit?'Editar':'Nota rápida'}</h2><form onsubmit="saveNote(event,'${data.id||''}')"><div class="formgrid"><label>Fecha<input name="date" type="date" required value="${esc(data.date||today())}"></label><label>Odómetro<input name="odo" type="number" required value="${esc(data.odo??v().odo)}"></label><label class="full">Nota<textarea name="text" required placeholder="Ej. Ruido al frenar a 60km/h lado izq delantero, vibración volante">${esc(data.text||'')}</textarea></label></div><div style="margin-top:12px;display:flex;gap:8px"><button>Guardar nota</button><button type="button" class="secondary" onclick="closeModal()">Cancelar</button></div></form>`);
+}
+function saveNote(e,editId){
+  e.preventDefault();const o=Object.fromEntries(new FormData(e.target));o.odo=+o.odo||0;o.vehicleId=selected;
+  if(editId) Object.assign(db.quickNotes.find(x=>x.id===editId),o); else {o.id='note-'+Date.now();db.quickNotes.push(o);if(o.odo>v().odo) v().odo=o.odo;}
+  closeModal();save();toast('Nota guardada','ok');
+}
+function editNote(id){openNoteForm(db.quickNotes.find(x=>x.id===id))}
+function delNote(id){if(confirm('¿Eliminar nota?')){db.quickNotes=db.quickNotes.filter(x=>x.id!==id);save();toast('Eliminada','bad')}}
+
+/* Travel Checklist Carretera */
+function travelChecklistTable(){
+  const arr=[...db.travelChecklists.filter(t=>t.vehicleId===selected)].sort((a,b)=>b.date.localeCompare(a.date));
+  if(!arr.length) return '<div class="empty">Sin checklist de viaje<br><button onclick="openTravelChecklistForm()" style="margin-top:8px">＋ Checklist carretera</button></div>';
+  return '<div class="table"><table><thead><tr><th>Fecha</th><th>Destino</th><th>Odo</th><th>Estado</th><th></th></tr></thead><tbody>'+arr.map(t=>{
+    const total=t.items.length;const ok=t.items.filter(i=>i.checked).length;const pct=Math.round(ok/total*100);
+    return `<tr><td>${esc(t.date)}</td><td><b>${esc(t.destination||'—')}</b><br><span class="sub">${esc(t.notes||'').slice(0,50)}</span></td><td>${Number(t.odo||0).toLocaleString()}</td><td><span class="badge ${pct===100?'ok':pct>50?'warn':'bad'}">${pct}% · ${ok}/${total}</span></td><td><div style="display:flex;gap:4px"><button class="secondary" onclick="editTravelChecklist('${t.id}')">✎</button><button class="secondary" onclick="exportPDFViaje('${t.id}')">📄</button><button class="danger" style="border:0;background:var(--badBg);color:#ffb4b8;padding:6px 8px;border-radius:8px" onclick="delTravelChecklist('${t.id}')">×</button></div></td></tr>`
+  }).join('')+'</tbody></table></div>';
+}
+function openTravelChecklistForm(data={}){
+  const edit=!!data.id;
+  const existingItems=data.items||[];
+  let htmlItems='';
+  ROAD_TRIP_TEMPLATE.forEach((group,gIdx)=>{
+    htmlItems+=`<div style="margin-top:14px"><div class="eyebrow" style="color:var(--gold)">${group.cat}</div><div style="display:grid;gap:6px;margin-top:6px">`;
+    group.items.forEach((itemName,iIdx)=>{
+      const key=`${gIdx}-${iIdx}`;
+      const existing=existingItems.find(it=>it.name===itemName) || {name:itemName,checked:false};
+      htmlItems+=`<label style="display:flex;align-items:center;gap:8px;padding:8px;background:#11161c;border:1px solid var(--line);border-radius:10px;cursor:pointer"><input type="checkbox" id="trip-${key}" ${existing.checked?'checked':''} style="width:18px;height:18px"><span style="flex:1;font-size:12.5px">${esc(itemName)}</span></label>`;
+    });
+    htmlItems+=`</div></div>`;
+  });
+  modal(`<h2>🚗 Checklist Viaje Carretera</h2><form onsubmit="saveTravelChecklist(event,'${data.id||''}')"><div class="formgrid"><label>Fecha viaje<input name="date" type="date" required value="${esc(data.date||today())}"></label><label>Odómetro salida<input name="odo" type="number" required value="${esc(data.odo??v().odo)}"></label><label class="full">Destino<input name="destination" required value="${esc(data.destination||'')}" placeholder="Ej. Tijuana - Ensenada, 180 mi"></label><label class="full">Notas viaje<textarea name="notes" placeholder="Hotel, casetas, personas">${esc(data.notes||'')}</textarea></label></div>${htmlItems}<div style="margin-top:16px;display:flex;gap:8px"><button>Guardar checklist viaje</button><button type="button" class="secondary" onclick="closeModal()">Cancelar</button></div></form>`);
+}
+function saveTravelChecklist(e,editId){
+  e.preventDefault();const fd=new FormData(e.target);const o={date:fd.get('date')||today(),odo:+(fd.get('odo')||0),destination:fd.get('destination')||'',notes:fd.get('notes')||'',vehicleId:selected};
+  const items=[];
+  ROAD_TRIP_TEMPLATE.forEach((group,gIdx)=>{
+    group.items.forEach((itemName,iIdx)=>{
+      const key=`${gIdx}-${iIdx}`;
+      const checked=document.getElementById(`trip-${key}`)?.checked||false;
+      items.push({cat:group.cat,name:itemName,checked});
+    });
+  });
+  o.items=items;
+  if(editId) Object.assign(db.travelChecklists.find(x=>x.id===editId),o); else {o.id='trip-'+Date.now();db.travelChecklists.push(o);}
+  closeModal();save();toast(`Checklist viaje guardado: ${items.filter(i=>i.checked).length}/${items.length} listos`,'ok');
+}
+function editTravelChecklist(id){openTravelChecklistForm(db.travelChecklists.find(x=>x.id===id))}
+function delTravelChecklist(id){if(confirm('¿Eliminar checklist viaje?')){db.travelChecklists=db.travelChecklists.filter(x=>x.id!==id);save();toast('Eliminado','bad')}}
+function exportPDFViaje(id){
+  const { jsPDF } = window.jspdf;
+  const doc=new jsPDF();const x=v();const t=db.travelChecklists.find(i=>i.id===id);if(!t){toast('No encontrado','bad');return;}
+  doc.setFillColor(8,10,13);doc.rect(0,0,210,22,'F');
+  doc.setTextColor(217,180,106);doc.setFontSize(14);doc.setFont('helvetica','bold');doc.text('Checklist Viaje Carretera',14,14);
+  doc.setTextColor(255,255,255);doc.setFontSize(9);doc.text(`${t.date} - ${t.destination}`,130,14);
+  doc.setTextColor(0,0,0);doc.setFontSize(11);doc.setFont('helvetica','bold');doc.text(`${x.make} ${x.model} ${x.year} - ${Number(t.odo).toLocaleString()} mi`,14,32);
+  doc.setFontSize(9);doc.setFont('helvetica','normal');doc.text(`Destino: ${t.destination} | Odo salida: ${Number(t.odo).toLocaleString()} | ${t.notes||''}`,14,38);
+  let y=48;let currentCat='';
+  t.items.forEach(it=>{
+    if(y>270){doc.addPage();y=20;}
+    if(it.cat!==currentCat){currentCat=it.cat;y+=4;doc.setFontSize(10);doc.setFont('helvetica','bold');doc.setFillColor(240,240,240);doc.rect(14,y-4,182,8,'F');doc.text(currentCat.toUpperCase(),16,y);y+=8;}
+    doc.setFontSize(9);doc.setFont('helvetica','normal');
+    const icon=it.checked?'☑':'☐';
+    doc.text(`${icon} ${it.name}`,14,y);y+=6;
+  });
+  const ok=t.items.filter(i=>i.checked).length;doc.setFontSize(10);doc.setFont('helvetica','bold');doc.text(`Listo: ${ok}/${t.items.length} (${Math.round(ok/t.items.length*100)}%) - ${ok===t.items.length?'¡Listo para carretera!':'Faltan puntos'}`,14,y+8);
+  doc.save(`Viaje_${t.destination.replace(/[^a-zA-Z0-9]/g,'_')}_${t.date}.pdf`);
+  toast('PDF viaje generado','ok');
+}
+
+/* Travel Logs Modo Viaje */
+function openTravelLogForm(){
+  modal(`<h2>🛣️ Modo Viaje - Registrar viaje</h2><form onsubmit="saveTravelLog(event)"><div class="formgrid"><label>Fecha inicio<input name="startDate" type="date" required value="${today()}"></label><label>Odo inicio<input name="startOdo" type="number" required value="${v().odo}"></label><label>Destino<input name="destination" required placeholder="Tijuana - Mexicali"></label><label>Propósito<select name="purpose"><option>Personal</option><option>Trabajo</option><option>Vacaciones</option></select></label><label class="full">Notas<textarea name="notes"></textarea></label></div><div style="margin-top:12px;display:flex;gap:8px"><button>Iniciar viaje</button><button type="button" class="secondary" onclick="closeModal()">Cancelar</button></div></form>`);
+}
+function saveTravelLog(e){
+  e.preventDefault();const fd=new FormData(e.target);const o={startDate:fd.get('startDate')||today(),startOdo:+fd.get('startOdo')||0,destination:fd.get('destination')||'',purpose:fd.get('purpose')||'Personal',notes:fd.get('notes')||'',vehicleId:selected,id:'travel-'+Date.now(),status:'en_curso'};
+  db.travelLogs.push(o);closeModal();save();toast('Viaje iniciado','ok');
+}
+function closeTravelLog(id){
+  const t=db.travelLogs.find(x=>x.id===id);if(!t)return;
+  const endOdo=prompt('Odo final?',v().odo);if(!endOdo) return;
+  t.endDate=today();t.endOdo=+endOdo;t.miles=t.endOdo-t.startOdo;t.status='completado';if(t.endOdo>v().odo) v().odo=t.endOdo;
+  save();toast(`Viaje cerrado: ${t.miles} mi`,'ok');
+}
+
+/* Timeline */
+function timelineHtml(){
+  const x=v();
+  const all=[];
+  db.records.filter(r=>r.vehicleId===x.id).forEach(r=>all.push({date:r.date,odo:r.odo,type:'Servicio',title:r.service,desc:`${r.category||''} - ${money(r.cost)} - ${r.shop||''}`,icon:'🛠️'}));
+  db.mileageLogs.filter(r=>r.vehicleId===x.id).forEach(r=>all.push({date:r.date,odo:r.odo,type:'Millas',title:`${Number(r.odo).toLocaleString()} mi`,desc:r.notes||'',icon:'🛣️'}));
+  db.inspections.filter(r=>r.vehicleId===x.id).forEach(r=>all.push({date:r.date,odo:r.odo,type:'Checklist',title:`Inspección ${r.overallStatus}`,desc:r.notes||'',icon:'✅'}));
+  db.travelChecklists.filter(r=>r.vehicleId===x.id).forEach(r=>{const ok=r.items.filter(i=>i.checked).length;all.push({date:r.date,odo:r.odo,type:'Viaje',title:`Viaje a ${r.destination} - ${ok}/${r.items.length}`,desc:r.notes||'',icon:'🚗'})});
+  db.quickNotes.filter(r=>r.vehicleId===x.id).forEach(r=>all.push({date:r.date,odo:r.odo,type:'Nota',title:r.text.slice(0,60),desc:r.text,icon:'📝'}));
+  all.sort((a,b)=>b.date.localeCompare(a.date));
+  if(!all.length) return '<div class="empty">Sin historial aún</div>';
+  return '<div style="position:relative;padding-left:20px;border-left:2px dashed #2a333e;display:grid;gap:12px">'+all.slice(0,40).map(ev=>`
+    <div style="position:relative"><div style="position:absolute;left:-28px;top:0;width:16px;height:16px;background:#1e2630;border:2px solid var(--gold);border-radius:50%;display:grid;place-items:center;font-size:8px">${ev.icon}</div>
+    <div class="card section" style="padding:10px"><div style="display:flex;justify-content:space-between"><span class="badge info" style="font-size:9px">${ev.type}</span><span class="sub" style="font-size:10px">${ev.date} · ${Number(ev.odo||0).toLocaleString()} mi</span></div><div style="font-weight:700;font-size:13px;margin-top:4px">${esc(ev.title)}</div><div class="sub" style="font-size:11px">${esc(ev.desc||'').slice(0,120)}</div></div></div>`).join('')+'</div>';
+}
+
+/* Budget */
+function budgetHtml(){
+  const x=v();const monthlyBudget=db.settings.monthlyBudget||0;
+  const thisMonth=new Date().toISOString().slice(0,7);
+  const spentThisMonth=[...db.records.filter(r=>r.vehicleId===x.id&&r.date.startsWith(thisMonth)),...db.expenses.filter(r=>r.vehicleId===x.id&&r.date.startsWith(thisMonth))].reduce((a,b)=>a+Number(b.cost||b.amount||0),0);
+  const pct=monthlyBudget? Math.round(spentThisMonth/monthlyBudget*100) : 0;
+  return `<div class="card section"><div class="section-head"><div><div class="eyebrow">Finanzas</div><h2>Presupuesto mensual</h2></div><button class="secondary" onclick="setBudget()">⚙️ Configurar</button></div>
+    <div class="grid" style="grid-template-columns:repeat(2,1fr)">
+      <div class="stat"><div class="n">${money(spentThisMonth)}</div><div class="l">Gastado ${thisMonth}</div></div>
+      <div class="stat"><div class="n">${monthlyBudget?money(monthlyBudget):'—'}</div><div class="l">Presupuesto</div></div>
+    </div>
+    ${monthlyBudget?`<div style="margin-top:10px"><div style="display:flex;justify-content:space-between;font-size:11px"><span>${pct}% usado</span><span>${pct>100?'⚠️ Excedido':pct>80?'⚠️ Casi': '✓ OK'}</span></div><div style="height:8px;background:#1f2730;border-radius:999px;overflow:hidden;margin-top:4px"><div style="width:${Math.min(pct,100)}%;height:100%;background:${pct>100?'var(--bad)':pct>80?'var(--warn)':'var(--ok)'}"></div></div></div>`: '<div class="notice" style="margin-top:10px">Configura presupuesto mensual para control</div>'}
+  </div>`;
+}
+function setBudget(){
+  const current=db.settings.monthlyBudget||3000;
+  const val=prompt('Presupuesto mensual MXN?',current);if(val===null) return;db.settings.monthlyBudget=+val||0;save();toast('Presupuesto guardado','ok');
+}
+
+/* Quick Search CMD+K */
+function openQuickSearch(){
+  modal(`<h2>🔍 Búsqueda rápida (CMD+K)</h2><input id="qSearch" placeholder="Busca aceite, frenos, 169000, Tijuana..." style="width:100%;padding:12px;border-radius:12px;background:#0e1318;border:1px solid var(--line);color:#fff;margin-top:8px"><div id="qResults" style="margin-top:12px;display:grid;gap:6px;max-height:50vh;overflow:auto"></div><div class="sub" style="margin-top:8px">Tip: Presiona Ctrl+K o Cmd+K en cualquier momento</div>`);
+  const inp=document.getElementById('qSearch');inp.focus();
+  inp.addEventListener('input',()=>{
+    const q=inp.value.toLowerCase();if(q.length<2){document.getElementById('qResults').innerHTML='';return;}
+    const results=[];
+    db.records.filter(r=>r.vehicleId===selected).forEach(r=>{if((r.service+' '+r.category+' '+r.notes).toLowerCase().includes(q)) results.push(`🛠️ ${r.date} - ${r.service} - ${money(r.cost)}`);});
+    db.mileageLogs.filter(r=>r.vehicleId===selected).forEach(r=>{if((r.notes||'').toLowerCase().includes(q)||String(r.odo).includes(q)) results.push(`🛣️ ${r.date} - ${r.odo} mi - ${r.notes||''}`);});
+    db.partsCatalog.filter(r=>r.vehicleId===selected).forEach(r=>{if((r.name+' '+r.partNumber).toLowerCase().includes(q)) results.push(`🔧 ${r.name} - ${r.partNumber} - ${money(r.lastPrice)}`);});
+    db.travelChecklists.filter(r=>r.vehicleId===selected).forEach(r=>{if((r.destination+' '+r.notes).toLowerCase().includes(q)) results.push(`🚗 Viaje ${r.date} - ${r.destination}`);});
+    document.getElementById('qResults').innerHTML=results.slice(0,20).map(r=>`<div class="mini">${esc(r)}</div>`).join('')||'<div class="sub">Sin resultados</div>';
+  });
+}
+document.addEventListener('keydown',(e)=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();openQuickSearch();}});
+
+/* Export v2 PDF improved */
+function exportPDFServiciosV2(){
+  // Use existing exportPDFServicios but add health, parts, timeline
+  exportPDFServicios();
+  setTimeout(()=>{
+    // After first PDF, also generate detailed
+    const { jsPDF } = window.jspdf;const doc=new jsPDF();const x=v();const health=getHealthByCategory(selected);
+    doc.text('Salud vehículo por categoría:',14,20);
+    let y=30;if(health) Object.entries(health).forEach(([cat,data])=>{doc.text(`${cat}: ${data.pct}% OK - ${data.ok}/${data.total}`,14,y);y+=6;});
+    doc.save(`Salud_${x.make}_${today()}.pdf`);
+  },500);
+}
+
+/* Backup */
+function exportJSON(){const blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`EO_Garage_Personal_${today()}.json`;a.click();toast('Respaldo descargado','ok')}
+function restore(){const i=document.createElement('input');i.type='file';i.accept='.json';i.onchange=()=>{const f=i.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d.vehicles)throw 0;d.mileageLogs=d.mileageLogs||[];db=normalize(d);selected=db.vehicles[0]?.id||null;save();toast('Respaldo restaurado','ok')}catch(e){toast('Archivo no válido','bad')}};r.readAsText(f)};i.click()}
+function decodeVIN(){const el=document.getElementById('vinResult');const cur=v();if(!cur?.vin||cur.vin.length!==17){el.innerHTML='<div class="notice">VIN 17 caracteres</div>';return}el.innerHTML='<div class="notice">Consultando…</div>';fetch('https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValues/'+encodeURIComponent(cur.vin)+'?format=json').then(r=>r.json()).then(j=>{const x=j.Results?.[0];const f=[['Marca',x.Make],['Modelo',x.Model],['Año',x.ModelYear],['Motor',x.EngineModel||x.DisplacementCC+' cc'],['Tracción',x.DriveType]];el.innerHTML='<div class="card section" style="padding:10px">'+f.map(a=>`<div class="row"><span>${esc(a[0])}</span><b>${esc(a[1]||'—')}</b></div>`).join('')+'</div>'}).catch(e=>{el.innerHTML='<div class="notice bad">Error: '+esc(e.message)+'</div>'})}
+function openRecall(){window.open('https://www.nhtsa.gov/recalls?vin='+encodeURIComponent(v()?.vin||''),'_blank')}
+
+/* Cloud */
+function setCloudStatus(t){const el=document.getElementById('cloudStatus');if(el)el.textContent=t}
+function openAuth(){document.getElementById('authGate').style.display='flex'}function closeAuth(){document.getElementById('authGate').style.display='none'}
+async function logout(){await sb.auth.signOut({scope:'local'});toast('Sesión cerrada','info')}
+function setAccountUI(s){const btn=document.getElementById('accountBtn'),out=document.getElementById('logoutBtn');if(btn)btn.textContent=s?'Cuenta: '+(s.user?.email||'ok'):'Cuenta';if(out)out.style.display=s?'block':'none';if(!s)setCloudStatus('☁️ Local')}
+function authMsg(t){document.getElementById('authMsg').textContent=t}
+function uuid(id){return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(String(id||''))?id:crypto.randomUUID()}
+async function syncTable(table,rows,mapFn){const existing=await sb.from(table).select('id').eq('owner_id',cloudUser.id);if(existing.error)throw existing.error;const keep=new Set();const payload=rows.map(r=>{const id=uuid(r.id);r.id=id;keep.add(id);return mapFn(r,id)});if(payload.length){const {error}=await sb.from(table).upsert(payload,{onConflict:'id'});if(error)throw error}for(const row of existing.data||[]){if(!keep.has(row.id)){await sb.from(table).delete().eq('owner_id',cloudUser.id).eq('id',row.id)}}}
+async function cloudSave(force=false){
+  if(!cloudUser||(!cloudReady&&!force))return;if(cloudSyncing){saveQueue=true;return}cloudSyncing=true;
+  try{
+    setCloudStatus('☁️ Guardando…');
+    const idMap=new Map();for(const r of db.vehicles){const old=r.id;const id=uuid(old);if(old!==id)idMap.set(old,id);r.id=id}
+    if(idMap.size){const remap=arr=>arr.forEach(r=>{if(idMap.has(r.vehicleId))r.vehicleId=idMap.get(r.vehicleId)});remap(db.records);remap(db.reminders);remap(db.issues);remap(db.expenses);remap(db.mileageLogs)}
+    await syncTable('eo_garage_vehicles',db.vehicles,(r,id)=>({id,owner_id:cloudUser.id,make:r.make,model:r.model,model_year:Number(r.year)||null,vin:r.vin||null,engine:r.engine||null,drivetrain:r.drive||null,current_mileage:Number(r.odo)||0,tire_size:r.tire||null,tire_pressure_psi:r.tirePressure?Number(r.tirePressure):null,oil_brand:r.oil||null,oil_viscosity:r.oilViscosity||null,oil_filter_brand:r.oilFilter||null,spark_plug_brand:r.spark||null,notes:r.notes||null,service_notes:r.serviceNotes||null}));
+    await syncTable('eo_garage_maintenance',db.records,(r,id)=>({id,owner_id:cloudUser.id,vehicle_id:r.vehicleId,service_date:r.date||today(),mileage:Number(r.odo)||null,category:r.category||'Mantenimiento',description:r.service||'Trabajo',brand:r.parts||null,part_number:r.partNumber||null,cost:Number(r.cost)||0,shop:r.shop||null,notes:r.notes||null}));
+    await syncTable('eo_garage_reminders',db.reminders,(r,id)=>({id,owner_id:cloudUser.id,vehicle_id:r.vehicleId,title:r.name||'Servicio',category:r.type||null,interval_miles:r.intervalMiles?Number(r.intervalMiles):null,interval_months:r.intervalMonths?Number(r.intervalMonths):null,due_mileage:r.nextMileage?Number(r.nextMileage):null,due_date:r.nextDate||null,status:r.status||'pending',notes:r.notes||null}));
+    await syncTable('eo_garage_issues',db.issues,(r,id)=>({id,owner_id:cloudUser.id,vehicle_id:r.vehicleId,title:r.title||'Problema',description:r.description||null,priority:r.severity||'normal',status:r.status==='resuelto'?'resuelto':(r.status==='en observación'?'en observación':'abierto'),diagnosed_at:r.date||null,notes:r.notes||null,cost:Number(r.cost)||0}));
+    await syncTable('eo_garage_expenses',db.expenses,(r,id)=>({id,owner_id:cloudUser.id,vehicle_id:r.vehicleId,expense_date:r.date||today(),mileage:Number(r.odo)||null,category:r.category||'Otro',description:r.description||'Gasto',amount:Number(r.amount)||0,notes:r.notes||null}));
+    try{await syncTable('eo_garage_mileage_logs',db.mileageLogs,(r,id)=>({id,owner_id:cloudUser.id,vehicle_id:r.vehicleId,log_date:r.date||today(),mileage:Number(r.odo)||0,notes:r.notes||null}));}catch(e){console.warn('mileage table missing',e.message)}
+    try{await syncTable('eo_garage_inspections',db.inspections,(r,id)=>({id,owner_id:cloudUser.id,vehicle_id:r.vehicleId,inspection_date:r.date||today(),mileage:Number(r.odo)||0,items:JSON.stringify(r.items||[]),notes:r.notes||null,overall_status:r.overallStatus||'pendiente'}));}catch(e){console.warn('inspections table missing',e.message)}
+    localStorage.setItem(KEY,JSON.stringify(db));setCloudStatus('☁️ Nube conectada');
+  }catch(e){console.error(e);setCloudStatus('⚠️ Local');toast('Error nube','bad')}finally{cloudSyncing=false;if(saveQueue){saveQueue=false;setTimeout(()=>cloudSave(true),500)}}
+}
+async function loadCloudToLocal(){
+  const qv=await sb.from('eo_garage_vehicles').select('*').order('created_at',{ascending:true});if(qv.error)throw qv.error;if(!qv.data.length){await cloudSave(true);cloudReady=true;return}
+  const vehicles=qv.data.map(x=>({id:x.id,make:x.make,model:x.model,year:x.model_year,vin:x.vin||'',engine:x.engine||'',drive:x.drivetrain||'',odo:x.current_mileage||0,unit:'mi',fuel:'Gasolina',tire:x.tire_size||'',tirePressure:x.tire_pressure_psi||'',oil:x.oil_brand||'',oilViscosity:x.oil_viscosity||'',oilFilter:x.oil_filter_brand||'',spark:x.spark_plug_brand||'',notes:x.notes||'',serviceNotes:x.service_notes||''}));
+  const ids=vehicles.map(x=>x.id);
+  const [qm,qr,qi,qe,qml,qin]=await Promise.all([
+    sb.from('eo_garage_maintenance').select('*').in('vehicle_id',ids).order('service_date',{ascending:false}),
+    sb.from('eo_garage_reminders').select('*').in('vehicle_id',ids),
+    sb.from('eo_garage_issues').select('*').in('vehicle_id',ids),
+    sb.from('eo_garage_expenses').select('*').in('vehicle_id',ids).order('expense_date',{ascending:false}),
+    sb.from('eo_garage_mileage_logs').select('*').in('vehicle_id',ids).order('log_date',{ascending:true}).then(r=>r).catch(()=>({data:[],error:null})),
+    sb.from('eo_garage_inspections').select('*').in('vehicle_id',ids).order('inspection_date',{ascending:false}).then(r=>r).catch(()=>({data:[],error:null}))
+  ]);
+  db.vehicles=vehicles;
+  db.records=(qm.data||[]).map(x=>({id:x.id,vehicleId:x.vehicle_id,date:x.service_date,odo:x.mileage||0,category:x.category||'',service:x.description||'',parts:x.brand||'',partNumber:x.part_number||'',cost:Number(x.cost)||0,shop:x.shop||'',notes:x.notes||''}));
+  db.reminders=(qr.data||[]).map(x=>({id:x.id,vehicleId:x.vehicle_id,name:x.title,nextMileage:x.due_mileage,nextDate:x.due_date,warnMiles:1000,warnDays:30,type:x.category||'Reemplazo',source:'Supabase',intervalMiles:x.interval_miles||null,intervalMonths:x.interval_months||null,status:x.status||'pending',notes:x.notes||''}));
+  db.issues=(qi.data||[]).map(x=>({id:x.id,vehicleId:x.vehicle_id,date:x.diagnosed_at||today(),odo:0,title:x.title,severity:x.priority||'normal',status:(x.status==='resolved'||x.status==='resuelto')?'resuelto':(x.status==='in_progress'||x.status==='en observación'?'en observación':'abierto'),description:x.description||'',notes:x.notes||'',cost:Number(x.cost)||0}));
+  db.expenses=(qe.data||[]).map(x=>({id:x.id,vehicleId:x.vehicle_id,date:x.expense_date,odo:x.mileage||0,category:x.category||'Otro',description:x.description||'',amount:Number(x.amount)||0,notes:x.notes||''}));
+  db.mileageLogs=(qml.data||[]).map(x=>({id:x.id,vehicleId:x.vehicle_id,date:x.log_date||today(),odo:x.mileage||0,notes:x.notes||''}));
+  db.inspections=(qin.data||[]).map(x=>{try{const items=JSON.parse(x.items||'[]');return {id:x.id,vehicleId:x.vehicle_id,date:x.inspection_date||today(),odo:x.mileage||0,items,notes:x.notes||'',overallStatus:x.overall_status||'pendiente'}}catch{return {id:x.id,vehicleId:x.vehicle_id,date:x.inspection_date||today(),odo:x.mileage||0,items:[],notes:x.notes||'',overallStatus:'pendiente'}}});
+  selected=db.vehicles[0]?.id||null;localStorage.setItem(KEY,JSON.stringify(db));render();
+}
+async function syncCloud(){if(!cloudUser||cloudSyncing)return;cloudSyncing=true;try{setCloudStatus('☁️ Sincronizando…');await loadCloudToLocal();cloudReady=true;setCloudStatus('☁️ Nube conectada');toast('Nube sincronizada','ok')}catch(e){setCloudStatus('⚠️ Error nube');toast('Error: '+(e.message||e),'bad')}finally{cloudSyncing=false}}
+
+document.getElementById('authForm').addEventListener('submit',async e=>{e.preventDefault();authMsg('Entrando…');const email=document.getElementById('authEmail').value.trim(),password=document.getElementById('authPassword').value;const {error}=await sb.auth.signInWithPassword({email,password});if(error)authMsg('Error: '+error.message);else{authMsg('Sesión iniciada');closeAuth()}});
+sb.auth.onAuthStateChange((ev,session)=>{cloudUser=session?.user||null;setAccountUI(session);if(session){if(ev==='INITIAL_SESSION'||ev==='SIGNED_IN'){setCloudStatus('☁️ Conectando…');setTimeout(()=>syncCloud(),100)}}else{cloudReady=false;setCloudStatus('☁️ Local')}});
+sb.auth.getSession().then(({data})=>{const s=data?.session||null;cloudUser=s?.user||null;setAccountUI(s);if(s){setCloudStatus('☁️ Conectando…');setTimeout(()=>syncCloud(),100)}});
+document.getElementById('signupBtn').addEventListener('click',async()=>{const email=document.getElementById('authEmail').value.trim(),password=document.getElementById('authPassword').value;if(!email||password.length<6)return authMsg('Correo y 6 caracteres mínimo');authMsg('Creando…');const {data,error}=await sb.auth.signUp({email,password});if(error)return authMsg(error.message);authMsg(data.session?'Cuenta creada':'Revisa tu correo para confirmar')});
+
+let saveDebounce=null;
+async function save(){try{localStorage.setItem(KEY,JSON.stringify(db))}catch(e){toast('LocalStorage lleno','bad')}render();clearTimeout(saveDebounce);saveDebounce=setTimeout(()=>{if(cloudUser)cloudSave(true)},700)}
+
+try{render();document.getElementById('bn-resumen')?.classList.add('active');}catch(err){document.getElementById('app').innerHTML=`<div class="card section"><h2>Error</h2><div class="notice">${esc(err.message||err)}</div></div>`}
+
+
+// ---- APP UI OVERRIDE (v15.2 - Todo parejo) ----
+
+function render(){
+  const x=v();if(!x){document.getElementById('appContent').innerHTML='<div class="card-app">Sin vehículo</div>';return;}
+  document.getElementById('topVehicle').textContent=x.model;document.getElementById('topOdo').textContent=Number(x.odo).toLocaleString()+' '+(x.unit||'mi');
+  const monthly=getMonthlyMiles(x.id);const avg=getAvgMonthlyMiles(x.id);const currentMonth=monthly.find(m=>m.current)||monthly[monthly.length-1];const milesThisMonth=currentMonth?currentMonth.miles:0;
+  const rec=db.records.filter(r=>r.vehicleId===x.id);const rem=db.reminders.filter(r=>r.vehicleId===x.id);const pending=rem.filter(r=>r.name!=='Actualizar kilometraje mensual'&&reminderStatus(r)[1]!=='ok');
+  const health=getHealthByCategory(x.id);
+  document.querySelectorAll('.bottom-nav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById('bn-'+(tab==='resumen'?'resumen':tab==='millas'?'millas':tab==='mantenimiento'?'mantenimiento':tab==='viajes'?'viajes':'mas'))?.classList.add('active');
+  let html='';
+  if(tab==='resumen'){
+    html+=`
+      <div class="hero" style="background:linear-gradient(180deg,#1c2531,#161d28);border:1px solid var(--line);border-radius:22px;padding:16px;position:relative;overflow:hidden">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px"><div><div style="font-size:9px;letter-spacing:1.4px;color:var(--gold);font-weight:800;text-transform:uppercase">Vehículo principal · v15.2 App Final</div><h2 style="margin:4px 0 2px;font-size:22px;letter-spacing:-.4px">${esc(x.make)} ${esc(x.model)} ${x.year}</h2><p style="margin:0;font-size:11px;color:var(--muted)">${esc(x.vin||'')} · ${esc(x.engine||'')} · ${esc(x.tire||'')}</p></div><button class="btn-sec" style="padding:8px 12px;font-size:11px" onclick="openVehicleDrawer()">Cambiar</button></div>
+        <div style="margin-top:12px;display:flex;gap:10px">
+          <div style="flex:1;background:#0f151d;border:1px solid var(--line);border-radius:16px;padding:12px"><span style="font-size:9px;color:var(--muted);font-weight:700;letter-spacing:.8px;display:block">ODÓMETRO</span><b style="font-size:18px">${Number(x.odo).toLocaleString()} ${esc(x.unit||'mi')}</b><small style="font-size:10px;color:var(--muted);display:block;margin-top:2px">${db.mileageLogs.slice(-1)[0]?.date||today()}</small></div>
+          <div style="flex:1;background:#0f151d;border:1px solid var(--line);border-radius:16px;padding:12px"><span style="font-size:9px;color:var(--muted);font-weight:700;letter-spacing:.8px;display:block">ESTE MES</span><b style="font-size:18px">${milesThisMonth>=0?'+'+milesThisMonth.toLocaleString():'—'}</b><small style="font-size:10px;color:var(--muted);display:block;margin-top:2px">Prom ${Math.round(avg)} mi/mes</small></div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="stat-app" onclick="switchTab('millas')"><div class="icon" style="background:#18273f">🛣️</div><div><div class="n">${milesThisMonth.toLocaleString()}</div><div class="l">Millas este mes</div></div><span class="badge-pos info">${Math.round(avg)} prom</span></div>
+        <div class="stat-app" onclick="switchTab('mantenimiento')"><div class="icon" style="background:#2e2815">⏰</div><div><div class="n">${pending.length}</div><div class="l">Servicios pendientes</div></div><span class="badge-pos ${pending.length?'warn':'ok'}">${pending.length?'atención':'al día'}</span></div>
+        <div class="stat-app" onclick="switchTab('checklist')"><div class="icon" style="background:#132a1f">✅</div><div><div class="n">${health?Object.keys(health).length+' cats':'—'}</div><div class="l">Salud vehículo</div></div><span class="badge-pos ${health?Object.values(health).some(h=>h.status!=='ok')?'warn':'ok':'info'}">${health?Math.round(Object.values(health).reduce((a,b)=>a+b.pct,0)/Object.keys(health).length)+'%':'sin check'}</span></div>
+        <div class="stat-app" onclick="switchTab('gastos')"><div class="icon" style="background:#1e2630">💰</div><div><div class="n">${money(rec.reduce((a,r)=>a+Number(r.cost||0),0)+db.expenses.filter(e=>e.vehicleId===x.id).reduce((a,r)=>a+Number(r.amount||0),0)).slice(0,6)}</div><div class="l">Gasto total</div></div><span class="badge-pos info">${db.records.length} servicios</span></div>
+      </div>
+      <div class="card-app"><div class="card-head"><h3>📊 Millas por mes</h3><span class="action" onclick="switchTab('millas')" style="font-size:11px;color:var(--gold);cursor:pointer">Ver todo →</span></div><div class="chart-wrap"><canvas id="chartMiles" style="height:180px"></canvas></div></div>
+      <div class="card-app"><div class="card-head"><h3>⏰ Próximos servicios</h3><span class="action" onclick="switchTab('mantenimiento')" style="font-size:11px;color:var(--gold);cursor:pointer">＋ Programar</span></div><div class="list">${pending.slice(0,4).map(r=>{const s=reminderStatus(r);return `<div class="row-app" onclick="editReminder('${r.id}')"><div class="left"><div class="ico">🔧</div><div><b>${esc(r.name)}</b><span>${r.nextMileage?Number(r.nextMileage).toLocaleString()+' '+(x.unit||'mi'):r.nextDate||''} · ${r.intervalMiles||''} ${r.intervalMonths?'/ '+r.intervalMonths+' meses':''}</span></div></div><span class="badge ${s[1]}">${s[0]}</span></div>`}).join('')||'<div class="notice">✓ Todo al día</div>'}</div></div>
+      ${health?`<div class="card-app"><div class="card-head"><h3>💚 Salud por categoría</h3><span class="action" onclick="switchTab('checklist')" style="font-size:11px;color:var(--gold);cursor:pointer">Checklist</span></div><div class="grid-2">${Object.entries(health).map(([cat,d])=>`<div class="stat-app" style="min-height:72px"><div style="display:flex;justify-content:space-between;align-items:center;width:100%"><span style="font-size:11px;font-weight:800">${esc(cat)}</span><span class="badge ${d.status}">${d.pct}%</span></div><div style="height:6px;background:#1f2730;border-radius:999px;margin-top:8px;overflow:hidden"><div style="width:${d.pct}%;height:100%;background:${d.status==='ok'?'var(--ok)':d.status==='warn'?'var(--warn)':'var(--bad)'}"></div></div><span style="font-size:10px;color:var(--muted);margin-top:4px">${d.ok}/${d.total} OK · ${d.atencion} atención</span></div>`).join('')}</div></div>`:''}
+      <div class="card-app"><div class="card-head"><h3>🚗 Viaje rápido</h3><span class="action" onclick="switchTab('viajes')" style="font-size:11px;color:var(--gold);cursor:pointer">Checklist carretera</span></div><div class="list"><div class="row-app" onclick="openTravelChecklistForm()"><div class="left"><div class="ico">🛣️</div><div><b>Checklist carretera 32 puntos</b><span>Documentos, llantas, seguridad, luces</span></div></div><span>→</span></div><div class="row-app" onclick="openTravelLogForm()"><div class="left"><div class="ico">📍</div><div><b>Iniciar viaje</b><span>Registra odo inicio/fin</span></div></div><span>→</span></div></div></div>
+    `;
+  } else {
+    // For other tabs, use original super pro tabHtml but wrapped in card-app style
+    const x=v();const rec=db.records.filter(r=>r.vehicleId===x.id);const rem=db.reminders.filter(r=>r.vehicleId===x.id);const iss=db.issues.filter(r=>r.vehicleId===x.id);const exp=db.expenses.filter(r=>r.vehicleId===x.id);const mLogs=db.mileageLogs.filter(r=>r.vehicleId===x.id);const monthly=getMonthlyMiles(x.id);const avg=getAvgMonthlyMiles(x.id);
+    if(tab==='millas') html+=`<div class="card-app"><div class="card-head"><h3>🛣️ Bitácora millas</h3><button class="btn-gold" style="padding:8px 12px;font-size:12px" onclick="openMileageModal()">＋ Registrar</button></div><div class="chart-wrap" style="margin-bottom:12px"><canvas id="chartMilesFull" style="height:200px"></canvas></div><div class="list">${[...mLogs].sort((a,b)=>b.date.localeCompare(a.date)).map(l=>`<div class="row-app"><div class="left"><div class="ico">📍</div><div><b>${esc(l.date)} · ${Number(l.odo).toLocaleString()} mi</b><span>${esc(l.notes||'')}</span></div></div><div style="display:flex;gap:4px"><button class="btn-sec" style="padding:6px 8px" onclick="editMileage('${l.id}')">✎</button><button class="btn-sec" style="padding:6px 8px;color:var(--bad)" onclick="delMileage('${l.id}')">×</button></div></div>`).join('')||'<div class="notice">Sin registros</div>'}</div></div>`;
+    else if(tab==='mantenimiento') html+=`<div class="card-app"><div class="card-head"><h3>🔧 Servicios</h3><div style="display:flex;gap:6px"><button class="btn-sec" style="padding:6px 10px;font-size:11px" onclick="reminderForm()">＋</button><button class="btn-gold" style="padding:6px 10px;font-size:11px" onclick="exportPDFServicios()">📄 PDF</button></div></div><div class="list">${rem.map(r=>{const s=reminderStatus(r);return `<div class="row-app" onclick="editReminder('${r.id}')"><div class="left"><div class="ico">⏰</div><div><b>${esc(r.name)}</b><span>${r.nextMileage?Number(r.nextMileage).toLocaleString()+' mi':r.nextDate||''}</span></div></div><span class="badge ${s[1]}">${s[0]}</span></div>`}).join('')||'<div class="notice">Sin recordatorios</div>'}</div></div><div class="card-app"><div class="card-head"><h3>🛠️ Historial</h3><button class="btn-sec" style="padding:6px 10px;font-size:11px" onclick="recordForm()">＋</button></div><div class="list">${rec.sort((a,b)=>b.date.localeCompare(a.date)).slice(0,15).map(r=>`<div class="row-app"><div class="left"><div class="ico">🛠️</div><div><b>${esc(r.service)}</b><span>${r.date} · ${Number(r.odo).toLocaleString()} mi · ${money(r.cost)}</span></div></div></div>`).join('')||'<div class="notice">Sin historial</div>'}</div></div>`;
+    else if(tab==='viajes') html+=`<div class="card-app"><div class="card-head"><h3>🚗 Checklist carretera</h3><button class="btn-gold" style="padding:8px 12px;font-size:12px" onclick="openTravelChecklistForm()">＋ Nuevo</button></div><div class="list">${db.travelChecklists.filter(t=>t.vehicleId===x.id).sort((a,b)=>b.date.localeCompare(a.date)).map(t=>{const ok=t.items.filter(i=>i.checked).length;const pct=Math.round(ok/t.items.length*100);return `<div class="row-app" onclick="editTravelChecklist('${t.id}')"><div class="left"><div class="ico">🗺️</div><div><b>${esc(t.destination||'Viaje')} · ${t.date}</b><span>${ok}/${t.items.length} listos · ${pct}%</span></div></div><span class="badge ${pct===100?'ok':pct>60?'warn':'bad'}">${pct}%</span></div>`}).join('')||'<div class="notice">Sin viajes. Crea checklist 32 puntos.</div>'}</div></div>`;
+    else if(tab==='mas') html+=`<div class="grid-2"><div class="stat-app" onclick="switchTab('checklist')"><div class="icon" style="background:#132a1f">✅</div><div><div class="n">28 pts</div><div class="l">Inspección</div></div></div><div class="stat-app" onclick="switchTab('partes')"><div class="icon" style="background:#18273f">🔧</div><div><div class="n">${db.partsCatalog.length}</div><div class="l">Refacciones</div></div></div><div class="stat-app" onclick="switchTab('bitacora')"><div class="icon" style="background:#2e2815">📝</div><div><div class="n">${db.quickNotes.length}</div><div class="l">Bitácora</div></div></div><div class="stat-app" onclick="switchTab('timeline')"><div class="icon" style="background:#1e2630">📅</div><div><div class="n">Timeline</div><div class="l">Historial</div></div></div></div><div class="card-app"><div class="card-head"><h3>⚙️ Más</h3></div><div class="list"><div class="row-app" onclick="switchTab('gastos')"><div class="left"><div class="ico">💰</div><div><b>Gastos</b><span>${money(db.expenses.filter(e=>e.vehicleId===x.id).reduce((a,r)=>a+Number(r.amount||0),0))} total</span></div></div><span>→</span></div><div class="row-app" onclick="exportPDFServicios()"><div class="left"><div class="ico">📄</div><div><b>PDF para mecánico</b><span>Servicios pendientes</span></div></div><span>→</span></div><div class="row-app" onclick="exportJSON()"><div class="left"><div class="ico">💾</div><div><b>Respaldo</b><span>Descargar JSON</span></div></div><span>→</span></div></div></div>`;
+    else if(tab==='checklist') html+=`<div class="card-app"><div class="card-head"><h3>✅ Inspección 28p</h3><button class="btn-gold" style="padding:8px 12px;font-size:12px" onclick="openInspectionForm()">＋ Nueva</button></div><div class="list">${db.inspections.filter(i=>i.vehicleId===x.id).map(ins=>{const at=ins.items.filter(i=>i.status==='atencion').length;return `<div class="row-app" onclick="editInspection('${ins.id}')"><div class="left"><div class="ico">✅</div><div><b>${ins.date} · ${Number(ins.odo).toLocaleString()} mi</b><span>${esc(ins.overallStatus)} · ${at} atención</span></div></div><span class="badge ${at?'warn':'ok'}">${at?at+' ⚠':'OK'}</span></div>`}).join('')||'<div class="notice">Sin inspecciones</div>'}</div></div>`;
+    else if(tab==='partes') html+=`<div class="card-app"><div class="card-head"><h3>🔧 Refacciones</h3><button class="btn-gold" style="padding:8px 12px;font-size:12px" onclick="openPartForm()">＋</button></div><div class="list">${db.partsCatalog.filter(p=>p.vehicleId===x.id).map(p=>`<div class="row-app"><div class="left"><div class="ico">🔩</div><div><b>${esc(p.name)}</b><span>${esc(p.partNumber)} · ${esc(p.brand)} · ${money(p.lastPrice)}</span></div></div></div>`).join('')||'<div class="notice">Sin refacciones</div>'}</div></div>`;
+    else if(tab==='bitacora') html+=`<div class="card-app"><div class="card-head"><h3>📝 Bitácora</h3><button class="btn-gold" style="padding:8px 12px;font-size:12px" onclick="openNoteForm()">＋ Nota</button></div><div class="list">${db.quickNotes.filter(n=>n.vehicleId===x.id).sort((a,b)=>b.date.localeCompare(a.date)).map(n=>`<div class="row-app"><div class="left"><div class="ico">📝</div><div><b>${esc(n.date)} · ${Number(n.odo).toLocaleString()} mi</b><span>${esc(n.text)}</span></div></div></div>`).join('')||'<div class="notice">Sin notas</div>'}</div></div>`;
+    else if(tab==='timeline') {const all=[];db.records.filter(r=>r.vehicleId===x.id).forEach(r=>all.push({date:r.date,title:r.service,icon:'🛠️'}));db.mileageLogs.filter(r=>r.vehicleId===x.id).forEach(r=>all.push({date:r.date,title:r.odo+' mi',icon:'🛣️'}));all.sort((a,b)=>b.date.localeCompare(a.date)); html+=`<div class="card-app"><div class="card-head"><h3>📅 Timeline</h3></div><div class="list">${all.slice(0,30).map(ev=>`<div class="row-app"><div class="left"><div class="ico">${ev.icon}</div><div><b>${esc(ev.title)}</b><span>${ev.date}</span></div></div></div>`).join('')||'<div class="notice">Sin datos</div>'}</div></div>`;}
+    else if(tab==='gastos') html+=`<div class="card-app"><div class="card-head"><h3>💰 Gastos</h3><button class="btn-gold" style="padding:8px 12px;font-size:12px" onclick="expenseForm()">＋ Gasto</button></div><div class="list">${db.expenses.filter(e=>e.vehicleId===x.id).sort((a,b)=>b.date.localeCompare(a.date)).map(e=>`<div class="row-app"><div class="left"><div class="ico">💲</div><div><b>${esc(e.description)} · ${money(e.amount)}</b><span>${e.date} · ${esc(e.category||'')}</span></div></div></div>`).join('')||'<div class="notice">Sin gastos</div>'}</div></div>`;
+  }
+  document.getElementById('appContent').innerHTML=html;
+  setTimeout(()=>{try{const ctx=document.getElementById('chartMiles');if(ctx){const monthly=getMonthlyMiles(selected);new Chart(ctx,{type:'bar',data:{labels:monthly.map(m=>m.to.slice(5)),datasets:[{data:monthly.map(m=>m.miles),backgroundColor:'#d9b46a',borderRadius:8}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{color:'#8d9aab',font:{size:10}}},y:{grid:{color:'#252f3c'},ticks:{color:'#8d9aab'}}}}});}}catch(e){}},80);
+}
+
 </script>
 <script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductId(a);if(productId){e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*");return}e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:a.href},"*");return}var dataHref=findDataHref(target);if(dataHref&&/^https?:\/\//.test(dataHref.href)&&dataHref.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(dataHref.node,dataHref.href))return;e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:dataHref.href},"*")}},true)})();</script><script>(function(){var FOCUS_TYPE="ecto:artifact-focus-request";var CLOSE_TYPE="ecto:artifact-close-request";function focusArtifactDocument(){var body=document.body;if(!body)return;try{window.focus();}catch(e){}if(!body.hasAttribute("tabindex"))body.setAttribute("tabindex","-1");try{body.focus({preventScroll:true});}catch(e){try{body.focus();}catch(e2){}}}window.addEventListener("message",function(event){if(event.source!==window.parent)return;var data=event.data;if(!data||typeof data!=="object"||data.type!==FOCUS_TYPE)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",focusArtifactDocument,{once:true});return;}focusArtifactDocument();});window.addEventListener("keydown",function(event){if(event.key!=="Escape")return;window.setTimeout(function(){if(event.defaultPrevented)return;window.parent.postMessage({type:CLOSE_TYPE},"*");},0);});})();</script></body>
 </html>
