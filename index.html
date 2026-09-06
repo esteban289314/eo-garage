@@ -28,8 +28,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="E.O. Garage">
-<meta name="eo-garage-version" content="15.2-app-final-todo">
-<title>E.O. Garage v15.2 Final · App Limpia + Todo</title>
+<meta name="eo-garage-version" content="15.3-app-final-fix">
+<title>E.O. Garage v15.3 Final · App Limpia + Todo</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.115.0"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
@@ -114,11 +114,11 @@ input:focus,select:focus,textarea:focus{border-color:var(--gold)} textarea{min-h
 <body>
 <div class="app">
   <div class="top">
-    <div class="brand"><div class="logo">EO</div><div><h1>E.O. Garage v15.2</h1><p id="topSub">App final · Todo parejo · Todo en uno</p></div></div>
+    <div class="brand"><div class="logo">EO</div><div><h1>E.O. Garage v15.3</h1><p id="topSub">App final · Todo parejo · Todo en uno</p></div></div>
     <div class="vehicle-switch" onclick="openVehicleDrawer()"><div><b id="topVehicle">Enclave</b><span id="topOdo">169,000 mi</span></div><span>▼</span></div>
   </div>
   <div class="content" id="appContent"></div>
-  <div class="footer">v15.2 Final · App limpia + PDF v2 + Checklist 28p + Viajes 32p + Salud + Refacciones + Millas + Timeline + Bitácora · Sin fotos</div>
+  <div class="footer">v15.3 Final · App limpia + PDF v2 + Checklist 28p + Viajes 32p + Salud + Refacciones + Millas + Timeline + Bitácora · Sin fotos</div>
 </div>
 
 <div class="bottom-nav" id="bottomNav">
@@ -136,7 +136,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--gold)} textarea{min-h
 <div id="drawerRoot"></div>
 <div id="authGate" style="display:none;position:fixed;inset:0;background:rgba(8,10,13,.94);backdrop-filter:blur(14px);z-index:100;align-items:center;justify-content:center;padding:16px">
   <div class="card-app" style="width:min(420px,100%)">
-    <div class="brand" style="margin-bottom:8px"><div class="logo">EO</div> E.O. Garage v15.2</div>
+    <div class="brand" style="margin-bottom:8px"><div class="logo">EO</div> E.O. Garage v15.3</div>
     <div class="sub" style="margin:5px 0 14px;color:var(--muted);font-size:11px">Solo tus datos, en tu nube</div>
     <form id="authForm">
       <div class="formgrid"><label class="full">Correo<input id="authEmail" type="email" required placeholder="tu correo"></label><label class="full">Contraseña<input id="authPassword" type="password" required minlength="6" placeholder="••••••"></label></div>
@@ -1816,7 +1816,7 @@ async function save(){try{localStorage.setItem(KEY,JSON.stringify(db))}catch(e){
 try{render();document.getElementById('bn-resumen')?.classList.add('active');}catch(err){document.getElementById('app').innerHTML=`<div class="card section"><h2>Error</h2><div class="notice">${esc(err.message||err)}</div></div>`}
 
 
-// ---- APP UI OVERRIDE (v15.2 - Todo parejo) ----
+// ---- APP UI OVERRIDE (v15.3 - Todo parejo) ----
 
 function render(){
   const x=v();if(!x){document.getElementById('appContent').innerHTML='<div class="card-app">Sin vehículo</div>';return;}
@@ -1830,7 +1830,7 @@ function render(){
   if(tab==='resumen'){
     html+=`
       <div class="hero" style="background:linear-gradient(180deg,#1c2531,#161d28);border:1px solid var(--line);border-radius:22px;padding:16px;position:relative;overflow:hidden">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px"><div><div style="font-size:9px;letter-spacing:1.4px;color:var(--gold);font-weight:800;text-transform:uppercase">Vehículo principal · v15.2 App Final</div><h2 style="margin:4px 0 2px;font-size:22px;letter-spacing:-.4px">${esc(x.make)} ${esc(x.model)} ${x.year}</h2><p style="margin:0;font-size:11px;color:var(--muted)">${esc(x.vin||'')} · ${esc(x.engine||'')} · ${esc(x.tire||'')}</p></div><button class="btn-sec" style="padding:8px 12px;font-size:11px" onclick="openVehicleDrawer()">Cambiar</button></div>
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px"><div><div style="font-size:9px;letter-spacing:1.4px;color:var(--gold);font-weight:800;text-transform:uppercase">Vehículo principal · v15.3 App Final</div><h2 style="margin:4px 0 2px;font-size:22px;letter-spacing:-.4px">${esc(x.make)} ${esc(x.model)} ${x.year}</h2><p style="margin:0;font-size:11px;color:var(--muted)">${esc(x.vin||'')} · ${esc(x.engine||'')} · ${esc(x.tire||'')}</p></div><button class="btn-sec" style="padding:8px 12px;font-size:11px" onclick="openVehicleDrawer()">Cambiar</button></div>
         <div style="margin-top:12px;display:flex;gap:10px">
           <div style="flex:1;background:#0f151d;border:1px solid var(--line);border-radius:16px;padding:12px"><span style="font-size:9px;color:var(--muted);font-weight:700;letter-spacing:.8px;display:block">ODÓMETRO</span><b style="font-size:18px">${Number(x.odo).toLocaleString()} ${esc(x.unit||'mi')}</b><small style="font-size:10px;color:var(--muted);display:block;margin-top:2px">${db.mileageLogs.slice(-1)[0]?.date||today()}</small></div>
           <div style="flex:1;background:#0f151d;border:1px solid var(--line);border-radius:16px;padding:12px"><span style="font-size:9px;color:var(--muted);font-weight:700;letter-spacing:.8px;display:block">ESTE MES</span><b style="font-size:18px">${milesThisMonth>=0?'+'+milesThisMonth.toLocaleString():'—'}</b><small style="font-size:10px;color:var(--muted);display:block;margin-top:2px">Prom ${Math.round(avg)} mi/mes</small></div>
