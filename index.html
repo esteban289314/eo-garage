@@ -22,7 +22,7 @@
 </style><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
 <meta name="theme-color" content="#0b0d10">
-<title>E.O. Garage v67.6 FIX DEFINITIVO - LIMPIO</title>
+<title>E.O. Garage v67.9 FIX BOTONES + NUBE</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.115.0"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
@@ -54,9 +54,9 @@ button{border:0;border-radius:12px;padding:11px 16px;background:linear-gradient(
 .notice{padding:12px 14px;background:rgba(106,168,255,.08);border:1px solid rgba(106,168,255,.15);border-radius:12px;font-size:12px;margin:8px 0;color:#9fc3ff}
 .formgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px} .formgrid label{font-size:11px;color:var(--muted);display:grid;gap:5px;font-weight:600} .formgrid input,.formgrid select,.formgrid textarea{background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:10px;padding:11px;color:#fff;font-size:14px} .formgrid .full{grid-column:1/-1}
 @media (max-width: 900px){ .layout{grid-template-columns:1fr} .side{position:relative;top:0} .kpi-grid{grid-template-columns:repeat(2,1fr)} .health-grid{grid-template-columns:repeat(2,1fr)} }
-</style></head><body><div class="wrap"><div class="top"><div class="brand"><div class="brand-badge">EO</div><div>E.O. Garage v67.6 FIX LIMPIO<br><span class="sub">5GAKRCKD1DJ218711 • 169,972 mi • Nube ☁️</span></div></div><div class="top-right"><button class="secondary" id="cloudBadge" onclick="openCloudConfig()" style="padding:6px 10px;font-size:10px;border-radius:999px">☁️ Off</button><button class="secondary" onclick="openQuickSearch()" style="padding:8px 12px;font-size:11px">🔍</button><button class="secondary" onclick="openMasMenu()" style="padding:8px 12px;font-size:11px">⋯</button></div></div>
+</style></head><body><div class="wrap"><div class="top"><div class="brand"><div class="brand-badge">EO</div><div>E.O. Garage v67.9 FIX BOTONES<br><span class="sub">5GAKRCKD1DJ218711 • 169,972 mi • Nube ☁️</span></div></div><div class="top-right"><button class="secondary" id="cloudBadge" onclick="openCloudConfig()" style="padding:6px 10px;font-size:10px;border-radius:999px">☁️ Off</button><button class="secondary" onclick="openQuickSearch()" style="padding:8px 12px;font-size:11px">🔍</button><button class="secondary" onclick="openMasMenu()" style="padding:8px 12px;font-size:11px">⋯</button></div></div>
 <div class="layout"><aside class="side"><div class="side-head"><span class="sub" style="font-weight:800">VEHICULOS</span><button onclick="addVehicle()" style="background:var(--gold);color:#111;border:0;border-radius:8px;padding:6px 12px;font-size:11px;font-weight:800">＋</button></div><div class="vehicle-list" id="vehicleList"></div></aside><main class="content" id="app"><div class="card section">Cargando...</div></main></div>
-<div class="footer" style="color:var(--muted2);text-align:center;font-size:9px;padding:12px">v67.6 FIX LIMPIO • 0 serv • Salud REAL • Nube fix • 0 serv • 47 maestra • Nube • Ficha completa • Reset si falla</div>
+<div class="footer" style="color:var(--muted2);text-align:center;font-size:9px;padding:12px">v67.9 FIX BOTONES • 26 serv • Batería+LEDs • 24 serv • Salud REAL • Nube fix • 0 serv • 47 maestra • Nube • Ficha completa • Reset si falla</div>
 </div>
 <div class="bottom-nav-v50"><button onclick="switchTab('resumen')" id="bn-resumen" class="active"><div class="ico">🏠</div><b>Inicio</b></button><button onclick="switchTab('millas')" id="bn-millas"><div class="ico">🛣️</div><b>Millas</b></button><button onclick="switchTab('mantenimiento')" id="bn-mantenimiento"><div class="ico">⏰</div><b>Serv</b></button><button onclick="switchTab('checklist')" id="bn-checklist"><div class="ico">✅</div><b>Check</b></button><button onclick="openMasMenu()" id="bn-mas"><div class="ico">⋯</div><b>Más</b></button></div>
 <button onclick="openIAModal()" id="iaFab" style="position:fixed;right:14px;bottom:calc(84px + env(safe-area-inset-bottom));z-index:46;width:56px;height:56px;border-radius:18px;background:linear-gradient(135deg,#d9b46a,#9a7a3a);color:#111;border:2px solid rgba(255,255,255,.2);box-shadow:0 8px 24px rgba(217,180,106,.4);display:grid;place-items:center;font-size:24px;cursor:pointer">🧠</button>
@@ -131,14 +131,17 @@ const MASTER_REPAIRS_BY_SECTION=[
 ];
 const seed={
   vehicles:[{id:'v1',make:'Buick',model:'Enclave',year:2013,vin:'5GAKRCKD1DJ218711',odo:169972,engine:'3.6L V6 LFX 3564cc 288HP',drive:'FWD',tire:'P255/60R19 35 PSI',unit:'mi',trans:'6T70 6 vel',mpg:'17/24',tank:'22 gal',oil:'5W-30 5.7L',filter:'STP S10590',plugs:'Bosch 9603 gap 0.043',weight:'4,922 lbs'}],
-  records:[],
+  records:[{"id": "r-jul08-01", "vehicleId": "v1", "date": "2026-07-08", "odo": 168500, "category": "Electrico", "service": "Batería LTH 70Ah 12V - Nueva", "parts": "Batería nueva", "partNumber": "", "cost": 0, "shop": "Taller - Julio", "notes": "2 meses atrás - Batería nueva"}, {"id": "r-jul08-02", "vehicleId": "v1", "date": "2026-07-08", "odo": 168500, "category": "Electrico", "service": "Conversión completa a LED - Faros, cuartos, stop, interior", "parts": "Focos LED toda camioneta", "partNumber": "", "cost": 0, "shop": "Taller - Julio", "notes": "2 meses atrás - Focos LED toda camioneta"}, {"id": "r-aug02-01", "vehicleId": "v1", "date": "2026-08-02", "odo": 169800, "category": "Refrigeracion", "service": "Reemplazo de bomba de agua", "parts": "Bomba del agua", "partNumber": "", "cost": 0, "shop": "Taller - 02 Ago", "notes": "Cambio real 02 Ago: Bomba del agua"}, {"id": "r-aug02-02", "vehicleId": "v1", "date": "2026-08-02", "odo": 169800, "category": "Motor", "service": "Banda serpentina nueva", "parts": "Banda serpentina", "partNumber": "", "cost": 0, "shop": "Taller - 02 Ago", "notes": "Cambio real 02 Ago: Banda serpentina"}, {"id": "r-aug02-03", "vehicleId": "v1", "date": "2026-08-02", "odo": 169800, "category": "Motor", "service": "Polea damper cigüeñal", "parts": "Polea del Damper", "partNumber": "", "cost": 0, "shop": "Taller - 02 Ago", "notes": "Cambio real 02 Ago: Polea del Damper"}, {"id": "r-aug02-04", "vehicleId": "v1", "date": "2026-08-02", "odo": 169800, "category": "Motor", "service": "Cambio aceite 5W-30 5.7L EDGE", "parts": "Aceite de motor", "partNumber": "", "cost": 0, "shop": "Taller - 02 Ago", "notes": "Cambio real 02 Ago: Aceite de motor"}, {"id": "r-aug02-05", "vehicleId": "v1", "date": "2026-08-02", "odo": 169800, "category": "Motor", "service": "Filtro aceite STP S10590", "parts": "Filtro de aceite", "partNumber": "", "cost": 0, "shop": "Taller - 02 Ago", "notes": "Cambio real 02 Ago: Filtro de aceite"}, {"id": "r-aug02-06", "vehicleId": "v1", "date": "2026-08-02", "odo": 169800, "category": "Admisión", "service": "Filtro aire SA10562", "parts": "Filtro de aire", "partNumber": "", "cost": 0, "shop": "Taller - 02 Ago", "notes": "Cambio real 02 Ago: Filtro de aire"}, {"id": "r-aug02-07", "vehicleId": "v1", "date": "2026-08-02", "odo": 169800, "category": "Motor", "service": "Cambio de bujías x6 Bosch 9603 gap 0.043", "parts": "Bujías", "partNumber": "", "cost": 0, "shop": "Taller - 02 Ago", "notes": "Cambio real 02 Ago: Bujías"}, {"id": "r-aug02-08", "vehicleId": "v1", "date": "2026-08-02", "odo": 169800, "category": "Suspension", "service": "Bujes flotantes traseros", "parts": "Bujes flotantes", "partNumber": "", "cost": 0, "shop": "Taller - 02 Ago", "notes": "Cambio real 02 Ago: Bujes flotantes"}, {"id": "r-aug02-09", "vehicleId": "v1", "date": "2026-08-02", "odo": 169800, "category": "Frenos", "service": "Balatas delanteras QC1414", "parts": "Balatas delanteras", "partNumber": "", "cost": 0, "shop": "Taller - 02 Ago", "notes": "Cambio real 02 Ago: Balatas delanteras"}, {"id": "r-aug02-10", "vehicleId": "v1", "date": "2026-08-02", "odo": 169800, "category": "Refrigeracion", "service": "Anticongelante DEX-COOL", "parts": "Anti Freeze", "partNumber": "", "cost": 0, "shop": "Taller - 02 Ago", "notes": "Cambio real 02 Ago: Anti Freeze"}, {"id": "r-aug02-11", "vehicleId": "v1", "date": "2026-08-02", "odo": 169800, "category": "Suspension", "service": "Tornillos estabilizadores links", "parts": "Links", "partNumber": "", "cost": 0, "shop": "Taller - 02 Ago", "notes": "Cambio real 02 Ago: Links"}, {"id": "r-aug02-12", "vehicleId": "v1", "date": "2026-08-02", "odo": 169800, "category": "Transmision", "service": "Aceite transmisión DEXRON VI", "parts": "Aceite de transmisión", "partNumber": "", "cost": 0, "shop": "Taller - 02 Ago", "notes": "Cambio real 02 Ago: Aceite de transmisión"}, {"id": "r-aug02-13", "vehicleId": "v1", "date": "2026-08-02", "odo": 169800, "category": "Suspension", "service": "Hules barra estabilizadora", "parts": "Hules de barra estabilizadora", "partNumber": "", "cost": 0, "shop": "Taller - 02 Ago", "notes": "Cambio real 02 Ago: Hules de barra estabilizadora"}, {"id": "r-aug02-14", "vehicleId": "v1", "date": "2026-08-02", "odo": 169800, "category": "Suspension", "service": "Amortiguadores traseros", "parts": "Amortiguadores traseros", "partNumber": "", "cost": 0, "shop": "Taller - 02 Ago", "notes": "Cambio real 02 Ago: Amortiguadores traseros"}, {"id": "r-aug02-15", "vehicleId": "v1", "date": "2026-08-02", "odo": 169800, "category": "Motor", "service": "Soporte motor superior", "parts": "Soporte superior del motor", "partNumber": "", "cost": 0, "shop": "Taller - 02 Ago", "notes": "Cambio real 02 Ago: Soporte superior del motor"}, {"id": "r-aug02-16", "vehicleId": "v1", "date": "2026-08-02", "odo": 169800, "category": "Electrico", "service": "Limpieza de sensores MAP/MAF/O2", "parts": "Limpieza de sensores", "partNumber": "", "cost": 0, "shop": "Taller - 02 Ago", "notes": "Cambio real 02 Ago: Limpieza de sensores"}, {"id": "r-aug02-17", "vehicleId": "v1", "date": "2026-08-02", "odo": 169800, "category": "A/C", "service": "Válvulas servicio A/C", "parts": "Válvulas de aire acondicionado", "partNumber": "", "cost": 0, "shop": "Taller - 02 Ago", "notes": "Cambio real 02 Ago: Válvulas de aire acondicionado"}, {"id": "r-aug02-18", "vehicleId": "v1", "date": "2026-08-02", "odo": 169800, "category": "A/C", "service": "Empaques válvulas A/C", "parts": "Empaques válvulas A/C", "partNumber": "", "cost": 0, "shop": "Taller - 02 Ago", "notes": "Cambio real 02 Ago: Empaques válvulas A/C"}, {"id": "r-aug02-19", "vehicleId": "v1", "date": "2026-08-02", "odo": 169800, "category": "A/C", "service": "Recarga gas R-134a", "parts": "Gas aire acondicionado", "partNumber": "", "cost": 0, "shop": "Taller - 02 Ago", "notes": "Cambio real 02 Ago: Gas aire acondicionado"}, {"id": "r-aug02-20", "vehicleId": "v1", "date": "2026-08-02", "odo": 169800, "category": "A/C", "service": "Aceite PAG compresor A/C", "parts": "Aceite de compresor", "partNumber": "", "cost": 0, "shop": "Taller - 02 Ago", "notes": "Cambio real 02 Ago: Aceite de compresor"}, {"id": "r-aug02-21", "vehicleId": "v1", "date": "2026-08-02", "odo": 169800, "category": "Motor", "service": "Retén cigüeñal / empaque", "parts": "Empaque del retén", "partNumber": "", "cost": 0, "shop": "Taller - 02 Ago", "notes": "Cambio real 02 Ago: Empaque del retén"}, {"id": "r-aug02-22", "vehicleId": "v1", "date": "2026-08-02", "odo": 169800, "category": "Frenos", "service": "Rectificado 4 discos", "parts": "Rectificado 4 discos frenos", "partNumber": "", "cost": 0, "shop": "Taller - 02 Ago", "notes": "Cambio real 02 Ago: Rectificado 4 discos frenos"}, {"id": "r-aug02-23", "vehicleId": "v1", "date": "2026-08-02", "odo": 169800, "category": "Frenos", "service": "Líquido frenos DOT4", "parts": "Aceite de freno", "partNumber": "", "cost": 0, "shop": "Taller - 02 Ago", "notes": "Cambio real 02 Ago: Aceite de freno"}, {"id": "r-aug02-24", "vehicleId": "v1", "date": "2026-08-02", "odo": 169800, "category": "Admisión", "service": "Limpieza cuerpo aceleración", "parts": "Lavado cuerpo de aceleración", "partNumber": "", "cost": 0, "shop": "Taller - 02 Ago", "notes": "Cambio real 02 Ago: Lavado cuerpo de aceleración"}],
   reminders:[
     {id:'m1',vehicleId:'v1',name:'Verificacion',nextDate:'2026-10-01',type:'Documento',warnDays:30,source:'Manual',status:'pending',notes:'Verificentro'},
     {id:'m2',vehicleId:'v1',name:'Aceite',nextMileage:177472,intervalMiles:7500,warnMiles:1000,type:'Reemplazo',source:'Auto',status:'pending',notes:'Castrol EDGE 5W-30'},
     {id:'m3',vehicleId:'v1',name:'Rotacion llantas',nextMileage:177472,intervalMiles:7500,warnMiles:500,type:'Reemplazo',source:'Auto',status:'pending',notes:'P255/60R19 35 PSI'}
   ],
-  mileageLogs:[
-    {id:'ml1',vehicleId:'v1',date:'2026-09-02',odo:169972,notes:'Odo inicial - Empieza en cero'}
+      mileageLogs:[
+    {id:'ml-jul08',vehicleId:'v1',date:'2026-07-08',odo:168500,notes:'Batería nueva + LEDs completos - 2 meses atrás'},
+    {id:'ml-aug02',vehicleId:'v1',date:'2026-08-02',odo:169800,notes:'Servicio mayor 02 Ago - 24 conceptos'},
+    {id:'ml1',vehicleId:'v1',date:'2026-09-02',odo:169972,notes:'Odo inicial Septiembre - Empieza conteo'},
+    {id:'ml-sep',vehicleId:'v1',date:'2026-09-08',odo:169972,notes:'Septiembre - inicio REAL'}
   ],
   masterRepairs:[],
   expenses:[],
@@ -162,6 +165,14 @@ const seed={
     });
   });
   seed.masterRepairs=master;
+  // Marcar como hecho lo del 02 Ago
+  var augMap=["Reemplazo de bomba de agua", "Banda serpentina nueva", "Polea damper cigüeñal", "Cambio aceite 5W-30 5.7L EDGE", "Filtro aceite STP S10590", "Filtro aire SA10562", "Cambio de bujías x6 Bosch 9603 gap 0.043", "Bujes flotantes traseros", "Balatas delanteras QC1414", "Anticongelante DEX-COOL", "Tornillos estabilizadores links", "Aceite transmisión DEXRON VI", "Hules barra estabilizadora", "Amortiguadores traseros", "Soporte motor superior", "Limpieza de sensores MAP/MAF/O2", "Válvulas servicio A/C", "Empaques válvulas A/C", "Recarga gas R-134a", "Aceite PAG compresor A/C", "Retén cigüeñal / empaque", "Rectificado 4 discos", "Líquido frenos DOT4", "Limpieza cuerpo aceleración"];
+  seed.masterRepairs.forEach(function(m){
+    if(augMap.some(function(a){ return m.name.toLowerCase().includes(a.toLowerCase().slice(0,8)) || a.toLowerCase().includes(m.name.toLowerCase().slice(0,8)); })){
+      m.done=true; m.dateDone='2026-08-02'; m.odoDone=169800; m.status='hecho';
+    }
+  });
+  // Asegurar records también en seed.masterRepairs done count
 })();
 let db;
 try{
@@ -221,8 +232,48 @@ function toast(m,type){ type=type||'ok'; var r=document.createElement('div'); r.
 function modal(html){ document.getElementById('modalCard').innerHTML=html; document.getElementById('modalRoot').classList.add('open'); }
 function closeModal(){ document.getElementById('modalRoot').classList.remove('open'); }
 let supabaseClient=null; let lastSyncTime=localStorage.getItem('eo_last_sync')||null;
-function initSupabase(){ const url=localStorage.getItem('eo_supabase_url'); const key=localStorage.getItem('eo_supabase_key'); if(!url||!key) return null; try{ if(!window.supabase) return null; supabaseClient=window.supabase.createClient(url,key); return supabaseClient; }catch(e){ return null; } }
-async function syncToCloud(silent){ const client=initSupabase(); if(!client){ if(!silent) toast('Configura Nube en ⋯ > ☁️','warn'); return false; } try{ const vin=v()?.vin||'default'; const payload={id:vin,vin:vin,data:db,updated_at:new Date().toISOString(),odo:v()?.odo||0,servicios:db.records?.length||0,salud:calculateHealthReal().overall}; const {error}=await client.from('eo_garage').upsert(payload,{onConflict:'id'}); if(error) throw error; lastSyncTime=new Date().toISOString(); localStorage.setItem('eo_last_sync',lastSyncTime); if(!silent) toast('☁️ Nube OK '+vin.slice(-6),'ok'); updateCloudBadge(true); return true; }catch(err){ if(!silent) toast('☁️ Error: '+err.message,'bad'); updateCloudBadge(false); return false; } }
+function initSupabase(){ 
+  const url=(localStorage.getItem('eo_supabase_url')||'').trim(); 
+  const key=(localStorage.getItem('eo_supabase_key')||'').trim(); 
+  if(!url||!key) return null; 
+  try{ 
+    let lib=null;
+    if(typeof window!=='undefined' && window.supabase && window.supabase.createClient) lib=window.supabase;
+    else if(typeof supabase!=='undefined' && supabase.createClient) lib=supabase;
+    else if(typeof window!=='undefined' && window.supabaseJs && window.supabaseJs.createClient) lib=window.supabaseJs;
+    if(!lib){ console.log('Supabase lib no encontrada'); return null; }
+    supabaseClient=lib.createClient(url,key); 
+    return supabaseClient; 
+  }catch(e){ console.error('initSupabase error', e); return null; } 
+}
+async function syncToCloud(silent){ 
+  const client=initSupabase(); 
+  if(!client){ if(!silent) toast('⚠️ Configura Nube: ⋯ > ☁️ Nube > pega URL y Key','warn'); return false; } 
+  try{ 
+    const vin=(v()&&v().vin?v().vin:'5GAKRCKD1DJ218711'); 
+    const payload={id:vin,vin:vin,data:db,updated_at:new Date().toISOString(),odo:(v()&&v().odo?v().odo:169972),servicios:(db.records?db.records.length:0),salud:calculateHealthReal().overall}; 
+    if(!silent) toast('☁️ Subiendo '+payload.servicios+' serv...','info');
+    const {error}=await client.from('eo_garage').upsert(payload,{onConflict:'id'}); 
+    if(error) throw error; 
+    lastSyncTime=new Date().toISOString(); 
+    localStorage.setItem('eo_last_sync',lastSyncTime); 
+    if(!silent) toast('☁️ Nube OK '+vin.slice(-6)+' • '+payload.servicios+' serv','ok'); 
+    updateCloudBadge(true); 
+    return true; 
+  }catch(err){ 
+    let msg=err.message||err;
+    if(!silent){
+      if(msg.includes('does not exist')) msg='Tabla eo_garage no existe - ve a Supabase SQL y crea tabla';
+      else if(msg.includes('JWT') || msg.includes('apikey')) msg='URL o Key incorrecta - revisa en Supabase Project Settings > API';
+      else if(msg.includes('Failed to fetch') || msg.includes('NetworkError')) msg='Sin internet o URL mal - revisa URL https://xxx.supabase.co';
+      else if(msg.includes('policy') || msg.includes('RLS')) msg='RLS bloquea - ejecuta policy allow all en SQL Editor';
+      toast('☁️ Error: '+msg,'bad');
+    }
+    console.error('syncToCloud error', err);
+    updateCloudBadge(false); 
+    return false; 
+  } 
+}
 async function syncFromCloud(){ const client=initSupabase(); if(!client){ toast('Configura Nube','warn'); return; } try{ const vin=v()?.vin||'default'; toast('☁️ Descargando...','info'); const {data,error}=await client.from('eo_garage').select('*').eq('id',vin).single(); if(error){ if(error.code==='PGRST116'){ toast('☁️ No hay datos','warn'); return; } throw error; } if(data && data.data){ if(confirm('☁️ Nube: '+(data.data.records?.length||0)+' serv\nLocal: '+db.records.length+' serv\n¿Sobrescribir?')){ db=data.data; localStorage.setItem(KEY,JSON.stringify(db)); saveLocalOnly(); toast('☁️ Restaurado','ok'); } } }catch(err){ toast('☁️ Error: '+err.message,'bad'); } }
 let saveDebounce=null;
 function saveLocalOnly(){ 
@@ -357,27 +408,61 @@ function tabHtml(t,x){
   return '<div class="card"><div class="section"><h2>'+esc(t)+'</h2></div></div>';
 }
 function openMasMenu(){
-  var rec=db.records.filter(function(r){ return r.vehicleId===selected; });
-  var health=calculateHealthReal();
-  var notifStatus='🔔 Notif';
   try{
-    if(typeof Notification!=='undefined'){
+    var rec=db.records.filter(function(r){ return r.vehicleId===selected; });
+    var health=calculateHealthReal();
+  }catch(e){ var rec=[]; var health={overall:75}; }
+  var notifStatus='🔔 Notif';
+  var notifSupported=true;
+  try{
+    if(typeof Notification==='undefined'){ notifSupported=false; notifStatus='🔔 Solo App'; }
+    else {
       notifStatus=Notification.permission==='granted'?'🔔 ON':Notification.permission==='denied'?'🔕 OFF':'🔔 Activar';
     }
-  }catch(e){ notifStatus='🔔 Notif'; }
-  modal('<h2 style="font-size:16px;margin-bottom:12px">📋 Menú</h2><div class="kpi-grid" style="margin-bottom:12px"><div class="kpi-card"><div class="kpi-n">'+rec.length+'</div><div class="kpi-l">Historial</div></div><div class="kpi-card"><div class="kpi-n">'+health.overall+'%</div><div class="kpi-l">Salud</div></div><div class="kpi-card"><div class="kpi-n">'+db.masterRepairs.length+'</div><div class="kpi-l">Maestra</div></div><div class="kpi-card"><div class="kpi-n">0</div><div class="kpi-l">Viajes</div></div></div><div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px"><button onclick="switchTab(\'historial\');closeModal()">📜 Historial</button><button onclick="switchTab(\'maestro\');closeModal()">🔧 Maestra</button><button onclick="switchTab(\'mantenimiento\');closeModal()">⏰ Servicios</button><button onclick="switchTab(\'millas\');closeModal()">🛣️ Millas</button><button onclick="switchTab(\'gastos\');closeModal()">💰 Gastos</button><button onclick="switchTab(\'partes\');closeModal()">🔩 Refacciones</button><button onclick="switchTab(\'bitacora\');closeModal()">📝 Notas</button><button onclick="switchTab(\'viajes\');closeModal()">✈️ Viajes</button><button onclick="switchTab(\'checklist\');closeModal()">✅ Check</button><button onclick="switchTab(\'timeline\');closeModal()">📅 Timeline</button><button onclick="switchTab(\'ficha\');closeModal()">📄 Ficha VIN</button><button onclick="openCloudConfig();closeModal()" style="padding:14px">☁️ Nube</button><button onclick="requestNotificationPermission();closeModal()" style="padding:14px;background:linear-gradient(135deg,#6aa8ff,#4a7ac7);color:#fff">'+notifStatus+' Notif</button><button onclick="openIAModal();closeModal()" style="background:linear-gradient(135deg,#d9b46a,#b8944a);color:#111">🧠 IA</button><button onclick="openQuickSearch();closeModal()">🔍 Buscar</button></div><button class="secondary" style="width:100%;margin-top:12px" onclick="closeModal()">Cerrar</button><div style="margin-top:10px;font-size:10px;color:var(--muted2);text-align:center">'+esc(v().vin.slice(-6))+' • '+Number(v().odo).toLocaleString()+' mi • Notif Push + Externas • Sin nombres largos</div>');
+  }catch(e){ notifSupported=false; notifStatus='🔔 Solo App'; }
+  modal('<h2 style="font-size:16px;margin-bottom:12px">📋 Menú • v67.9</h2><div class="kpi-grid" style="margin-bottom:12px"><div class="kpi-card"><div class="kpi-n">'+rec.length+'</div><div class="kpi-l">Historial</div></div><div class="kpi-card"><div class="kpi-n">'+health.overall+'%</div><div class="kpi-l">Salud</div></div><div class="kpi-card"><div class="kpi-n">'+(db.masterRepairs?db.masterRepairs.length:47)+'</div><div class="kpi-l">Maestra</div></div><div class="kpi-card"><div class="kpi-n">'+(db.mileageLogs?db.mileageLogs.length:0)+'</div><div class="kpi-l">Millas</div></div></div>'+
+  '<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px">'+
+  '<button onclick="closeModal();setTimeout(()=>switchTab(\'historial\'),100)">📜 Historial</button>'+
+  '<button onclick="closeModal();setTimeout(()=>switchTab(\'maestro\'),100)">🔧 Maestra</button>'+
+  '<button onclick="closeModal();setTimeout(()=>switchTab(\'mantenimiento\'),100)">⏰ Servicios</button>'+
+  '<button onclick="closeModal();setTimeout(()=>switchTab(\'millas\'),100)">🛣️ Millas</button>'+
+  '<button onclick="closeModal();setTimeout(()=>switchTab(\'gastos\'),100)">💰 Gastos</button>'+
+  '<button onclick="closeModal();setTimeout(()=>switchTab(\'partes\'),100)">🔩 Refacciones</button>'+
+  '<button onclick="closeModal();setTimeout(()=>switchTab(\'bitacora\'),100)">📝 Notas</button>'+
+  '<button onclick="closeModal();setTimeout(()=>switchTab(\'viajes\'),100)">✈️ Viajes</button>'+
+  '<button onclick="closeModal();setTimeout(()=>switchTab(\'checklist\'),100)">✅ Check</button>'+
+  '<button onclick="closeModal();setTimeout(()=>switchTab(\'timeline\'),100)">📅 Timeline</button>'+
+  '<button onclick="closeModal();setTimeout(()=>switchTab(\'ficha\'),100)">📄 Ficha VIN</button>'+
+  '<button onclick="openCloudConfig()" style="padding:14px;background:rgba(106,168,255,.15);border:1px solid rgba(106,168,255,.3)">☁️ Nube</button>'+
+  '<button onclick="requestNotificationPermission()" style="padding:14px;background:'+(notifSupported?'linear-gradient(135deg,#6aa8ff,#4a7ac7)':'rgba(255,255,255,.06)')+';color:#fff">'+notifStatus+'</button>'+
+  '<button onclick="openIAModal()" style="background:linear-gradient(135deg,#d9b46a,#b8944a);color:#111;padding:14px">🧠 IA Mecánico</button>'+
+  '<button onclick="openQuickSearch()" style="padding:14px">🔍 Buscar</button>'+
+  '</div><button class="secondary" style="width:100%;margin-top:12px" onclick="closeModal()">Cerrar</button><div style="margin-top:10px;font-size:9px;color:var(--muted2);text-align:center">'+esc((v()&&v().vin?v().vin:'5GAKRCKD1DJ218711').slice(-6))+' • '+Number((v()&&v().odo?v().odo:169972)).toLocaleString()+' mi • v67.9 FIX BOTONES • Nube + IA + Buscar OK</div>');
 }
 
 function requestNotificationPermission(){
-  if(!('Notification' in window)){ toast('Notificaciones no soportadas','warn'); return; }
-  if(Notification.permission==='granted'){ toast('🔔 Notificaciones activadas','ok'); localStorage.setItem('eo_notif','granted'); checkAndNotifyReminders(); return; }
-  if(Notification.permission!=='denied'){
-    Notification.requestPermission().then(function(perm){
-      if(perm==='granted'){ toast('🔔 Activadas - Te avisaré de servicios','ok'); localStorage.setItem('eo_notif','granted'); checkAndNotifyReminders(); }
-      else { toast('Notificaciones bloqueadas','warn'); }
-    });
-  } else {
-    toast('Activa notificaciones en ajustes del navegador','warn');
+  if(typeof Notification==='undefined' || !('Notification' in window)){
+    toast('📱 Este navegador no soporta push, pero te avisaré dentro de la app con toasts','info');
+    localStorage.setItem('eo_notif','app_only');
+    // Simular notificacion con toast
+    try{ checkAndNotifyReminders(); }catch(e){}
+    return;
+  }
+  try{
+    if(Notification.permission==='granted'){ toast('🔔 Notificaciones activadas','ok'); localStorage.setItem('eo_notif','granted'); checkAndNotifyReminders(); return; }
+    if(Notification.permission!=='denied'){
+      Notification.requestPermission().then(function(perm){
+        if(perm==='granted'){ toast('🔔 Activadas - Te avisaré de servicios','ok'); localStorage.setItem('eo_notif','granted'); checkAndNotifyReminders(); }
+        else { toast('🔔 Permiso denegado - usaré avisos dentro de app','warn'); localStorage.setItem('eo_notif','app_only'); }
+      }).catch(function(e){
+        toast('🔔 Usaré avisos dentro de app','info'); localStorage.setItem('eo_notif','app_only');
+      });
+    } else {
+      toast('🔔 Bloqueadas en navegador, activaré avisos dentro de app','warn'); localStorage.setItem('eo_notif','app_only');
+    }
+  }catch(e){
+    toast('📱 Notif error: '+(e.message||e)+' - usaré avisos app','warn');
+    localStorage.setItem('eo_notif','app_only');
   }
 }
 function showPushNotification(title, body){
@@ -594,7 +679,10 @@ function iaAddToChat(q,a,src){
 }
 function openIAModal(){
   try{
-    var h=calculateHealthReal(); var pending=db.masterRepairs.filter(function(m){ return !m.done; }); var crit=pending.filter(function(p){ return p.critical; });
+    var h=calculateHealthReal(); 
+    var reps=db.masterRepairs||seed.masterRepairs||[];
+    var pending=reps.filter(function(m){ return !m.done; }); 
+    var crit=pending.filter(function(p){ return p.critical; });
     var html='<div style="display:flex;flex-direction:column;height:75vh;max-height:75vh">'+
     '<div style="flex-shrink:0"><h2 style="margin:0;font-size:16px">🧠 IA Mecánico Avanzado • '+h.overall+'%</h2><div class="notice" style="font-size:10px;margin-top:8px">Buick Enclave 2013 3.6L LFX • '+Number(v().odo).toLocaleString()+' mi • '+db.records.length+' serv REALES • '+pending.length+' pend ('+crit.length+' crit) • Pregunta lo que quieras de mecánica</div>'+
     '<div class="kpi-grid" style="margin-top:8px"><div class="kpi-card" style="padding:8px"><div class="kpi-n" style="font-size:14px">'+h.overall+'%</div><div class="kpi-l">Salud</div></div><div class="kpi-card" style="padding:8px"><div class="kpi-n" style="font-size:14px">'+pending.length+'</div><div class="kpi-l">Pend</div></div><div class="kpi-card" style="padding:8px"><div class="kpi-n" style="font-size:14px">'+db.records.length+'</div><div class="kpi-l">Historial</div></div><div class="kpi-card" style="padding:8px"><div class="kpi-n" style="font-size:14px">'+money2(db.expenses.reduce(function(a,e){ return a+e.amount; },0)/Math.max(1,Number(v().odo)))+'</div><div class="kpi-l">$/mi</div></div></div></div>'+
@@ -653,4 +741,4 @@ if(typeof Notification!=='undefined' && Notification.permission!=='granted' && N
   },4000);
 }
 
-<!-- v67.6 FIX LIMPIO - 0 serv REAL - Salud REAL - 2026-09-08 - 169,972 mi Sep inicio - 75 funcs - Balance 0,0 - Historial vacio - IA avanzada - Notif push + externas --></script><script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductId(a);if(productId){e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*");return}e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:a.href},"*");return}var dataHref=findDataHref(target);if(dataHref&&/^https?:\/\//.test(dataHref.href)&&dataHref.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(dataHref.node,dataHref.href))return;e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:dataHref.href},"*")}},true)})();</script><script>(function(){var FOCUS_TYPE="ecto:artifact-focus-request";var CLOSE_TYPE="ecto:artifact-close-request";function focusArtifactDocument(){var body=document.body;if(!body)return;try{window.focus();}catch(e){}if(!body.hasAttribute("tabindex"))body.setAttribute("tabindex","-1");try{body.focus({preventScroll:true});}catch(e){try{body.focus();}catch(e2){}}}window.addEventListener("message",function(event){if(event.source!==window.parent)return;var data=event.data;if(!data||typeof data!=="object"||data.type!==FOCUS_TYPE)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",focusArtifactDocument,{once:true});return;}focusArtifactDocument();});window.addEventListener("keydown",function(event){if(event.key!=="Escape")return;window.setTimeout(function(){if(event.defaultPrevented)return;window.parent.postMessage({type:CLOSE_TYPE},"*");},0);});})();</script></body></html>
+<!-- v67.9 FIX BOTONES - 0 serv REAL - Salud REAL - 2026-09-08 - 169,972 mi Sep inicio - 75 funcs - Balance 0,0 - Historial vacio - IA avanzada - Notif push + externas --></script><script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductId(a);if(productId){e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*");return}e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:a.href},"*");return}var dataHref=findDataHref(target);if(dataHref&&/^https?:\/\//.test(dataHref.href)&&dataHref.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(dataHref.node,dataHref.href))return;e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:dataHref.href},"*")}},true)})();</script><script>(function(){var FOCUS_TYPE="ecto:artifact-focus-request";var CLOSE_TYPE="ecto:artifact-close-request";function focusArtifactDocument(){var body=document.body;if(!body)return;try{window.focus();}catch(e){}if(!body.hasAttribute("tabindex"))body.setAttribute("tabindex","-1");try{body.focus({preventScroll:true});}catch(e){try{body.focus();}catch(e2){}}}window.addEventListener("message",function(event){if(event.source!==window.parent)return;var data=event.data;if(!data||typeof data!=="object"||data.type!==FOCUS_TYPE)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",focusArtifactDocument,{once:true});return;}focusArtifactDocument();});window.addEventListener("keydown",function(event){if(event.key!=="Escape")return;window.setTimeout(function(){if(event.defaultPrevented)return;window.parent.postMessage({type:CLOSE_TYPE},"*");},0);});})();</script></body></html>
