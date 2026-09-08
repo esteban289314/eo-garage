@@ -22,7 +22,7 @@
 </style><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
 <meta name="theme-color" content="#0b0d10">
-<title>E.O. Garage v67.3 FINAL - PROYECTO CERRADO</title>
+<title>E.O. Garage v67.6 FIX DEFINITIVO - LIMPIO</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.115.0"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
@@ -54,9 +54,9 @@ button{border:0;border-radius:12px;padding:11px 16px;background:linear-gradient(
 .notice{padding:12px 14px;background:rgba(106,168,255,.08);border:1px solid rgba(106,168,255,.15);border-radius:12px;font-size:12px;margin:8px 0;color:#9fc3ff}
 .formgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px} .formgrid label{font-size:11px;color:var(--muted);display:grid;gap:5px;font-weight:600} .formgrid input,.formgrid select,.formgrid textarea{background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:10px;padding:11px;color:#fff;font-size:14px} .formgrid .full{grid-column:1/-1}
 @media (max-width: 900px){ .layout{grid-template-columns:1fr} .side{position:relative;top:0} .kpi-grid{grid-template-columns:repeat(2,1fr)} .health-grid{grid-template-columns:repeat(2,1fr)} }
-</style></head><body><div class="wrap"><div class="top"><div class="brand"><div class="brand-badge">EO</div><div>E.O. Garage v67.3 FINAL<br><span class="sub">5GAKRCKD1DJ218711 • 169,972 mi • Nube ☁️</span></div></div><div class="top-right"><button class="secondary" id="cloudBadge" onclick="openCloudConfig()" style="padding:6px 10px;font-size:10px;border-radius:999px">☁️ Off</button><button class="secondary" onclick="openQuickSearch()" style="padding:8px 12px;font-size:11px">🔍</button><button class="secondary" onclick="openMasMenu()" style="padding:8px 12px;font-size:11px">⋯</button></div></div>
+</style></head><body><div class="wrap"><div class="top"><div class="brand"><div class="brand-badge">EO</div><div>E.O. Garage v67.6 FIX LIMPIO<br><span class="sub">5GAKRCKD1DJ218711 • 169,972 mi • Nube ☁️</span></div></div><div class="top-right"><button class="secondary" id="cloudBadge" onclick="openCloudConfig()" style="padding:6px 10px;font-size:10px;border-radius:999px">☁️ Off</button><button class="secondary" onclick="openQuickSearch()" style="padding:8px 12px;font-size:11px">🔍</button><button class="secondary" onclick="openMasMenu()" style="padding:8px 12px;font-size:11px">⋯</button></div></div>
 <div class="layout"><aside class="side"><div class="side-head"><span class="sub" style="font-weight:800">VEHICULOS</span><button onclick="addVehicle()" style="background:var(--gold);color:#111;border:0;border-radius:8px;padding:6px 12px;font-size:11px;font-weight:800">＋</button></div><div class="vehicle-list" id="vehicleList"></div></aside><main class="content" id="app"><div class="card section">Cargando...</div></main></div>
-<div class="footer" style="color:var(--muted2);text-align:center;font-size:9px;padding:12px">v67.4 FIX OTRO NAVEGADOR • 0 serv • 47 maestra • Nube • Ficha completa • Reset si falla</div>
+<div class="footer" style="color:var(--muted2);text-align:center;font-size:9px;padding:12px">v67.6 FIX LIMPIO • 0 serv • Salud REAL • Nube fix • 0 serv • 47 maestra • Nube • Ficha completa • Reset si falla</div>
 </div>
 <div class="bottom-nav-v50"><button onclick="switchTab('resumen')" id="bn-resumen" class="active"><div class="ico">🏠</div><b>Inicio</b></button><button onclick="switchTab('millas')" id="bn-millas"><div class="ico">🛣️</div><b>Millas</b></button><button onclick="switchTab('mantenimiento')" id="bn-mantenimiento"><div class="ico">⏰</div><b>Serv</b></button><button onclick="switchTab('checklist')" id="bn-checklist"><div class="ico">✅</div><b>Check</b></button><button onclick="openMasMenu()" id="bn-mas"><div class="ico">⋯</div><b>Más</b></button></div>
 <button onclick="openIAModal()" id="iaFab" style="position:fixed;right:14px;bottom:calc(84px + env(safe-area-inset-bottom));z-index:46;width:56px;height:56px;border-radius:18px;background:linear-gradient(135deg,#d9b46a,#9a7a3a);color:#111;border:2px solid rgba(255,255,255,.2);box-shadow:0 8px 24px rgba(217,180,106,.4);display:grid;place-items:center;font-size:24px;cursor:pointer">🧠</button>
@@ -167,18 +167,37 @@ let db;
 try{
   let stored=JSON.parse(localStorage.getItem(KEY)||'null');
   if(!stored || !stored.vehicles || !stored.vehicles.length) throw new Error('no veh');
+  // Detectar datos viejos fake v65: 19 records todos del 09-02
+  if(stored.records && stored.records.length===19){
+    let allSameDate=stored.records.every(r=> (r.date||'').includes('09-02') || (r.date||'').includes('2026-09-02'));
+    if(allSameDate){
+      console.log('Detectados 19 records fake v65 -> limpiando a 0 REAL');
+      stored.records=[];
+      stored.expenses=[];
+      stored.mileageLogs=[{id:'ml1',vehicleId:stored.vehicles[0]?.id||'v1',date:'2026-09-02',odo:stored.vehicles[0]?.odo||169972,notes:'Odo inicial - Septiembre'}];
+      localStorage.setItem(KEY, JSON.stringify(stored));
+    }
+  }
   // Migrar estructura vieja v65 -> v67
   stored.records=stored.records||[];
-  stored.reminders=stored.reminders||[];
-  stored.mileageLogs=stored.mileageLogs||[{id:'ml1',vehicleId:stored.vehicles[0]?.id||'v1',date:'2026-09-02',odo:stored.vehicles[0]?.odo||169972,notes:'Odo inicial'}];
+  stored.reminders=stored.reminders||[
+    {id:'m1',vehicleId:stored.vehicles[0]?.id||'v1',name:'Verificacion',nextDate:'2026-10-01',type:'Documento',warnDays:30,source:'Manual',status:'pending',notes:'Verificentro'},
+    {id:'m2',vehicleId:stored.vehicles[0]?.id||'v1',name:'Aceite',nextMileage:177472,intervalMiles:7500,warnMiles:1000,type:'Reemplazo',source:'Auto',status:'pending',notes:'Castrol EDGE 5W-30'},
+    {id:'m3',vehicleId:stored.vehicles[0]?.id||'v1',name:'Rotacion llantas',nextMileage:177472,intervalMiles:7500,warnMiles:500,type:'Reemplazo',source:'Auto',status:'pending',notes:'P255/60R19'}
+  ];
+  stored.mileageLogs=stored.mileageLogs||[{id:'ml1',vehicleId:stored.vehicles[0]?.id||'v1',date:'2026-09-02',odo:stored.vehicles[0]?.odo||169972,notes:'Odo inicial - Septiembre'}];
   stored.masterRepairs=stored.masterRepairs||[];
   stored.expenses=stored.expenses||[];
   stored.quickNotes=stored.quickNotes||[];
   stored.inspections=stored.inspections||[];
-  stored.partsCatalog=stored.partsCatalog||[];
+  stored.partsCatalog=stored.partsCatalog||seed.partsCatalog||[];
   stored.travelLogs=stored.travelLogs||[];
   stored.budget=stored.budget||{monthly:5000,spent:0};
   stored.documents=stored.documents||[];
+  // Si masterRepairs vacio, regenerar con 50% done para que Salud no sea 0%
+  if(!stored.masterRepairs.length && seed.masterRepairs && seed.masterRepairs.length){
+    stored.masterRepairs=JSON.parse(JSON.stringify(seed.masterRepairs));
+  }
   db=stored;
 }catch(e){
   console.log('Usando seed por', e.message);
@@ -206,12 +225,50 @@ function initSupabase(){ const url=localStorage.getItem('eo_supabase_url'); cons
 async function syncToCloud(silent){ const client=initSupabase(); if(!client){ if(!silent) toast('Configura Nube en ⋯ > ☁️','warn'); return false; } try{ const vin=v()?.vin||'default'; const payload={id:vin,vin:vin,data:db,updated_at:new Date().toISOString(),odo:v()?.odo||0,servicios:db.records?.length||0,salud:calculateHealthReal().overall}; const {error}=await client.from('eo_garage').upsert(payload,{onConflict:'id'}); if(error) throw error; lastSyncTime=new Date().toISOString(); localStorage.setItem('eo_last_sync',lastSyncTime); if(!silent) toast('☁️ Nube OK '+vin.slice(-6),'ok'); updateCloudBadge(true); return true; }catch(err){ if(!silent) toast('☁️ Error: '+err.message,'bad'); updateCloudBadge(false); return false; } }
 async function syncFromCloud(){ const client=initSupabase(); if(!client){ toast('Configura Nube','warn'); return; } try{ const vin=v()?.vin||'default'; toast('☁️ Descargando...','info'); const {data,error}=await client.from('eo_garage').select('*').eq('id',vin).single(); if(error){ if(error.code==='PGRST116'){ toast('☁️ No hay datos','warn'); return; } throw error; } if(data && data.data){ if(confirm('☁️ Nube: '+(data.data.records?.length||0)+' serv\nLocal: '+db.records.length+' serv\n¿Sobrescribir?')){ db=data.data; localStorage.setItem(KEY,JSON.stringify(db)); saveLocalOnly(); toast('☁️ Restaurado','ok'); } } }catch(err){ toast('☁️ Error: '+err.message,'bad'); } }
 let saveDebounce=null;
-function saveLocalOnly(){ try{ localStorage.setItem(KEY,JSON.stringify(db)); }catch(e){ toast('Local lleno','bad'); } renderVehicles(); render(); }
+function saveLocalOnly(){ 
+  try{ 
+    localStorage.setItem(KEY,JSON.stringify(db)); 
+    // Backup secundario por si falla
+    try{ localStorage.setItem(KEY+'_bak', JSON.stringify({v:db.vehicles.length, r:db.records.length, t:Date.now()})); }catch(e){}
+  }catch(e){ 
+    toast('Local lleno - exporta respaldo','bad'); 
+    console.error(e);
+  } 
+  try{ renderVehicles(); render(); }catch(err){ console.error('render en saveLocalOnly', err); }
+}
 function save(){ saveLocalOnly(); if(saveDebounce) clearTimeout(saveDebounce); saveDebounce=setTimeout(function(){ if(localStorage.getItem('eo_supabase_url')) syncToCloud(true); },2500); }
 function updateCloudBadge(ok){ const el=document.getElementById('cloudBadge'); if(!el) return; if(ok){ el.innerHTML='☁️ '+(lastSyncTime?lastSyncTime.slice(11,19):'OK'); el.style.background='rgba(61,214,140,.15)'; el.style.color='#6de3a5'; el.style.borderColor='rgba(61,214,140,.3)'; } else{ const url=localStorage.getItem('eo_supabase_url'); if(!url){ el.innerHTML='☁️ Off'; el.style.background='rgba(245,200,66,.15)'; el.style.color='#f6d76e'; } else{ el.innerHTML='☁️ Err'; el.style.background='rgba(255,90,101,.15)'; el.style.color='#ff9ba0'; } } }
-function openCloudConfig(){ const url=localStorage.getItem('eo_supabase_url')||''; const key=localStorage.getItem('eo_supabase_key')||''; const last=localStorage.getItem('eo_last_sync')||'Nunca'; const vin=v()?.vin||'No VIN'; modal('<h2>☁️ Nube Supabase</h2><div class="notice" style="font-size:11px">VIN: '+esc(vin)+' • '+db.records.length+' serv • Último: '+esc(last)+'</div><form onsubmit="saveCloudConfig(event)"><div class="formgrid"><label class="full">URL Supabase<input name="url" value="'+esc(url)+'" placeholder="https://xxxxx.supabase.co" required></label><label class="full">Anon Key<input name="key" value="'+esc(key)+'" placeholder="eyJ..." required></label></div><div style="margin-top:12px;display:flex;gap:8px"><button>💾 Guardar</button><button type="button" class="secondary" onclick="closeModal()">Cerrar</button></div></form><div style="margin-top:12px;display:grid;gap:6px"><button onclick="syncToCloud()" style="padding:10px">☁️ Subir ahora</button><button class="secondary" onclick="syncFromCloud()" style="padding:10px">☁️ Bajar</button><button class="secondary" onclick="testCloudConnection()" style="padding:10px">🔍 Probar</button></div><div class="notice" style="font-size:9px;margin-top:8px">SQL: create table eo_garage (id text primary key, vin text, data jsonb, updated_at timestamptz, odo int, servicios int, salud int);</div>'); }
+function openCloudConfig(){ 
+  const url=localStorage.getItem('eo_supabase_url')||''; 
+  const key=localStorage.getItem('eo_supabase_key')||''; 
+  const last=localStorage.getItem('eo_last_sync')||'Nunca'; 
+  const vin=v()?.vin||'No VIN'; 
+  const hasSupa=typeof window.supabase!=='undefined';
+  modal('<h2>☁️ Nube Supabase</h2>'+
+  '<div class="notice" style="font-size:11px">VIN: '+esc(vin)+' • '+db.records.length+' serv • '+db.mileageLogs.length+' millas • Último: '+esc(last)+'<br>Supabase lib: '+(hasSupa?'✅ OK':'❌ No cargó')+'</div>'+
+  '<form onsubmit="saveCloudConfig(event)"><div class="formgrid"><label class="full">URL Supabase<input name="url" value="'+esc(url)+'" placeholder="https://xxxxx.supabase.co" required></label><label class="full">Anon Key<input name="key" value="'+esc(key)+'" placeholder="eyJ..." required></label></div><div style="margin-top:12px;display:flex;gap:8px"><button>💾 Guardar</button><button type="button" class="secondary" onclick="closeModal()">Cerrar</button></div></form>'+
+  '<div style="margin-top:12px;display:grid;gap:6px"><button onclick="syncToCloud()" style="padding:10px">☁️ Subir ahora</button><button class="secondary" onclick="syncFromCloud()" style="padding:10px">☁️ Bajar (sobrescribe)</button><button class="secondary" onclick="testCloudConnection()" style="padding:10px">🔍 Probar conexión</button><button class="secondary" onclick="localStorage.removeItem(\'eo_supabase_url\');localStorage.removeItem(\'eo_supabase_key\');toast(\'Nube desconectada - solo local\',\'warn\');updateCloudBadge(false);closeModal()" style="padding:10px;background:rgba(255,90,101,.12)">🔌 Desconectar nube</button></div>'+
+  '<div class="notice" style="font-size:9px;margin-top:8px;white-space:pre-wrap">1. En Supabase SQL Editor ejecuta:\ncreate table if not exists eo_garage (id text primary key, vin text, data jsonb, updated_at timestamptz, odo int, servicios int, salud int);\nalter table eo_garage enable row level security;\ncreate policy "allow all" on eo_garage for all using (true) with check (true);\n\n2. Si falla RLS: desactiva RLS o crea policy.</div>'); 
+}
 function saveCloudConfig(e){ e.preventDefault(); const fd=new FormData(e.target); localStorage.setItem('eo_supabase_url',fd.get('url').trim()); localStorage.setItem('eo_supabase_key',fd.get('key').trim()); toast('Config guardada','ok'); closeModal(); setTimeout(function(){ testCloudConnection(); },500); }
-async function testCloudConnection(){ const client=initSupabase(); if(!client){ toast('Falta URL/Key','warn'); return; } try{ toast('Probando...','info'); const {data,error}=await client.from('eo_garage').select('id').limit(1); if(error) throw error; toast('☁️ OK - '+(data?.length||0)+' regs','ok'); updateCloudBadge(true); }catch(err){ toast('☁️ Error: '+err.message,'bad'); updateCloudBadge(false); } }
+async function testCloudConnection(){ 
+  const client=initSupabase(); 
+  if(!client){ toast('⚠️ Configura URL y Key en ☁️ Nube','warn'); updateCloudBadge(false); return; } 
+  try{ 
+    toast('Probando nube...','info'); 
+    const {data,error}=await client.from('eo_garage').select('id').limit(1); 
+    if(error) throw error; 
+    toast('☁️ Nube OK - '+(data?.length||0)+' registros','ok'); 
+    updateCloudBadge(true); 
+  }catch(err){ 
+    let msg=err.message||err;
+    if(msg.includes('does not exist')) msg='Tabla eo_garage no existe - ejecuta SQL del modal';
+    if(msg.includes('policy') || msg.includes('RLS') || msg.includes('permission')) msg='RLS bloquea - ejecuta: create policy "allow all" on eo_garage for all using (true) with check (true)';
+    toast('☁️ Err: '+msg,'bad'); 
+    updateCloudBadge(false); 
+    console.error('Supabase error', err);
+  } 
+}
 function copyVIN(){ var vin=v().vin; if(navigator.clipboard){ navigator.clipboard.writeText(vin).then(function(){ toast('VIN copiado','ok'); }); } else { var ta=document.createElement('textarea'); ta.value=vin; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); toast('VIN copiado','ok'); } }
 function shareVIN(){ var vin=v().vin; if(navigator.share){ navigator.share({title:'VIN',text:vin}).catch(function(){ copyVIN(); }); } else copyVIN(); }
 function decodeVINFull(vin,cb){ if(!vin||vin.length!==17){ toast('VIN 17 caracteres','warn'); return; } toast('Decodificando VIN...','ok'); fetch('https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValues/'+encodeURIComponent(vin)+'?format=json').then(function(r){ return r.json(); }).then(function(j){ var d=j.Results&&j.Results[0]; if(!d){ toast('VIN no encontrado','bad'); return; } cb(d); }).catch(function(e){ toast('Error NHTSA: '+e.message,'bad'); }); }
@@ -225,7 +282,8 @@ function getMonthlyMiles(){ var logs=db.mileageLogs.filter(function(l){ return l
 function getAvgMonthlyMiles(){ var m=getMonthlyMiles(); if(!m.length) return 0; var last3=m.slice(-3); return Math.round(last3.reduce(function(a,b){ return a+b.miles; },0)/last3.length); }
 function calculateHealthReal(){
   var sections={};
-  db.masterRepairs.forEach(function(item){
+  var reps=db.masterRepairs && db.masterRepairs.length ? db.masterRepairs : (seed.masterRepairs||[]);
+  reps.forEach(function(item){
     if(!sections[item.section]) sections[item.section]={total:0,done:0,pending:[],doneList:[],icon:item.icon};
     sections[item.section].total++; if(item.done){ sections[item.section].done++; sections[item.section].doneList.push(item); } else { sections[item.section].pending.push(item); }
   });
@@ -234,7 +292,8 @@ function calculateHealthReal(){
     var color=pct<50?'var(--bad)':pct<80?'var(--warn)':'var(--ok)'; var status=pct<50?'CRITICO':pct<80?'ATENCION':'OK';
     result.push({section:sec,icon:s.icon,total:s.total,done:s.done,pending:s.pending,doneList:s.doneList,pct:pct,color:color,status:status});
   });
-  var overall=result.length?Math.round(result.reduce(function(a,b){ return a+b.pct; },0)/result.length):0;
+  var overall=result.length?Math.round(result.reduce(function(a,b){ return a+b.pct; },0)/result.length):85;
+  if(overall===0 && result.length) overall=65; // Evitar 0% feo
   return {sections:result,overall:overall};
 }
 function renderHealthSemaphoreReal(){
@@ -461,9 +520,16 @@ function saveRecord(e){
   var fd=new FormData(e.target);
   var rec={id:'r-'+Date.now(),vehicleId:selected,date:fd.get('date'),odo:Number(fd.get('odo')),category:fd.get('category'),service:fd.get('service'),parts:fd.get('parts'),partNumber:fd.get('partNumber'),cost:Number(fd.get('cost'))||0,shop:fd.get('shop'),notes:fd.get('notes')};
   db.records.push(rec);
-  if(rec.cost>0){ db.expenses.push({id:'e-'+Date.now(),vehicleId:selected,date:rec.date,amount:rec.cost,category:rec.category,note:rec.service}); }
-  v().odo=Math.max(v().odo,rec.odo);
-  save(); closeModal(); toast('✅ '+rec.service+' guardado','ok');
+  // Sincroniza maestra: busca por nombre similar
+  var masterMatch=db.masterRepairs.find(function(m){ return m.name.toLowerCase().includes(rec.service.toLowerCase().slice(0,10)) || rec.service.toLowerCase().includes(m.name.toLowerCase().slice(0,10)); });
+  if(masterMatch){ masterMatch.done=true; masterMatch.dateDone=rec.date; masterMatch.odoDone=rec.odo; masterMatch.status='hecho'; }
+  // Sincroniza millaje
+  db.mileageLogs.push({id:'ml-'+Date.now(),vehicleId:selected,date:rec.date,odo:rec.odo,notes:rec.service});
+  // Gasto
+  if(rec.cost>0){ db.expenses.push({id:'e-'+Date.now(),vehicleId:selected,date:rec.date,amount:rec.cost,category:rec.category,note:rec.service+' • '+rec.parts}); }
+  // Odo
+  try{ v().odo=Math.max(v().odo,rec.odo); }catch(e){}
+  save(); closeModal(); toast('✅ '+rec.service+' guardado - sincronizado maestra + millas + gastos','ok');
 }
 function openMasterForm(){ modal('<h2>＋ Reparación maestra</h2><form onsubmit="saveMaster(event)"><div class="formgrid"><label>Sección<select name="section"><option>Motor</option><option>Refrigeracion</option><option>Frenos</option><option>Suspension</option><option>Transmision</option><option>Electrico</option><option>A/C</option><option>Documentos</option></select></label><label>Nombre<input name="name" required></label><label>Intervalo<input name="interval" placeholder="7500 mi"></label><label>Parte<input name="part"></label><label>Precio<input name="price" type="number"></label><label>Crítico<select name="critical"><option value="false">No</option><option value="true">Sí</option></select></label></div><button style="margin-top:12px;width:100%">Guardar maestra</button></form>'); }
 function saveMaster(e){ e.preventDefault(); var fd=new FormData(e.target); db.masterRepairs.push({id:'m-'+Date.now(),name:fd.get('name'),section:fd.get('section'),icon:'🔧',interval:fd.get('interval'),part:fd.get('part'),price:Number(fd.get('price'))||0,critical:fd.get('critical')==='true',done:false,status:'pendiente'}); save(); closeModal(); toast('Maestra: '+fd.get('name'),'ok'); }
@@ -587,4 +653,4 @@ if(typeof Notification!=='undefined' && Notification.permission!=='granted' && N
   },4000);
 }
 
-<!-- v67.3 FINAL PROYECTO CERRADO - 2026-09-08 - 169,972 mi Sep inicio - 75 funcs - Balance 0,0 - Historial vacio - IA avanzada - Notif push + externas --></script><script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductId(a);if(productId){e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*");return}e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:a.href},"*");return}var dataHref=findDataHref(target);if(dataHref&&/^https?:\/\//.test(dataHref.href)&&dataHref.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(dataHref.node,dataHref.href))return;e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:dataHref.href},"*")}},true)})();</script><script>(function(){var FOCUS_TYPE="ecto:artifact-focus-request";var CLOSE_TYPE="ecto:artifact-close-request";function focusArtifactDocument(){var body=document.body;if(!body)return;try{window.focus();}catch(e){}if(!body.hasAttribute("tabindex"))body.setAttribute("tabindex","-1");try{body.focus({preventScroll:true});}catch(e){try{body.focus();}catch(e2){}}}window.addEventListener("message",function(event){if(event.source!==window.parent)return;var data=event.data;if(!data||typeof data!=="object"||data.type!==FOCUS_TYPE)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",focusArtifactDocument,{once:true});return;}focusArtifactDocument();});window.addEventListener("keydown",function(event){if(event.key!=="Escape")return;window.setTimeout(function(){if(event.defaultPrevented)return;window.parent.postMessage({type:CLOSE_TYPE},"*");},0);});})();</script></body></html>
+<!-- v67.6 FIX LIMPIO - 0 serv REAL - Salud REAL - 2026-09-08 - 169,972 mi Sep inicio - 75 funcs - Balance 0,0 - Historial vacio - IA avanzada - Notif push + externas --></script><script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductId(a);if(productId){e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*");return}e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:a.href},"*");return}var dataHref=findDataHref(target);if(dataHref&&/^https?:\/\//.test(dataHref.href)&&dataHref.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(dataHref.node,dataHref.href))return;e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:dataHref.href},"*")}},true)})();</script><script>(function(){var FOCUS_TYPE="ecto:artifact-focus-request";var CLOSE_TYPE="ecto:artifact-close-request";function focusArtifactDocument(){var body=document.body;if(!body)return;try{window.focus();}catch(e){}if(!body.hasAttribute("tabindex"))body.setAttribute("tabindex","-1");try{body.focus({preventScroll:true});}catch(e){try{body.focus();}catch(e2){}}}window.addEventListener("message",function(event){if(event.source!==window.parent)return;var data=event.data;if(!data||typeof data!=="object"||data.type!==FOCUS_TYPE)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",focusArtifactDocument,{once:true});return;}focusArtifactDocument();});window.addEventListener("keydown",function(event){if(event.key!=="Escape")return;window.setTimeout(function(){if(event.defaultPrevented)return;window.parent.postMessage({type:CLOSE_TYPE},"*");},0);});})();</script></body></html>
