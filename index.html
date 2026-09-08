@@ -56,7 +56,7 @@ button{border:0;border-radius:12px;padding:11px 16px;background:linear-gradient(
 @media (max-width: 900px){ .layout{grid-template-columns:1fr} .side{position:relative;top:0} .kpi-grid{grid-template-columns:repeat(2,1fr)} .health-grid{grid-template-columns:repeat(2,1fr)} }
 </style></head><body><div class="wrap"><div class="top"><div class="brand"><div class="brand-badge">EO</div><div>E.O. Garage v67.3 FINAL<br><span class="sub">5GAKRCKD1DJ218711 • 169,972 mi • Nube ☁️</span></div></div><div class="top-right"><button class="secondary" id="cloudBadge" onclick="openCloudConfig()" style="padding:6px 10px;font-size:10px;border-radius:999px">☁️ Off</button><button class="secondary" onclick="openQuickSearch()" style="padding:8px 12px;font-size:11px">🔍</button><button class="secondary" onclick="openMasMenu()" style="padding:8px 12px;font-size:11px">⋯</button></div></div>
 <div class="layout"><aside class="side"><div class="side-head"><span class="sub" style="font-weight:800">VEHICULOS</span><button onclick="addVehicle()" style="background:var(--gold);color:#111;border:0;border-radius:8px;padding:6px 12px;font-size:11px;font-weight:800">＋</button></div><div class="vehicle-list" id="vehicleList"></div></aside><main class="content" id="app"><div class="card section">Cargando...</div></main></div>
-<div class="footer" style="color:var(--muted2);text-align:center;font-size:9px;padding:12px">v65.0 FULL • 19 serv • 47 maestra • Nube • Ficha completa</div>
+<div class="footer" style="color:var(--muted2);text-align:center;font-size:9px;padding:12px">v67.4 FIX OTRO NAVEGADOR • 0 serv • 47 maestra • Nube • Ficha completa • Reset si falla</div>
 </div>
 <div class="bottom-nav-v50"><button onclick="switchTab('resumen')" id="bn-resumen" class="active"><div class="ico">🏠</div><b>Inicio</b></button><button onclick="switchTab('millas')" id="bn-millas"><div class="ico">🛣️</div><b>Millas</b></button><button onclick="switchTab('mantenimiento')" id="bn-mantenimiento"><div class="ico">⏰</div><b>Serv</b></button><button onclick="switchTab('checklist')" id="bn-checklist"><div class="ico">✅</div><b>Check</b></button><button onclick="openMasMenu()" id="bn-mas"><div class="ico">⋯</div><b>Más</b></button></div>
 <button onclick="openIAModal()" id="iaFab" style="position:fixed;right:14px;bottom:calc(84px + env(safe-area-inset-bottom));z-index:46;width:56px;height:56px;border-radius:18px;background:linear-gradient(135deg,#d9b46a,#9a7a3a);color:#111;border:2px solid rgba(255,255,255,.2);box-shadow:0 8px 24px rgba(217,180,106,.4);display:grid;place-items:center;font-size:24px;cursor:pointer">🧠</button>
@@ -163,10 +163,37 @@ const seed={
   });
   seed.masterRepairs=master;
 })();
-let db=JSON.parse(localStorage.getItem(KEY)||'null')||seed;
+let db;
+try{
+  let stored=JSON.parse(localStorage.getItem(KEY)||'null');
+  if(!stored || !stored.vehicles || !stored.vehicles.length) throw new Error('no veh');
+  // Migrar estructura vieja v65 -> v67
+  stored.records=stored.records||[];
+  stored.reminders=stored.reminders||[];
+  stored.mileageLogs=stored.mileageLogs||[{id:'ml1',vehicleId:stored.vehicles[0]?.id||'v1',date:'2026-09-02',odo:stored.vehicles[0]?.odo||169972,notes:'Odo inicial'}];
+  stored.masterRepairs=stored.masterRepairs||[];
+  stored.expenses=stored.expenses||[];
+  stored.quickNotes=stored.quickNotes||[];
+  stored.inspections=stored.inspections||[];
+  stored.partsCatalog=stored.partsCatalog||[];
+  stored.travelLogs=stored.travelLogs||[];
+  stored.budget=stored.budget||{monthly:5000,spent:0};
+  stored.documents=stored.documents||[];
+  db=stored;
+}catch(e){
+  console.log('Usando seed por', e.message);
+  db=JSON.parse(JSON.stringify(seed));
+}
 let tab='resumen'; let selected=db.vehicles[0]?.id||'v1';
+try{ if(localStorage.getItem(KEY+'_selected')) selected=localStorage.getItem(KEY+'_selected'); }catch(e){}
+
 let plegableState=JSON.parse(localStorage.getItem('eo_plegable_v50')||'{"salud":true}');
-function v(){ return db.vehicles.find(x=>x.id===selected)||db.vehicles[0]; }
+function v(){ 
+  try{
+    if(!db || !db.vehicles || !db.vehicles.length) return seed.vehicles[0];
+    return db.vehicles.find(x=>x.id===selected)||db.vehicles[0]||seed.vehicles[0];
+  }catch(e){ return seed.vehicles[0]; }
+}
 function esc(s){ var t=String(s||''); return t.split('&').join('&amp;').split('<').join('&lt;').split('>').join('&gt;').split('"').join('&quot;'); }
 function today(){ return new Date().toISOString().slice(0,10); }
 function money(n){ return '$'+Number(n||0).toLocaleString('es-MX'); }
@@ -343,11 +370,15 @@ function enableAutoNotifications(){
 function renderVehicles(){ var list=document.getElementById('vehicleList'); list.innerHTML=db.vehicles.map(function(veh){ return '<div class="vehicle '+(veh.id===selected?'active':'')+'" onclick="selected=\''+veh.id+'\';save()"><b>'+esc(veh.make)+' '+esc(veh.model)+'</b><small>'+esc(veh.vin.slice(-6))+' • '+Number(veh.odo).toLocaleString()+' mi</small></div>'; }).join(''); }
 function switchTab(t){ tab=t; render(); }
 function render(){
-  renderVehicles();
-  var x=v(); var app=document.getElementById('app');
-  var rec=db.records.filter(function(r){ return r.vehicleId===selected; });
-  var exp=db.expenses.filter(function(e){ return e.vehicleId===selected; });
-  var health=calculateHealthReal();
+  try{
+    renderVehicles();
+    var x=v(); 
+    if(!x){ x=seed.vehicles[0]; console.log('v() vacio, usando seed'); }
+    var app=document.getElementById('app');
+    if(!app){ console.error('app no existe'); return; }
+    var rec=(db.records||[]).filter(function(r){ return r.vehicleId===selected; });
+    var exp=(db.expenses||[]).filter(function(e){ return e.vehicleId===selected; });
+    var health=calculateHealthReal();
   if(tab==='resumen'){
     app.innerHTML='<div class="vin-card"><div style="display:flex;justify-content:space-between;gap:12px"><div style="flex:1;min-width:0"><div class="vin-label">VIN • '+rec.length+' serv • Salud '+health.overall+'%</div><div class="vin-value">'+esc(x.vin)+'</div><div class="vin-meta">'+esc(x.make)+' '+esc(x.model)+' '+x.year+' • '+Number(x.odo).toLocaleString()+' mi</div></div><div style="display:flex;gap:6px;flex-shrink:0"><button class="secondary" onclick="copyVIN()" style="padding:8px 10px;font-size:11px">Copiar</button><button class="secondary" onclick="openCloudConfig()" style="padding:8px 10px;font-size:11px">☁️</button></div></div><div class="kpi-grid" style="margin-top:12px"><div class="kpi-card"><div class="kpi-n">'+Number(x.odo).toLocaleString()+'</div><div class="kpi-l">Odo</div></div><div class="kpi-card"><div class="kpi-n">'+rec.length+'</div><div class="kpi-l">Historial</div></div><div class="kpi-card"><div class="kpi-n">'+health.overall+'%</div><div class="kpi-l">Salud</div></div><div class="kpi-card"><div class="kpi-n">'+money(exp.reduce(function(a,e){ return a+e.amount; },0))+'</div><div class="kpi-l">Gastos</div></div></div></div><div class="card"><div class="section"><div class="section-head"><h2>🚦 Salud • '+health.overall+'%</h2><button class="secondary" onclick="switchTab(\'maestro\')" style="padding:8px 12px">Ver</button></div>'+renderHealthSemaphoreReal()+'</div></div><div class="card"><div class="section"><div class="section-head"><h2>📅 Timeline • '+rec.length+'</h2><button class="secondary" onclick="switchTab(\'timeline\')" style="padding:8px 12px">Ver</button></div><div class="rows">'+rec.slice(0,5).map(function(r){ return '<div class="row"><span>'+esc(r.date.slice(5))+' • '+esc(r.category)+'</span><b>'+esc(r.service.slice(0,20))+'</b></div>'; }).join('')+'</div></div></div>';
   } else { app.innerHTML=tabHtml(tab,x); }
@@ -355,6 +386,12 @@ function render(){
   var bn=document.getElementById('bn-'+(tab==='resumen'?'resumen':['historial','mantenimiento','maestro','millas','gastos','partes','bitacora','timeline','viajes','checklist','ficha'].includes(tab)?tab:'mas'));
   if(bn) bn.classList.add('active');
   try{ updateCloudBadge(localStorage.getItem('eo_last_sync')!==null); }catch(e){}
+  }catch(err){
+    console.error('Render error', err);
+    var app=document.getElementById('app');
+    if(app) app.innerHTML='<div class="card section"><h2>⚠️ Error carga</h2><div class="notice bad">'+esc(err.message||err)+'</div><button onclick="localStorage.removeItem(KEY);location.reload()" style="margin-top:12px;width:100%">🔄 Resetear datos</button></div>';
+    toast('Error: '+(err.message||err),'bad');
+  }
 }
 function openMileageModal(){ modal('<h2>＋ Millas</h2><form onsubmit="saveMileage(event)"><div class="formgrid"><label>Fecha<input name="date" type="date" required value="'+today()+'"></label><label>Odo REAL<input name="odo" type="number" required value="'+v().odo+'"></label><label class="full">Notas<textarea name="notes" placeholder="Ruta, gasolina..."></textarea></label></div><button style="margin-top:12px;width:100%">Guardar odo REAL</button></form>'); }
 function saveMileage(e){ e.preventDefault(); var fd=new FormData(e.target); v().odo=Math.max(v().odo,Number(fd.get('odo'))); db.mileageLogs.push({id:'ml-'+Date.now(),vehicleId:selected,date:fd.get('date'),odo:Number(fd.get('odo')),notes:fd.get('notes')||''}); save(); closeModal(); toast('Millas: '+Number(fd.get('odo')).toLocaleString()+' mi','ok'); }
